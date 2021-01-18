@@ -1,5 +1,5 @@
 <h2>Ideja</h2>
-<p>JSD koji generiše Spring Boot aplikaciju, konkretno kontroler, servis, repozitorijum i model. Proširenje bi bilo generisanje osnovnog pom.xml fajla za osnovu Spring Boot aplikacije. </p>
+<p>JSD koji generiše Spring Boot aplikaciju, odnosno fajlove  za kontroler, servis, repozitorijum i model. Proširenje bi bilo generisanje osnovnog pom.xml fajla za osnovu Spring Boot aplikacije. </p>
 
 <h2>Generisanje</h2>
 <p>Model bi se definisao sa ključnonm rečju model, koji bi u svojoj definiciji uvek morao imati obavezno polje controller. To polje bi moglo imati jedno od tri vrednosti. <ol><li>Prazno polje</li><li>Jedna reč</li><li>Lista metoda</li></ol></p>
