@@ -36,3 +36,42 @@ model Doctor
 	specialization: string,
   rate: double,
 </pre>
+
+
+<pre>
+Model Covek {
+
+    controler : [CRUD, get(i)]
+
+    properties{
+        ime: string
+        prezime: string
+        pomocni_radnik: Sestra
+    }
+
+}
+
+Model Dete{
+
+    implements {
+      service: MAth
+      repository: JPA
+    }
+
+    extends {
+      model : Covek
+    }
+
+    controler : []
+  
+    properties{
+        ime: string
+        prezime: string
+    }
+
+    bibliote{
+      ime_biblioteke: 2.0.23
+    }
+
+}
+</pre>

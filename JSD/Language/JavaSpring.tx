@@ -1,0 +1,15 @@
+Model:
+  name: string
+  property*=Property
+  controler: ('string')('[]')?
+    entity_type*=EntityType  
+;
+
+Property:
+  name: string
+  type*=PropertyType
+
+;
+
+PropertyType:
+  (STring , Model)
