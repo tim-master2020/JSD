@@ -41,9 +41,9 @@ model Doctor
 <pre>
 Model Covek {
 
-    controler : [CRUD, get(i)]
+    controller : [get(i)]
 
-    properties{
+    properties {
         ime: string
         prezime: string
         pomocni_radnik: Sestra
@@ -51,7 +51,7 @@ Model Covek {
 
 }
 
-Model Dete{
+Model Dete {
 
     implements {
       service: MAth
@@ -62,14 +62,14 @@ Model Dete{
       model : Covek
     }
 
-    controler : []
+    controller : CRUD
   
-    properties{
+    properties {
         ime: string
         prezime: string
     }
 
-    bibliote{
+    dependencies {
       ime_biblioteke: 2.0.23
     }
 
