@@ -1,0 +1,32 @@
+model Covek {
+
+    properties {
+      "ime" : string
+      "prezime" : string
+    }
+
+    controller : ["get(i)"]
+
+}
+
+model Dete {
+
+    properties {
+      "ime" : string
+      "jmbg" : integer
+    }
+
+    controller : CRUD
+
+    implements {
+      repository: "JPA"
+    }
+
+    extends {
+      model : "Covek"
+    }
+
+    dependencies {
+      "alert" : "2.0.23"
+    }
+}

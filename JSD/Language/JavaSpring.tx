@@ -1,0 +1,57 @@
+App:
+  models += Model
+;
+
+Model:
+  'model' name=ID '{'
+    (property=Property)?
+    (controller=Controller)?
+    (implements=Interfaces)?
+    (extends=BaseClasses)?
+    (dependencies=Dependencies)?
+  '}'  
+;
+
+Property:
+  'properties' '{'
+    (prop_name=STRING ':' value=Value)+
+  '}'
+;
+
+Controller:
+  'controller' ':' value=ControllerType
+;
+
+Interfaces:
+  'implements' '{'
+    ('model' ':' value=ValueType)?
+    ('service' ':' value=ValueType)?
+    ('repository' ':' value=ValueType)?
+  '}'
+;
+
+BaseClasses:
+  'extends' '{'
+    ('model' ':' model=STRING)?
+    ('service' ':' service=STRING)?
+    ('repository' ':' repository=STRING)?
+  '}'
+;
+
+Dependencies:
+  'dependencies' '{'
+    (dependency=STRING ':' version=STRING)+
+  '}'
+;
+
+ValueType:
+  value=STRING | value='[' value+=STRING[','] ']'
+;
+
+ControllerType:
+  value='CRUD' | value='[' value+=STRING[','] ']'
+;
+
+Value:
+    ('string' | 'integer' | 'float' | 'boolean' | Model)('[]')?
+;
