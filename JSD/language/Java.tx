@@ -1,5 +1,7 @@
-App:
+App: 
+  'app' '{'
   models += Model
+  '}'
 ;
 
 Model:

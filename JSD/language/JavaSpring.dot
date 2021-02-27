@@ -1,0 +1,47 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+2450369404368[ label="{App|}"]
+
+2450369380768[ label="{Model|name: ID\l}"]
+
+2450369434576[ label="{Property|prop_name: list[STRING]\l}"]
+
+2450369420416[ label="{Controller|}"]
+
+2450369421360[ label="{Interfaces|}"]
+
+2450369424192[ label="{BaseClasses|model: STRING\lservice: STRING\lrepository: STRING\l}"]
+
+2450369426080[ label="{Dependencies|dependency: list[STRING]\lversion: list[STRING]\l}"]
+
+2450369433632[ label="{ValueType|value: list[STRING]\l}"]
+
+2450369428912[ label="{ControllerType|value: list[STRING]\l}"]
+
+2450369435520[ label="{*Value|}"]
+
+
+
+2450369404368 -> 2450369380768[arrowtail=diamond, dir=both, headlabel="models 1..*"]
+2450369380768 -> 2450369434576[arrowtail=diamond, dir=both, headlabel="property "]
+2450369380768 -> 2450369420416[arrowtail=diamond, dir=both, headlabel="controller "]
+2450369380768 -> 2450369421360[arrowtail=diamond, dir=both, headlabel="implements "]
+2450369380768 -> 2450369424192[arrowtail=diamond, dir=both, headlabel="extends "]
+2450369380768 -> 2450369426080[arrowtail=diamond, dir=both, headlabel="dependencies "]
+2450369434576 -> 2450369435520[arrowtail=diamond, dir=both, headlabel="value 1..*"]
+2450369420416 -> 2450369428912[arrowtail=diamond, dir=both, headlabel="value "]
+2450369421360 -> 2450369433632[arrowtail=diamond, dir=both, headlabel="value 1..*"]
+2450369435520 -> 2450369380768 [dir=back]
+
+}
