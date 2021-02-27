@@ -1,4 +1,5 @@
 from textx import metamodel_from_file
+import os
 
 class Model(object):
     def __init__(self, name, properties, controller, implements, extends, template_path):
@@ -22,11 +23,12 @@ class Property(object):
 
 def get_meta_model():
 
+    # build metamodel
     current_dir = os.path.dirname(__file__)
 
-    path = os.path.join(current_dir, 'JavaSpring.tx')
+    grammar_path = os.path.join(current_dir, 'Java.tx')
 
-    # build metamodel
-    metamodel = metamodel_from_file(path, classes=[Model])
+    metamodel = metamodel_from_file(grammar_path)
     
     return metamodel
+
