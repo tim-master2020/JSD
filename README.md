@@ -36,3 +36,13 @@ model Doctor
 	specialization: string,
   rate: double,
 </pre>
+
+
+<p1>Team instructions for commands</p1>
+<div>
+	pip uninstall JSD - if there are changes in generator or metamodel
+	pip install . - to install package again
+	textx list-generators - list of all registered gen
+	textx generate JSD/Example/primer.jsb --target java+html+js - generate code from primer.jsb 
+	
+</div>
