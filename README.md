@@ -59,4 +59,10 @@ model Doctor
 		<li>textx generate JSD/Example/primer.jsb --target java+html+js - generate code from primer.jsb </li>
 	</ul>
 	
+	<pre>	
+		how to see model properties(example for controller):
+		1)from pprint import pprint
+		2)pprint(vars(model.controller))
+	</pre>
+	
 </div>
