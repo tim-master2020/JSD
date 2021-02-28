@@ -5,6 +5,7 @@ import jinja2
 from textx import metamodel_for_language, model as md
 import datetime
 import sys
+from pprint import pprint
 
 def generate(model, output_path, overwrite):
     """
@@ -77,6 +78,7 @@ def generate(model, output_path, overwrite):
     for model in models:
         f = open(join(backend_model, "%s.java" % model.name), 'w')
         f.write(template.render(model=model, datetime=now))
+        pprint(vars(model.controller.value))
 
     # js_template = jinja_env.get_template('survey_js.j2')
 
