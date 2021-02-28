@@ -38,6 +38,18 @@ model Doctor
 </pre>
 
 
+
+<p1>Preparing setup</p1>
+<div>
+	<ul>
+		<li> python3 -m venv env - creating env for Linux </li>
+	 	<li> py -m venv env - creating env for Windows </li>
+		<li> source env/bin/activate - activate env for Linux  </li>
+		<li> .\env\Scripts\activate - activate env for Windows  </li>
+		<li> pip install -r requirements.txt - install all packets </li>
+		<li> free to go </li>
+	</ul>
+</div>
 <p1>Team instructions for commands</p1>
 <div>
 	<ul>
