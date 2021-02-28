@@ -47,11 +47,11 @@ Dependencies:
 ;
 
 ValueType:
-  value=STRING | value='[' value+=STRING[','] ']'
+  value=STRING | value+=STRING[',']
 ;
 
 ControllerType:
-  value='CRUD' | value='[' value+=STRING[','] ']'
+  value='CRUD' | value+=STRING[',']
 ;
 
 Value:

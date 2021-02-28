@@ -6,6 +6,6 @@ app {
         "prezime" : string
       }
 
-      controller : ["get(i)"]
+      controller : "getName()","getAge()"
   }
 }
