@@ -2,9 +2,14 @@ app {
   model Covek {
 
       properties {
-        "ime" : string
-        "prezime" : string
+        zanimanje : Zanimanje : ArrayList : @ManyToMany
       }
+
+      controller : "getName()","getAge()"
+  }
+
+   model Zanimanje {
+
 
       controller : "getName()","getAge()"
   }

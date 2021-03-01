@@ -78,7 +78,8 @@ def generate(model, output_path, overwrite):
     for model in models:
         f = open(join(backend_model, "%s.java" % model.name), 'w')
         f.write(template.render(model=model, datetime=now))
-        pprint(vars(model.controller.value))
+        if(model.property):
+            pprint(vars(model.property))
 
     # js_template = jinja_env.get_template('survey_js.j2')
 

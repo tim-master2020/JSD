@@ -16,7 +16,7 @@ Model:
 
 Property:
   'properties' '{'
-    (prop_name=STRING ':' value=Value)+
+    (prop_name=ID ':'type=[Value] (':' objectType=ObjectType)? (':' annotiation=AnnotationType)?)+
   '}'
 ;
 
@@ -55,5 +55,13 @@ ControllerType:
 ;
 
 Value:
-    ('string' | 'integer' | 'float' | 'boolean' | Model)('[]')?
+    (STRING | INT | FLOAT | BOOL | Model)
+;
+
+ObjectType:
+  ('ArrayList' | 'HashMap' | '[]' | 'HashSet')
+;
+
+AnnotationType:
+('@ManyToOne'| '@OneToMany' | '@OneToOne' | '@ManyToMany')
 ;
