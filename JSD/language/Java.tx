@@ -17,10 +17,12 @@ Model:
 Property:
   'properties' '{'
     ('model_type' '{'
-      (prop_name_model=ID ':' prop_name_model_type=[Model] (':' prop_name_model_object_type=ObjectType)? (':' prop_name_model_annotiation=AnnotationType)?)+
+      ( prop_name_model_annotiation=AnnotationType
+        prop_name_model=ID ':' prop_name_model_type=[Model] (':' prop_name_model_object_type=ObjectType | prop_name_model_object_type='')
+      )+
     '}')?
     ('build_in_type' '{'
-      (prop_name=ID ':' prop_name_type=Value (':' prop_name_object_type=ObjectType)?)+
+      (prop_name=ID ':' prop_name_type=Value (':' prop_name_object_type=ObjectType | prop_name_object_type=''))+
     '}')?
   '}'
 ;
@@ -64,9 +66,9 @@ Value:
 ;
 
 ObjectType:
-  ('ArrayList' | 'HashMap' | '[]' | 'HashSet')
+  ( 'ArrayList' | 'HashMap' | '[]' | 'HashSet')
 ;
 
 AnnotationType:
-  ('@ManyToOne'| '@OneToMany' | '@OneToOne' | '@ManyToMany')
+  ('@ManyToOne'| '@OneToMany' | '@OneToOne' | '@ManyToMany' | '')
 ;

@@ -3,8 +3,9 @@ app {
 
       properties {
         model_type{
-          zanimanje : Zanimanje : [] : @ManyToOne
-          ime: Zanimanje : ArrayList : @OneToOne
+          zanimanje : Zanimanje : []
+          @OneToOne
+          ime: Zanimanje : ArrayList
         }
         build_in_type{
           rec : string : []
@@ -20,11 +21,12 @@ app {
 
       properties {
         model_type{
-          covek : Covek : ArrayList : @OneToMany
+          @OneToMany
+          covek : Covek : ArrayList
         }
         build_in_type {
           rec : string : []
-          rec1 : string
+          rec1 : string : []
         }
       }
       controller : "getName()","getAge()"
