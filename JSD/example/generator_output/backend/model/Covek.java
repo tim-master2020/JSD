@@ -1,5 +1,5 @@
-<html>
-    <body>
-        Hello world Covek
-    </body>
-</html>
+
+public class Covek {
+
+
+}

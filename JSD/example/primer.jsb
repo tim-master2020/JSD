@@ -2,7 +2,15 @@ app {
   model Covek {
 
       properties {
-        zanimanje : Zanimanje : ArrayList : @ManyToMany
+        model_type{
+          zanimanje : Zanimanje : [] : @ManyToOne
+          ime: Zanimanje : ArrayList : @OneToOne
+        }
+        build_in_type{
+          rec : string : []
+          bora : int
+          pera : float : ArrayList
+        }
       }
 
       controller : "getName()","getAge()"
@@ -10,7 +18,15 @@ app {
 
    model Zanimanje {
 
-
+      properties {
+        model_type{
+          covek : Covek : ArrayList : @OneToMany
+        }
+        build_in_type {
+          rec : string : []
+          rec1 : string
+        }
+      }
       controller : "getName()","getAge()"
   }
 }
