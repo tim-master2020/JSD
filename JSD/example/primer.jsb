@@ -3,6 +3,7 @@ app {
 
       properties {
         model_type{
+          @ManyToOne
           zanimanje : Zanimanje : []
           @OneToOne
           ime: Zanimanje : ArrayList
