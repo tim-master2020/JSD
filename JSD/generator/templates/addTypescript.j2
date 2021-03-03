@@ -1,0 +1,50 @@
+import { Component, OnInit } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Service } from 'src/app/service/service';
+
+@Component({
+  selector: 'app-{{model.name}}-add',
+  templateUrl: './add{{model.name}}.component.html',
+  styleUrls: []
+})
+export class Add{{model.name}}Component implements OnInit {
+
+  {{model.name}}:FormGroup;
+  submitted = false;
+  data: any;
+
+  constructor(
+    private service : Service,
+    private formBuilder : FormBuilder,
+    private router : Router,
+    private activatedRoute : ActivatedRoute) { }
+
+  ngOnInit() {
+      this.{{model.name}} = this.formBuilder.group({
+      {% for n in range(model.property['prop_name'] | length) %}
+        {%if model.property['prop_name_type'][n] == "string" %}
+         	{{model.property['prop_name'][n]}} :['',Validators.required],
+        {% elif (model.property['prop_name_type'][n] == "int") or (model.property['prop_name_type'][n] == "float") %}
+          {{model.property['prop_name'][n]}} :['',Validators.required],
+        {% else %}
+          {{model.property['prop_name'][n]}} :['',Validators.required]
+
+        {% endif %}
+
+      {% endfor %}
+      });
+  }
+
+  get f() { return this.{{model.name}}.controls; }
+
+  onSubmit(event:any) {
+    this.submitted = true;
+    this.data = this.{{model.name}}.getRawValue();
+    console.log(this.data)
+    this.service.add{{model.name}}(this.data).subscribe(
+      data => {
+    });
+  }
+
+}

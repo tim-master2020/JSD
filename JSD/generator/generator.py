@@ -37,6 +37,7 @@ def generate(model, output_path, overwrite):
     backend_model_service = join(backend_folder, 'service')
     frontend_folder = join(output_folder, 'front/')
 
+
     if not exists(backend_folder):
         mkdir(backend_folder)
 
@@ -56,10 +57,8 @@ def generate(model, output_path, overwrite):
     models  = md.get_children_of_type("Model", model)
     models = set(models)
     print('models',models)
-    for model in models:
-        component_folder = join(frontend_folder,str(model.name))
-        if not exists(component_folder):
-            mkdir(component_folder)
+    
+      
 
         # if(model.controller)
         #     if not exists(join(backend_folder,'controller')):
@@ -80,6 +79,19 @@ def generate(model, output_path, overwrite):
         f.write(template.render(model=model, datetime=now))
         if(model.property):
             pprint(vars(model.property))
+
+    for model in models:
+        component_folder = join(frontend_folder,str(model.name))
+
+        if not exists(component_folder):
+            mkdir(component_folder)
+        template = jinja_env.get_template('addTypescript.j2')
+        f = open(join(component_folder, "%s.ts" % model.name), 'w')
+        f.write(template.render(model=model, datetime=now))
+
+    
+    #kreairanje modela u model folderu
+   
 
     # js_template = jinja_env.get_template('survey_js.j2')
 
