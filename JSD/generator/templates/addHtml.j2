@@ -1,0 +1,53 @@
+<div class="container" style="color:green"> 
+     	<h1 style="margin-bottom: 30px">{{model.name}}</h1> 
+    </div> 
+    
+	<div class="container">
+	    <form action="" [formGroup]="{{model.name}}" (ngSubmit)="onSubmit($event)">
+			{% for n in range(model.property['prop_name'] | length) %}
+				{%if model.property['prop_name_type'][n] == "string" %}
+					<div class="form-group"> 
+						<label for="{{model.property['prop_name'][n]}}">{{model.property['prop_name'][n]}}</label> 
+						<input class="form-control" formControlName="{{model.property['prop_name'][n]}}" type="text" id="{{model.property['prop_name'][n]}}"> 
+		        	</div>
+				{% elif (model.property['prop_name_type'][n] == "int") or (model.property['prop_name_type'][n] == "float") %}
+					<div class="form-group"> 
+						<label for="{{model.property['prop_name'][n]}}">{{model.property['prop_name'][n]}}</label> 
+						<input class="form-control" formControlName="{{model.property['prop_name'][n]}}" type="number" id="{{model.property['prop_name'][n]}}"> 
+		        	</div>
+				{% else %}
+					<div class="form-group"> 
+						<label for="{{model.property['prop_name'][n]}}">{{model.property['prop_name'][n]}}</label> 
+						<input class="form-control" formControlName="{{model.property['prop_name'][n]}}" type="checkbox" id="{{model.property['prop_name'][n]}}"> 
+		        	</div>
+
+				{% endif %}
+
+			{% endfor %}
+			
+			{% for n in range(model.property['prop_name_model'] | length) %}
+				{% if model.property['prop_name_model_annotation'][n] == "@OneToMany" or model.property['prop_name_model_annotation'][n] == "@ManyToMany" %}
+					<div class="form-group"> 
+		            <label for="{{model.property['prop_name_model'][n]}}">{{model.property['prop_name_model'][n]}}</label> 
+						<select class="form-control" formControlName="{{model.property['prop_name_model'][n]}}" id="{{model.property['prop_name_model'][n]}}" multiple>
+							<option value="1">CHOOSE</option>
+							<option *ngFor="let zan of {{model.property['prop_name_model'][n]}}" value="{{zan}}">{{zan}}</option>
+						</select>
+		        	</div>
+				{% else %}
+					<div class="form-group"> 
+		            <label for="{{model.property['prop_name_model'][n]}}">{{model.property['prop_name_model'][n]}}</label> 
+						<select class="form-control" formControlName="{{model.property['prop_name_model'][n]}}" id="{{model.property['prop_name_model'][n]}}">
+							<option value="1">CHOOSE</option>
+							<option *ngFor="let zan of {{model.property['prop_name_model'][n]}}" value="{{zan}}">{{zan}}</option>
+						</select>
+		        	</div>
+				{% endif %}
+			{% endfor %}
+
+		          
+	        <div class="container"> 
+	            <button type="submit" class="btn btn-success" style="margin-left: -13px;margin-top: 20px">Add</button>  
+	        </div> 
+	    </form> 
+	</div> 

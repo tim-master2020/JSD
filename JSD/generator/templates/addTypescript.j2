@@ -11,6 +11,10 @@ import { Service } from 'src/app/service/service';
 export class Add{{model.name}}Component implements OnInit {
 
   {{model.name}}:FormGroup;
+  
+  {% for n in range(model.property['prop_name_model'] | length) %}
+        model.property['prop_name_model'][n]: any[]
+  {% endfor %}
   submitted = false;
   data: any;
 
@@ -21,6 +25,7 @@ export class Add{{model.name}}Component implements OnInit {
     private activatedRoute : ActivatedRoute) { }
 
   ngOnInit() {
+
       this.{{model.name}} = this.formBuilder.group({
       {% for n in range(model.property['prop_name'] | length) %}
         {%if model.property['prop_name_type'][n] == "string" %}
@@ -32,6 +37,9 @@ export class Add{{model.name}}Component implements OnInit {
 
         {% endif %}
 
+      {% endfor %}
+      {% for n in range(model.property['prop_name_model'] | length) %}
+        {{model.property['prop_name_model'][n]}} :['',Validators.required],
       {% endfor %}
       });
   }

@@ -88,6 +88,11 @@ def generate(model, output_path, overwrite):
         template = jinja_env.get_template('addTypescript.j2')
         f = open(join(component_folder, "%s.ts" % model.name), 'w')
         f.write(template.render(model=model, datetime=now))
+        template = jinja_env.get_template('addHtml.j2')
+        f = open(join(component_folder, "%s.html" % model.name), 'w')
+        f.write(template.render(model=model, datetime=now))
+
+ 
 
     
     #kreairanje modela u model folderu

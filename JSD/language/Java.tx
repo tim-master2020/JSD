@@ -17,7 +17,7 @@ Model:
 Property:
   'properties' '{'
     ('model_type' '{'
-      ( prop_name_model_annotiation=AnnotationType
+      ( prop_name_model_annotation=AnnotationType
         prop_name_model=ID ':' prop_name_model_type=[Model] (':' prop_name_model_object_type=ObjectType | prop_name_model_object_type='')
       )+
     '}')?
