@@ -1,5 +1,6 @@
 from textx import metamodel_from_file
 import os
+from textx import metamodel_from_file, TextXSyntaxError, TextXSemanticError
 
 class Model(object):
     def __init__(self, name, properties, controller, implements, extends, template_path):
@@ -21,6 +22,14 @@ class Property(object):
     def __str__(self):
         return self.prop_name
 
+
+def model_type_processor(properties):
+    """Checks if model type property has annotation."""
+    print(properties.prop_name_model_annotiation)
+    if '' in properties.prop_name_model_annotiation:
+        raise TextXSemanticError('Annotation must be written for model type!')
+
+
 def get_meta_model():
 
     # build metamodel
@@ -28,7 +37,13 @@ def get_meta_model():
 
     grammar_path = os.path.join(current_dir, 'Java.tx')
 
+    object_processors = {
+        'Property': model_type_processor
+    }
+
     metamodel = metamodel_from_file(grammar_path)
+
+    metamodel.register_obj_processors(object_processors)
     
     return metamodel
 

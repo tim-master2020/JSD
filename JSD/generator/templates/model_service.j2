@@ -1,0 +1,26 @@
+@Service
+public class {{model.name}}Service implements I{{model.name}}Service {
+
+    @Autowired
+    private {{model.name}}Repository {{model.name.lower()}}Repository;
+
+    private {{model.name}} save({{model.name}} {{model.name.lower()}}) {
+        return {{model.name.lower()}}Repository.save({{model.name.lower()}});
+    }
+
+    private List<{{model.name}}> findAll() {
+        return {{model.name.lower()}}Repository.findAll();
+    }
+
+    private {{model.name}} findById(long id){
+        return {{model.name.lower()}}Repository.findById(id);
+    }
+    
+    private {{model.name}} update({{model.name}} {{model.name.lower()}}) {
+        return {{model.name.lower()}}Repository.update({{model.name.lower()}});
+    }
+
+    private void remove(long id) {
+        return {{model.name.lower()}}Repository.remove(id);
+    }
+}

@@ -68,10 +68,20 @@ def generate(model, output_path, overwrite):
         lstrip_blocks=True)
 
     template = jinja_env.get_template('model_backend.j2')
+    templateIService = jinja_env.get_template('model_iservice.j2')
+    templateService = jinja_env.get_template('model_service.j2')
+
     #kreairanje modela u model folderu
     for model in models:
         f = open(join(backend_model, "%s.java" % model.name), 'w')
         f.write(template.render(model=model, datetime=now))
+
+        s = open(join(backend_model_service, "I%sService.java" % model.name), 'w')
+        s.write(templateIService.render(model=model, datetime=now))
+
+        ss = open(join(backend_model_service, "%sService.java" % model.name), 'w')
+        ss.write(templateService.render(model=model, datetime=now))
+
         if(model.property):
             pprint(vars(model.property))
 
