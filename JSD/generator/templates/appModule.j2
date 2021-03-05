@@ -1,0 +1,31 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+//Components import  for model in models:
+import { HomeComponent } from './Home/Home';
+{% for model in models %}
+import { Add{{model.name}}Component } from './{{model.name}}/{{model.name}}';
+{% endfor %}
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    {% for model in models %}
+      Add{{model.name}}Component,
+    {% endfor %}
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

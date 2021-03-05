@@ -17,26 +17,24 @@ def generate(model, output_path, overwrite):
     """
 
     now = datetime.datetime.now().strftime("%a, %b %d, %Y %X")
-
     this_folder = dirname(__file__)
-
-  
     # create output folders
     output_folder = join(output_path, 'generator_output/')
-
     if not overwrite and exists(output_folder):
         print('-- Skipping: {}'.format(output_folder))
         return
-    
     if not exists(output_folder):
         mkdir(output_folder)
 
+
+
+    ##########################################################################################################
+    #BackEnd generator
+    ##########################################################################################################
     backend_folder = join(output_folder, 'backend/')
     backend_model = join(backend_folder, 'model')
     backend_model_folder_repository = join(backend_folder, 'repository')
     backend_model_service = join(backend_folder, 'service')
-    frontend_folder = join(output_folder, 'front/')
-
 
     if not exists(backend_folder):
         mkdir(backend_folder)
@@ -49,9 +47,6 @@ def generate(model, output_path, overwrite):
 
     if not exists(backend_model_service):
         mkdir(backend_model_service)
-    
-    if not exists(frontend_folder):
-        mkdir(frontend_folder)
 
     
     models  = md.get_children_of_type("Model", model)
@@ -80,14 +75,54 @@ def generate(model, output_path, overwrite):
         if(model.property):
             pprint(vars(model.property))
 
-    for model in models:
-        component_folder = join(frontend_folder,str(model.name))
+    ##########################################################################################################
+    #Frontent generator
+    ##########################################################################################################
 
+    frontend_folder = join(output_folder, 'front/')
+    if not exists(frontend_folder):
+        mkdir(frontend_folder)
+
+    frontend_angular = join(frontend_folder, 'AngularFront/src/app')
+    frontend_angular_setings = join(frontend_folder, 'AngularFront')
+
+    template = jinja_env.get_template('appComponent.j2')
+    f = open(join(frontend_angular, "app.component.html"), 'w')
+    f.write(template.render(model=model, datetime=now))
+
+    template = jinja_env.get_template('appModule.j2')
+    f = open(join(frontend_angular, "app.module.ts"), 'w')
+    f.write(template.render(models=models, datetime=now))
+
+    template = jinja_env.get_template('appRouting.j2')
+    f = open(join(frontend_angular, "app-routing.module.ts"), 'w')
+    f.write(template.render(models=models, datetime=now))
+
+    template = jinja_env.get_template('angularJson.j2')
+    f = open(join(frontend_angular_setings, "angular.json"), 'w')
+    f.write(template.render(models=models, datetime=now))
+
+    component_folder_home = join(frontend_angular,"Home")
+    if not exists(component_folder_home):
+            mkdir(component_folder_home)
+            
+    template = jinja_env.get_template('homeTs.j2')
+    f = open(join(component_folder_home, "Home.ts"), 'w')
+    f.write(template.render(models=models, datetime=now))
+
+    template = jinja_env.get_template('homeHtml.j2')
+    f = open(join(component_folder_home, "Home.html"), 'w')
+    f.write(template.render(models=models, datetime=now))
+
+    for model in models:
+        component_folder = join(frontend_angular,str(model.name))
         if not exists(component_folder):
             mkdir(component_folder)
+
         template = jinja_env.get_template('addTypescript.j2')
         f = open(join(component_folder, "%s.ts" % model.name), 'w')
         f.write(template.render(model=model, datetime=now))
+
         template = jinja_env.get_template('addHtml.j2')
         f = open(join(component_folder, "%s.html" % model.name), 'w')
         f.write(template.render(model=model, datetime=now))

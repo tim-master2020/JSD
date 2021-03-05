@@ -1,0 +1,10 @@
+<div class="container">
+  {% for model in models %}
+  <h1>{{model.name}}</h1>
+  <a routerLink="/{{model.name}}"><button class="btn btn-success pull-right ml-2" > Add</button></a>
+  <a routerLink="/{{model.name}}"><button class="btn btn-success pull-right ml-2" > Edit</button></a>
+  <a routerLink="/{{model.name}}"><button class="btn btn-success pull-right ml-2" > Delete</button></a>
+  <a routerLink="/{{model.name}}"><button class="btn btn-success pull-right ml-2" > Preview</button></a>
+  {% endfor %}
+  
+</div>

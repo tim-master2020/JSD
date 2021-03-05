@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Service } from 'src/app/service/service';
+//import { Service } from 'src/app/service/service';
 
 @Component({
   selector: 'app-{{model.name}}-add',
-  templateUrl: './add{{model.name}}.component.html',
+  templateUrl: './{{model.name}}.html',
   styleUrls: []
 })
 export class Add{{model.name}}Component implements OnInit {
@@ -13,13 +13,13 @@ export class Add{{model.name}}Component implements OnInit {
   {{model.name}}:FormGroup;
   
   {% for n in range(model.property['prop_name_model'] | length) %}
-        model.property['prop_name_model'][n]: any[]
+        {{model.property['prop_name_model'][n]}}: any[]
   {% endfor %}
   submitted = false;
   data: any;
 
   constructor(
-    private service : Service,
+    //private service : Service,
     private formBuilder : FormBuilder,
     private router : Router,
     private activatedRoute : ActivatedRoute) { }
@@ -50,9 +50,9 @@ export class Add{{model.name}}Component implements OnInit {
     this.submitted = true;
     this.data = this.{{model.name}}.getRawValue();
     console.log(this.data)
-    this.service.add{{model.name}}(this.data).subscribe(
+    /*this.service.add{{model.name}}(this.data).subscribe(
       data => {
-    });
+    });*/
   }
 
 }
