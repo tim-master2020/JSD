@@ -65,7 +65,16 @@ def generate(model, output_path, overwrite):
         #     if not exists(join(backend_folder,'controller')):
         #         backend_model_controller = join(backend_folder, 'controller')
         #         mkdir(backend_model_controller)
-          
+        
+    def javatype(s):
+        """
+        Maps type names from PrimitiveType to Java.
+        """
+        return {
+            'string': 'String',
+            'integer': 'int'
+        }.get(s, s)
+
     
     # initialize template engine
     jinja_env = jinja2.Environment(
@@ -73,7 +82,8 @@ def generate(model, output_path, overwrite):
         trim_blocks=True,
         lstrip_blocks=True)
 
-    template = jinja_env.get_template('model_backend.j2')
+    jinja_env.filters['javatype'] = javatype
+    template = jinja_env.get_template('model_backend_template.j2')
     templateIService = jinja_env.get_template('model_iservice.j2')
     templateService = jinja_env.get_template('model_service.j2')
 
@@ -88,8 +98,11 @@ def generate(model, output_path, overwrite):
         ss = open(join(backend_model_service, "%sService.java" % model.name), 'w')
         ss.write(templateService.render(model=model, datetime=now))
 
-        if(model.property):
-            pprint(vars(model.property))
+        if(model.properties):
+            for p in model.properties:
+                print('property type is',p.type.name)
+        if(model.implements):
+            print(model.implements.value[0].value)
 
     # js_template = jinja_env.get_template('survey_js.j2')
 
