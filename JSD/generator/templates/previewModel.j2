@@ -1,0 +1,33 @@
+<table class="container table mt-3 table-hover" style="text-align:center;">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col" colspan="5">
+                  {{model.name}}
+            </th>
+        </tr>
+
+      	<tr>
+
+			{% for n in range(model.property['prop_name'] | length) %}
+			<th scope="col">{{model.property['prop_name'][n]}}</th>
+			{% endfor %}
+
+			<th scope="col">Edit</th>
+			<th scope="col">Delete</th>
+        
+     	</tr>
+    </thead>
+    <tbody>
+
+	  
+      <tr *ngFor="let dat of data ; let i = index" id="1">
+        <th scope="row">i</th>
+
+		{% for n in range(model.property['prop_name'] | length) %}
+			<th scope="row">{{'{{dat.'}}{{model.property['prop_name'][n]}}{{'}}'}}</th>
+		{% endfor %}
+        
+      </tr>
+	  
+    </tbody>
+</table>
