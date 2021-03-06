@@ -124,6 +124,10 @@ def generate(model, output_path, overwrite):
     f = open(join(component_folder_home, "Home.html"), 'w')
     f.write(template.render(models=models, datetime=now))
 
+    template = jinja_env.get_template('service.j2')
+    f = open(join(frontend_angular, "app.service.ts"), 'w')
+    f.write(template.render(models=models, datetime=now))
+
     for model in models:
         component_folder = join(frontend_angular,str(model.name))
         if not exists(component_folder):
@@ -136,6 +140,8 @@ def generate(model, output_path, overwrite):
         template = jinja_env.get_template('addHtml.j2')
         f = open(join(component_folder, "%s.html" % model.name), 'w')
         f.write(template.render(model=model, datetime=now))
+
+        
 
  
 

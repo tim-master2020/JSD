@@ -1,6 +1,6 @@
 clear
 source env/bin/activate
-rm -r JSD/example/generator_output
+rm -r JSD/example/generator_output/front
 pip install -r requirements.txt
 pip uninstall JSD
 pip install .
