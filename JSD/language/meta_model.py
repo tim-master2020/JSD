@@ -22,11 +22,10 @@ class Property(object):
     def __str__(self):
         return self.prop_name
 
-
 def model_type_processor(properties):
     """Checks if model type property has annotation."""
-    print(properties.prop_name_model_annotiation)
-    if '' in properties.prop_name_model_annotiation:
+    print(properties.prop_name_model_annotation)
+    if '' in properties.prop_name_model_annotation:
         raise TextXSemanticError('Annotation must be written for model type!')
 
 

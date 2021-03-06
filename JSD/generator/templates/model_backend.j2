@@ -3,7 +3,7 @@ public class {{model.name}} {
 
         
     {% for n in range(model.property['prop_name_model'] | length) %}
-        {{model.property['prop_name_model_annotiation'][n]}}
+        {{model.property['prop_name_model_annotation'][n]}}
         private {{model.property['prop_name_object_type'][n]}} {{model.property['prop_name_type'][n]}} {{model.property['prop_name_model'][n]}};
     
     {% endfor %}
