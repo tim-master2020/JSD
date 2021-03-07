@@ -6,6 +6,7 @@ from textx import metamodel_for_language, model as md
 import datetime
 import sys
 from pprint import pprint
+import re
 
 def generate(model, output_path, overwrite):
     """
@@ -35,6 +36,7 @@ def generate(model, output_path, overwrite):
     backend_model = join(backend_folder, 'model')
     backend_model_folder_repository = join(backend_folder, 'repository')
     backend_model_service = join(backend_folder, 'service')
+    backend_model_controller = join(backend_folder, 'controller')
     frontend_folder = join(output_folder, 'front/')
 
     if not exists(backend_folder):
@@ -48,6 +50,9 @@ def generate(model, output_path, overwrite):
 
     if not exists(backend_model_service):
         mkdir(backend_model_service)
+    
+    if not exists(backend_model_controller):
+        mkdir(backend_model_controller)
     
     if not exists(frontend_folder):
         mkdir(frontend_folder)
@@ -86,6 +91,7 @@ def generate(model, output_path, overwrite):
     template = jinja_env.get_template('model_backend_template.j2')
     templateIService = jinja_env.get_template('model_iservice.j2')
     templateService = jinja_env.get_template('model_service.j2')
+    templateController = jinja_env.get_template('model_controller.j2')
 
     #kreairanje modela u model folderu
     for model in models:
@@ -97,6 +103,9 @@ def generate(model, output_path, overwrite):
 
         ss = open(join(backend_model_service, "%sService.java" % model.name), 'w')
         ss.write(templateService.render(model=model, datetime=now))
+
+        ss = open(join(backend_model_controller, "%sController.java" % model.name), 'w')
+        ss.write(templateController.render(model=model, datetime=now))
 
         if(model.properties):
             for p in model.properties:
