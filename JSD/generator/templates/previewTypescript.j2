@@ -31,4 +31,11 @@ export class {{model.name}}PreviewComponent implements OnInit {
     
   }
 
+  delete{{model.name}}(id:number){
+      this.service.delete{{model.name}}ById(id).subscribe(
+      data => {
+      }
+    );
+  }
+
 }

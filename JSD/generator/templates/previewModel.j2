@@ -26,6 +26,9 @@
 		{% for n in range(model.property['prop_name'] | length) %}
 			<th scope="row">{{'{{dat.'}}{{model.property['prop_name'][n]}}{{'}}'}}</th>
 		{% endfor %}
+      <td>
+	        <a (click)="delete{{model.name}}(dat.id)">delete</a>
+	    </td>
         
       </tr>
 	  
