@@ -25,9 +25,9 @@ Controller:
 
 Interfaces:
   'implements' '{'
-    ('model' ':' value=ValueType)?
-    ('service' ':' value=ValueType)?
-    ('repository' ':' value=ValueType)?
+    ('model' ':' ValueType)?
+    ('service' ':' ValueType)?
+    ('repository' ':' ValueType)?
   '}'
 ;
 
