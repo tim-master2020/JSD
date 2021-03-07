@@ -22,7 +22,7 @@ class Property(object):
         return self.prop_name
 
 
-def model_type_processor(property):
+def property_type_processor(property):
     """Checks if model type property has annotation."""
     if property.type.name not in ['integer', 'string','boolean','float'] and property.annotiation is None:
         raise TextXSemanticError('Annotation must be written for model type!')
@@ -41,7 +41,7 @@ def get_meta_model():
     grammar_path = os.path.join(current_dir, 'Java.tx')
 
     object_processors = {
-        'Property': model_type_processor
+        'Property': property_type_processor
     }
 
     model_builtins = {
