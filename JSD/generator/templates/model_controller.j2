@@ -1,0 +1,89 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.*;
+import com.example.demo.service.I{{model.name}}Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@CrossOrigin("http://localhost:4200")
+@RestController
+@RequestMapping(value = "api")
+public class {{model.name}}Controller {
+
+    @Autowired
+    private I{{model.name}}Service {{model.name.lower()}}Service;
+        
+    {% if model.controller.value.value[0] != "CRUD" %}
+        {%for n in range(model.controller.value.value | length)%}
+        @RequestMapping(method = RequestMethod.{%if 'get' in model.controller.value.value[n].split('()')[0] %}GET{%endif%}{%if 'post' in model.controller.value.value[n].split('()')[0] %}POST{%endif%}{%if 'put' in model.controller.value.value[n].split('()')[0] %}PUT{%endif%}{%if 'delete' in model.controller.value.value[n].split('()')[0] %}DELETE{%endif%}, value = "/{{model.controller.value.value[n].split('()')[0]}}")
+        public ResponseEntity<string> {{model.controller.value.value[n]}} {
+            return new ResponseEntity<>({{model.name.lower()}}Service.{{model.controller.value.value[n]}}, HttpStatus.OK);
+        }
+        {%endfor%}
+
+        @RequestMapping(method = RequestMethod.POST, value = "/{{model.name.lower()}}")
+        public ResponseEntity<{{model.name}}> add(@RequestBody {{model.name}} {{model.name.lower()}}) {
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        @RequestMapping(method = RequestMethod.GET, value = "/{{model.name.lower()}}")
+        public ResponseEntity<List<{{model.name}}>> getAll() {
+            return new ResponseEntity<>({{model.name.lower()}}Service.findAll(), HttpStatus.OK);
+        }
+
+        @RequestMapping(method = RequestMethod.GET, value = "/{{model.name.lower()}}/{id}")
+        public ResponseEntity<{{model.name}}> getAll(@PathVariable Long id) {
+            return new ResponseEntity<>({{model.name.lower()}}Service.findById(id), HttpStatus.OK);
+        }
+
+        @RequestMapping(method = RequestMethod.DELETE, value = "/delete{{model.name.lower()}}/{id}")
+        public ResponseEntity<Void> delete{{model.name}}(@PathVariable Long id) {
+
+            return {{model.name.lower()}}Service.remove(id) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        @RequestMapping(method = RequestMethod.PUT, value = "/{{model.name.lower()}}/{id}")
+        public ResponseEntity<{{model.name}}> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}} {{model.name.lower()}}) {
+
+            return {{model.name.lower()}}Service.update({{model.name.lower()}}) ? new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    {% endif %}
+    
+    {% if model.controller.value.value[0] == "CRUD" %}
+        @RequestMapping(method = RequestMethod.POST, value = "/{{model.name.lower()}}")
+        public ResponseEntity<{{model.name}}> add(@RequestBody {{model.name}} {{model.name.lower()}}) {
+
+            return {{model.name.lower()}}Service.save({{model.name.lower()}}) ? new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        @RequestMapping(method = RequestMethod.GET, value = "/{{model.name.lower()}}")
+        public ResponseEntity<List<{{model.name}}>> getAll() {
+            return new ResponseEntity<>({{model.name.lower()}}Service.findAll(), HttpStatus.OK);
+        }
+
+        @RequestMapping(method = RequestMethod.GET, value = "/{{model.name.lower()}}/{id}")
+        public ResponseEntity<{{model.name}}> getAll(@PathVariable Long id) {
+            return new ResponseEntity<>({{model.name.lower()}}Service.findById(id), HttpStatus.OK);
+        }
+
+        @RequestMapping(method = RequestMethod.DELETE, value = "/delete{{model.name.lower()}}/{id}")
+        public ResponseEntity<Void> delete{{model.name}}(@PathVariable Long id) {
+
+            return {{model.name.lower()}}Service.remove(id) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        @RequestMapping(method = RequestMethod.PUT, value = "/{{model.name.lower()}}/{id}")
+        public ResponseEntity<{{model.name}}> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}} {{model.name.lower()}}) {
+
+            return {{model.name.lower()}}Service.update({{model.name.lower()}}) ? new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    {% endif %}
+    
+
+}
