@@ -1,7 +1,7 @@
 import javax.persistence.*;
 
 @Entity
-public class {{model.name}} {%if model.extends['model']%}extends {{model.extends['model']}}{%endif%} {%if model.implements.value%} implements {%for n in range(model.implements.value | length)%}{% if (n+1) != model.implements.value| length %}{{model.implements.value[n]}},{%else%}{{model.implements.value[n]}}{%endif%}{%endfor%}{%endif%}{
+public class {{model.name}} {%if model.extends['model']%}extends {{model.extends['model']}}{%endif%} {%if model.implements.value%} implements {%for n in range(model.implements.value | length)%}{% if (n+1) != model.implements.value| length %} {{model.implements.value[n]}},{%else%} {{model.implements.value[n]}}{%endif%}{%endfor%}{%endif%} {
 
 
     @Id
@@ -19,7 +19,7 @@ public class {{model.name}} {%if model.extends['model']%}extends {{model.extends
     {%if p.isArray%}
     {{p.type.name}}[] {{p.name}};
     {%else%}
-    {{p.objectType}} {{p.name}} = new {{p.objectType}}<{{p.type.name | javatype}}>();
+    {{p.objectType}}<{{p.type.name}}> {{p.name}} = new {{p.objectType}}<{{p.type.name | javatype}}>();
     {%endif%}
             {% else %}
 
