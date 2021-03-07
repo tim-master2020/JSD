@@ -101,8 +101,6 @@ def generate(model, output_path, overwrite):
         if(model.properties):
             for p in model.properties:
                 print('property type is',p.type.name)
-        if(model.implements):
-            print(model.implements.value[0].value)
 
     # js_template = jinja_env.get_template('survey_js.j2')
 
