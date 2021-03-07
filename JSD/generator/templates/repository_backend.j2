@@ -1,0 +1,12 @@
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface {{model.name[0]|upper}}{{model.name[1:] }}Repository extends JpaRepository<{{model.name[0]|upper}}{{model.name[1:] }}, Long> {
+
+    List<{{model.name[0]|upper}}{{model.name[1:] }}> findAll({{model.name[0]|upper}}{{model.name[1:] }} {{model.name[0:]|lower}});
+    {{model.name[0]|upper}}{{model.name[1:] }} save({{model.name[0]|upper}}{{model.name[1:] }} {{model.name[0:]|lower}});
+    void deleteById(Long id);
+    Optional< {{model.name[0]|upper}}{{model.name[1:]}}> findById(Long id);
+}
