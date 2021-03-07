@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './Home/Home';
 {% for model in models %}
 import { Add{{model.name}}Component } from './{{model.name}}/{{model.name}}';
+import { {{model.name}}PreviewComponent } from './{{model.name}}/{{model.name}}Preview';
 {% endfor %}
 
 @NgModule({
@@ -17,6 +18,7 @@ import { Add{{model.name}}Component } from './{{model.name}}/{{model.name}}';
     HomeComponent,
     {% for model in models %}
       Add{{model.name}}Component,
+      {{model.name}}PreviewComponent,
     {% endfor %}
   ],
   imports: [

@@ -145,6 +145,10 @@ def generate(model, output_path, overwrite):
         f = open(join(component_folder, "%sPreview.html" % model.name), 'w')
         f.write(template.render(model=model, datetime=now))
 
+        template = jinja_env.get_template('previewTypescript.j2')
+        f = open(join(component_folder, "%sPreview.ts" % model.name), 'w')
+        f.write(template.render(model=model, datetime=now))
+
         
 
  

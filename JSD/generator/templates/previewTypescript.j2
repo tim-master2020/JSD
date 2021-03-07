@@ -1,0 +1,34 @@
+import { Component, OnInit } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Service } from '../app.service';
+
+@Component({
+  selector: 'app-{{model.name}}-edit',
+  templateUrl: './{{model.name}}Preview.html',
+  styleUrls: []
+})
+export class {{model.name}}PreviewComponent implements OnInit {
+
+  submitted = false;
+  data: any;
+  id:number;
+  
+
+  constructor(
+    private service : Service,
+    private formBuilder : FormBuilder,
+    private router : Router,
+    private activatedRoute : ActivatedRoute) { }
+
+  ngOnInit() {
+      
+      this.service.get{{model.name}}All().subscribe(
+      data => {
+        this.data = data
+      }
+    );
+    
+  }
+
+}
