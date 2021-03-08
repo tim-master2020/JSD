@@ -93,6 +93,7 @@ def generate(model, output_path, overwrite):
     template = jinja_env.get_template('model_backend_template.j2')
     templateIService = jinja_env.get_template('model_iservice.j2')
     templateService = jinja_env.get_template('model_service.j2')
+    templateRepo = jinja_env.get_template('repository_backend.j2')
     templateController = jinja_env.get_template('model_controller.j2')
 
     #kreairanje modela u model folderu
@@ -106,12 +107,16 @@ def generate(model, output_path, overwrite):
         ss = open(join(backend_model_service, "%sService.java" % model.name), 'w')
         ss.write(templateService.render(model=model, datetime=now))
 
+        ss = open(join(backend_model_folder_repository, "%sRepository.java" % model.name), 'w')
+        ss.write(templateRepo.render(model=model, datetime=now))
         ss = open(join(backend_model_controller, "%sController.java" % model.name), 'w')
         ss.write(templateController.render(model=model, datetime=now))
 
         if(model.properties):
             for p in model.properties:
                 print('property type is',p.type.name)
+        if(model.implements):
+            print(model.implements.value)
 
     # js_template = jinja_env.get_template('survey_js.j2')
 
