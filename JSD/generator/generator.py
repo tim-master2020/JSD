@@ -6,6 +6,7 @@ from textx import metamodel_for_language, model as md
 import datetime
 import sys
 from pprint import pprint
+import re
 
 def generate(model, output_path, overwrite):
     """
@@ -23,6 +24,8 @@ def generate(model, output_path, overwrite):
   
     # create output folders
     output_folder = join(output_path, 'generator_output/')
+    print(output_folder)
+    output_folder_be = join(output_folder, 'backend/demo/src/main/java/com/example/demo/')
 
     if not overwrite and exists(output_folder):
         print('-- Skipping: {}'.format(output_folder))
@@ -31,14 +34,15 @@ def generate(model, output_path, overwrite):
     if not exists(output_folder):
         mkdir(output_folder)
 
-    backend_folder = join(output_folder, 'backend/')
-    backend_model = join(backend_folder, 'model')
-    backend_model_folder_repository = join(backend_folder, 'repository')
-    backend_model_service = join(backend_folder, 'service')
+    # backend_folder = join(output_folder, 'backend/')
+    backend_model = join(output_folder_be, 'model')
+    backend_model_folder_repository = join(output_folder_be, 'repository')
+    backend_model_service = join(output_folder_be, 'service')
+    backend_model_controller = join(output_folder_be, 'controller')
     frontend_folder = join(output_folder, 'front/')
 
-    if not exists(backend_folder):
-        mkdir(backend_folder)
+    # if not exists(backend_folder):
+    #     mkdir(backend_folder)
 
     if not exists(backend_model):
         mkdir(backend_model)
@@ -48,6 +52,9 @@ def generate(model, output_path, overwrite):
 
     if not exists(backend_model_service):
         mkdir(backend_model_service)
+    
+    if not exists(backend_model_controller):
+        mkdir(backend_model_controller)
     
     if not exists(frontend_folder):
         mkdir(frontend_folder)
@@ -87,6 +94,7 @@ def generate(model, output_path, overwrite):
     templateIService = jinja_env.get_template('model_iservice.j2')
     templateService = jinja_env.get_template('model_service.j2')
     templateRepo = jinja_env.get_template('repository_backend.j2')
+    templateController = jinja_env.get_template('model_controller.j2')
 
     #kreairanje modela u model folderu
     for model in models:
@@ -101,6 +109,8 @@ def generate(model, output_path, overwrite):
 
         ss = open(join(backend_model_folder_repository, "%sRepository.java" % model.name), 'w')
         ss.write(templateRepo.render(model=model, datetime=now))
+        ss = open(join(backend_model_controller, "%sController.java" % model.name), 'w')
+        ss.write(templateController.render(model=model, datetime=now))
 
         if(model.properties):
             for p in model.properties:
