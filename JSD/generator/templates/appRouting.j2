@@ -24,7 +24,7 @@ const routes: Routes = [
       component: {{model.name}}PreviewComponent
     },
     {
-      path: '{{model.name}}Edit',
+      path: '{{model.name}}Edit/:${{model.name}}Id',
       component: {{model.name}}EditComponent
     },
   {% endfor %}
