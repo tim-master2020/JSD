@@ -149,7 +149,9 @@ def generate(model, output_path, overwrite):
         f = open(join(component_folder, "%sPreview.ts" % model.name), 'w')
         f.write(template.render(model=model, datetime=now))
 
-        
+        template = jinja_env.get_template('editTypescript.j2')
+        f = open(join(component_folder, "%sEdit.ts" % model.name), 'w')
+        f.write(template.render(model=model, datetime=now))
 
  
 

@@ -29,68 +29,31 @@ export class Edit{{model.name}}Component implements OnInit {
       });
   	  	
       this.{{model.name}} = this.formBuilder.group({
-       <#list properties as property>
-         <#if property.type.name == "String" >
-         	${property.name} :['',Validators.required],
-	     <#elseif property.type.name == "Boolean" >
-	     	${property.name} :['',Validators.required],
-	     <#elseif property.type.name == "double" || property.type == "Integer">
-	     	${property.name} :['',Validators.required],
-	     <#elseif property.type.name == "date" >  
-	     	${property.name} :['',Validators.required],
-	     <#elseif property.type.name == "NotificationType" >
-	     	${property.name} :['',Validators.required],
-	     <#elseif property.type.name == "Visibility" >  
-	     	${property.name} :['',Validators.required],
-	     <#elseif property.type.name == "FriendshipRequestStatus" >  
-	     	${property.name} :['',Validators.required],
-	     <#elseif property.type.name == "ActivityRequestStatus" >  
-	     	${property.name} :['',Validators.required],
-	     </#if>   
-       </#list>
-      });
+        {% for n in range(model.property['prop_name'] | length) %}
+          {{model.property['prop_name'][n]}} :['', Validators.required],
+        {% endfor %}
+        })
       
       this.service.get{{model.name}}ById(this.id).subscribe(
       data => {
         this.data = data
         this.setValues();
       }
-    );
+      );
   }
 
   setValues(){
     {% for n in range(model.property['prop_name'] | length) %}
-      this.{{model.name}}.controls.{{}}
-    {% endfor %}
-   <#list properties as property>
-   		 <#if property.type.name == "String" >
-         	this.{{model.name}}.controls.${property.name}.setValue(this.data.${property.name});
-	     <#elseif property.type.name == "Boolean" >
-	     	this.{{model.name}}.controls.${property.name}.setValue(this.data.${property.name});
-	     <#elseif property.type.name == "double" || property.type == "Integer">
-	     	this.{{model.name}}.controls.${property.name}.setValue(this.data.${property.name});
-	     <#elseif property.type.name == "date" >  
-	     	this.${class.name}.controls.${property.name}.setValue(this.data.${property.name});
-	     <#elseif property.type.name == "NotificationType" >
-	     	this.${class.name}.controls.${property.name}.setValue(this.data.${property.name});
-	     <#elseif property.type.name == "Visibility" >  
-	     	this.${class.name}.controls.${property.name}.setValue(this.data.${property.name});
-	     <#elseif property.type.name == "FriendshipRequestStatus" >  
-	     	this.${class.name}.controls.${property.name}.setValue(this.data.${property.name});
-	     <#elseif property.type.name == "ActivityRequestStatus" >  
-	     	this.${class.name}.controls.${property.name}.setValue(this.data.${property.name});
-	     </#if>   
-     
-   </#list>    
-  }
+      this.{{model.name}}.controls.{{model.property['prop_name'][n]}}.setValue(this.data.{{model.property['prop_name'][n]}});
+    {% endfor %}}
 
-  get f() { return this.${class.name}.controls; }
+  get f() { return this.{{model.name}}.controls; }
 
   onSubmit(event:any) {
     this.submitted = true;
-    this.data = this.${class.name}.getRawValue();
+    this.data = this.{{model.name}}.getRawValue();
     console.log(this.data)
-    this.service.edit${class.name}(this.data,this.id).subscribe(
+    this.service.edit{{model.name}}(this.data,this.id).subscribe(
       data => {
     });
   }
