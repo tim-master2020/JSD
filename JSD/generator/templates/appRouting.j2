@@ -5,6 +5,8 @@ import { HomeComponent } from './Home/Home';
 {% for model in models %}
 import { Add{{model.name}}Component } from './{{model.name}}/{{model.name}}';
 import { {{model.name}}PreviewComponent } from './{{model.name}}/{{model.name}}Preview';
+import { {{model.name}}EditComponent } from './{{model.name}}/{{model.name}}Edit';
+
 {% endfor %}
 
 const routes: Routes = [
@@ -20,6 +22,10 @@ const routes: Routes = [
     {
       path: '{{model.name}}Preview',
       component: {{model.name}}PreviewComponent
+    },
+    {
+      path: '{{model.name}}Edit',
+      component: {{model.name}}EditComponent
     },
   {% endfor %}
 ];
