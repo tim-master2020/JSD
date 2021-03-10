@@ -38,4 +38,8 @@ export class {{model.name}}PreviewComponent implements OnInit {
     );
   }
 
+  edit{{model.name}}(id:number){
+      this.router.navigate([`{{model.name}}Edit/${id}`]);
+  }
+
 }
