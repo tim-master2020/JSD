@@ -1,21 +1,18 @@
 app {
   model Covek {
-
-      zanimanje : Zanimanje : [] : @ManyToOne
-
-      ime: Zanimanje : ArrayList : @OneToOne
-      rec : string 
-      bora : integer
-      pera : float 
+      zanimanje: Zanimanje : ArrayList : @OneToMany
+      ime : string 
+      godine : integer
+      jmbg : float 
       
       controller : "getName()","getAge()"
   }
 
   model Zanimanje {      
-    covek : Covek : HashSet : @OneToMany
-    rec : string 
-    rec1 : string
+    covek : Covek : @ManyToOne
+    mbr : string 
+    naziv : string
     
-      controller : "getName()","getAge()"
+      controller : "getNaziv()"
   }
 }

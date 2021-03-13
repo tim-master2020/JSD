@@ -12,5 +12,5 @@ public interface {{model.name[0]|upper}}{{model.name[1:] }}Repository extends Jp
     List<{{model.name[0]|upper}}{{model.name[1:] }}> findAll();
     {{model.name[0]|upper}}{{model.name[1:] }} save({{model.name[0]|upper}}{{model.name[1:] }} {{model.name[0:]|lower}});
     void deleteById(Long id);
-    Optional<{{model.name[0]|upper}}{{model.name[1:]}}> findById(Long id);
+    {{model.name[0]|upper}}{{model.name[1:]}} findById(long id);
 }

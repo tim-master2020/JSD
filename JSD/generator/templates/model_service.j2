@@ -27,13 +27,13 @@ public class {{model.name}}Service implements I{{model.name}}Service {
     }
 
     @Override
-    public Optional<{{model.name}}> findById(long id){
+    public {{model.name}} findById(long id){
         return {{model.name.lower()}}Repository.findById(id);
     }
     
     @Override
     public {{model.name}} update({{model.name}} {{model.name.lower()}}) {
-        return {{model.name.lower()}}Repository.update({{model.name.lower()}});
+        return {{model.name.lower()}}Repository.save({{model.name.lower()}});
     }
 
     @Override
