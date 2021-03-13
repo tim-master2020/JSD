@@ -9,14 +9,6 @@ app {
       pera : float 
       
       controller : "getName()","getAge()"
-
-      implements {
-        model : 'interface1','a','b'
-      }
-
-      extends {
-        model: 'NekaKlasa'
-      }
   }
 
   model Zanimanje {      

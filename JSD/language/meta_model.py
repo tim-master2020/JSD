@@ -32,6 +32,7 @@ def property_type_processor(property):
 
     property.primitve = property.type.name  in ['integer', 'string','boolean','float']
     property.isArray = property.objectType == '[]'
+    property.isArrayList = property.objectType == 'ArrayList'
 
 def get_meta_model():
 
