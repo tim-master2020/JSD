@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping(value = "api")
+@RequestMapping(value = "/{{model.name.lower()}}")
 public class {{model.name}}Controller {
 
     @Autowired
@@ -26,62 +26,62 @@ public class {{model.name}}Controller {
         }
         {%endfor%}
 
-        @RequestMapping(method = RequestMethod.POST, value = "/{{model.name.lower()}}")
+        @RequestMapping(method = RequestMethod.POST)
         public ResponseEntity<{{model.name}}> add(@RequestBody {{model.name}} {{model.name.lower()}}) {
 
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
-        @RequestMapping(method = RequestMethod.GET, value = "/{{model.name.lower()}}")
+        @RequestMapping(method = RequestMethod.GET)
         public ResponseEntity<List<{{model.name}}>> getAll() {
             return new ResponseEntity<>({{model.name.lower()}}Service.findAll(), HttpStatus.OK);
         }
 
-        @RequestMapping(method = RequestMethod.GET, value = "/{{model.name.lower()}}/{id}")
+        @RequestMapping(method = RequestMethod.GET, value = "{id}")
         public ResponseEntity<{{model.name}}> getAll(@PathVariable Long id) {
-            return new ResponseEntity<>({{model.name.lower()}}Service.findById(id), HttpStatus.OK);
+            return new ResponseEntity({{model.name.lower()}}Service.findById(id), HttpStatus.OK);
         }
 
-        @RequestMapping(method = RequestMethod.DELETE, value = "/delete{{model.name.lower()}}/{id}")
+        @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
         public ResponseEntity<Void> delete{{model.name}}(@PathVariable Long id) {
-
-            return {{model.name.lower()}}Service.remove(id) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            {{model.name.lower()}}Service.remove(id); 
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
-        @RequestMapping(method = RequestMethod.PUT, value = "/{{model.name.lower()}}/{id}")
+        @RequestMapping(method = RequestMethod.PUT, value = "{id}")
         public ResponseEntity<{{model.name}}> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}} {{model.name.lower()}}) {
-
-            return {{model.name.lower()}}Service.update({{model.name.lower()}}) ? new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            {{model.name.lower()}}Service.update({{model.name.lower()}})
+            return new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED);
         }
     {% endif %}
     
     {% if model.controller.value.value[0] == "CRUD" %}
-        @RequestMapping(method = RequestMethod.POST, value = "/{{model.name.lower()}}")
+        @RequestMapping(method = RequestMethod.POST)
         public ResponseEntity<{{model.name}}> add(@RequestBody {{model.name}} {{model.name.lower()}}) {
 
             return {{model.name.lower()}}Service.save({{model.name.lower()}}) ? new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        @RequestMapping(method = RequestMethod.GET, value = "/{{model.name.lower()}}")
+        @RequestMapping(method = RequestMethod.GET)
         public ResponseEntity<List<{{model.name}}>> getAll() {
             return new ResponseEntity<>({{model.name.lower()}}Service.findAll(), HttpStatus.OK);
         }
 
-        @RequestMapping(method = RequestMethod.GET, value = "/{{model.name.lower()}}/{id}")
+        @RequestMapping(method = RequestMethod.GET, value = "{id}")
         public ResponseEntity<{{model.name}}> getAll(@PathVariable Long id) {
-            return new ResponseEntity<>({{model.name.lower()}}Service.findById(id), HttpStatus.OK);
+            return new ResponseEntity({{model.name.lower()}}Service.findById(id), HttpStatus.OK);
         }
 
-        @RequestMapping(method = RequestMethod.DELETE, value = "/delete{{model.name.lower()}}/{id}")
+        @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
         public ResponseEntity<Void> delete{{model.name}}(@PathVariable Long id) {
-
-            return {{model.name.lower()}}Service.remove(id) ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            {{model.name.lower()}}Service.remove(id); 
+            return new ResponseEntity<>(HttpStatus.OK);        
         }
 
-        @RequestMapping(method = RequestMethod.PUT, value = "/{{model.name.lower()}}/{id}")
+        @RequestMapping(method = RequestMethod.PUT, value = "{id}")
         public ResponseEntity<{{model.name}}> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}} {{model.name.lower()}}) {
-
-            return {{model.name.lower()}}Service.update({{model.name.lower()}}) ? new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            {{model.name.lower()}}Service.update({{model.name.lower()}});
+            return new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED);        
         }
     {% endif %}
     

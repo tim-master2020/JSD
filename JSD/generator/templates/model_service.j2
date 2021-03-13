@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.model.{{model.name}};
 import com.example.demo.service.I{{model.name}}Service;
+import com.example.demo.repository.{{model.name}}Repository;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class {{model.name}}Service implements I{{model.name}}Service {
@@ -16,27 +17,27 @@ public class {{model.name}}Service implements I{{model.name}}Service {
     private {{model.name}}Repository {{model.name.lower()}}Repository;
 
     @Override
-    private {{model.name}} save({{model.name}} {{model.name.lower()}}) {
+    public {{model.name}} save({{model.name}} {{model.name.lower()}}) {
         return {{model.name.lower()}}Repository.save({{model.name.lower()}});
     }
 
     @Override
-    private List<{{model.name}}> findAll() {
+    public List<{{model.name}}> findAll() {
         return {{model.name.lower()}}Repository.findAll();
     }
 
     @Override
-    private {{model.name}} findById(long id){
+    public Optional<{{model.name}}> findById(long id){
         return {{model.name.lower()}}Repository.findById(id);
     }
     
     @Override
-    private {{model.name}} update({{model.name}} {{model.name.lower()}}) {
+    public {{model.name}} update({{model.name}} {{model.name.lower()}}) {
         return {{model.name.lower()}}Repository.update({{model.name.lower()}});
     }
 
     @Override
-    private void remove(long id) {
-        return {{model.name.lower()}}Repository.remove(id);
+    public void remove(long id) {
+        {{model.name.lower()}}Repository.deleteById(id);
     }
 }
