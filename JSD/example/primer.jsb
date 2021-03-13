@@ -12,7 +12,7 @@ app {
   }
 
   model Zanimanje {      
-    covek : Covek : ArrayList : @OneToMany
+    covek : Covek : HashSet : @OneToMany
     rec : string 
     rec1 : string
     

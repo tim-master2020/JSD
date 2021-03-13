@@ -58,7 +58,7 @@ Value:
 ;
 
 ObjectType:
-  ( 'ArrayList' | 'HashMap' | '[]' | 'HashSet')
+  ( 'ArrayList' | '[]' | 'HashSet')
 ;
 
 AnnotationType:

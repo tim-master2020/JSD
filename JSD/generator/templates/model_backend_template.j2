@@ -21,7 +21,7 @@ public class {{model.name[0]|upper}}{{model.name[1:]}} {%if model.extends['model
     {%if p.isArray%}
     {{p.type.name}}[] {{p.name}};
     {%else%}
-    {%if p.isArrayList %}List{%else%}{{p.objectType}}{%endif%}<{{p.type.name}}> {{p.name}} = new {{p.objectType}}<{{p.type.name | javatype}}>();
+    {%if p.isArrayList %}List{%elif p.isSet%}Set{%else%}{{p.objectType}}{%endif%}<{{p.type.name}}> {{p.name}} = new {{p.objectType}}<{{p.type.name | javatype}}>();
     {%endif%}
             {% else %}
 
@@ -40,7 +40,7 @@ public class {{model.name[0]|upper}}{{model.name[1:]}} {%if model.extends['model
 
     {%if model.properties%}
     {%for p in model.properties%}
-    public {{p.type.name | javatype}} get{{p.name[0]|upper}}{{p.name[1:] }}(){
+    public {%if p.objectType%}{%if p.isArray%}{{p.type.name | javatype}}[]{%else%}{%if p.isArrayList%}List{%elif p.isSet%}Set{%else%}{{p.objectType}}{%endif%}<{{p.type.name | javatype}}>{%endif%}{%else%}{{p.type.name | javatype}}{%endif%} get{{p.name[0]|upper}}{{p.name[1:] }}(){
         return this.{{p.name}};
     }
     
