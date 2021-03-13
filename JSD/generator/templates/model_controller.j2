@@ -21,8 +21,8 @@ public class {{model.name}}Controller {
     {% if model.controller.value.value[0] != "CRUD" %}
         {%for n in range(model.controller.value.value | length)%}
         @RequestMapping(method = RequestMethod.{%if 'get' in model.controller.value.value[n].split('()')[0] %}GET{%endif%}{%if 'post' in model.controller.value.value[n].split('()')[0] %}POST{%endif%}{%if 'put' in model.controller.value.value[n].split('()')[0] %}PUT{%endif%}{%if 'delete' in model.controller.value.value[n].split('()')[0] %}DELETE{%endif%}, value = "/{{model.controller.value.value[n].split('()')[0]}}")
-        public ResponseEntity<string> {{model.controller.value.value[n]}} {
-            return new ResponseEntity<>({{model.name.lower()}}Service.{{model.controller.value.value[n]}}, HttpStatus.OK);
+        public ResponseEntity<?> {{model.controller.value.value[n]}} {
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         {%endfor%}
 
