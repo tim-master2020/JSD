@@ -32,7 +32,8 @@ public class {{model.name}}Service implements I{{model.name}}Service {
     }
     
     @Override
-    public {{model.name}} update({{model.name}} {{model.name.lower()}}) {
+    public {{model.name}} update(long id, {{model.name}} {{model.name.lower()}}) {
+        {{model.name.lower()}}.setId(id);
         return {{model.name.lower()}}Repository.save({{model.name.lower()}});
     }
 

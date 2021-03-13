@@ -38,6 +38,14 @@ public class {{model.name[0]|upper}}{{model.name[1:]}} {%if model.extends['model
 
     public {{model.name}}(){}
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     {%if model.properties%}
     {%for p in model.properties%}
     public {%if p.objectType%}{%if p.isArray%}{{p.type.name | javatype}}[]{%else%}{%if p.isArrayList%}List{%elif p.isSet%}Set{%else%}{{p.objectType}}{%endif%}<{{p.type.name | javatype}}>{%endif%}{%else%}{{p.type.name | javatype}}{%endif%} get{{p.name[0]|upper}}{{p.name[1:] }}(){
