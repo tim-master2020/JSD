@@ -6,6 +6,7 @@ from textx import metamodel_for_language, model as md
 import datetime
 import sys
 from pprint import pprint
+import re
 
 def generate(model, output_path, overwrite):
     """
@@ -20,6 +21,9 @@ def generate(model, output_path, overwrite):
     this_folder = dirname(__file__)
     # create output folders
     output_folder = join(output_path, 'generator_output/')
+    print(output_folder)
+    output_folder_be = join(output_folder, 'backend/demo/src/main/java/com/example/demo/')
+
     if not overwrite and exists(output_folder):
         print('-- Skipping: {}'.format(output_folder))
         return
@@ -36,8 +40,8 @@ def generate(model, output_path, overwrite):
     backend_model_folder_repository = join(backend_folder, 'repository')
     backend_model_service = join(backend_folder, 'service')
 
-    if not exists(backend_folder):
-        mkdir(backend_folder)
+    # if not exists(backend_folder):
+    #     mkdir(backend_folder)
 
     if not exists(backend_model):
         mkdir(backend_model)
@@ -47,6 +51,12 @@ def generate(model, output_path, overwrite):
 
     if not exists(backend_model_service):
         mkdir(backend_model_service)
+    
+    if not exists(backend_model_controller):
+        mkdir(backend_model_controller)
+    
+    if not exists(frontend_folder):
+        mkdir(frontend_folder)
 
     
     models  = md.get_children_of_type("Model", model)
@@ -59,7 +69,16 @@ def generate(model, output_path, overwrite):
         #     if not exists(join(backend_folder,'controller')):
         #         backend_model_controller = join(backend_folder, 'controller')
         #         mkdir(backend_model_controller)
-          
+        
+    def javatype(s):
+        """
+        Maps type names from PrimitiveType to Java.
+        """
+        return {
+            'string': 'String',
+            'integer': 'int'
+        }.get(s, s)
+
     
     # initialize template engine
     jinja_env = jinja2.Environment(
@@ -67,9 +86,12 @@ def generate(model, output_path, overwrite):
         trim_blocks=True,
         lstrip_blocks=True)
 
-    template = jinja_env.get_template('model_backend.j2')
+    jinja_env.filters['javatype'] = javatype
+    template = jinja_env.get_template('model_backend_template.j2')
     templateIService = jinja_env.get_template('model_iservice.j2')
     templateService = jinja_env.get_template('model_service.j2')
+    templateRepo = jinja_env.get_template('repository_backend.j2')
+    templateController = jinja_env.get_template('model_controller.j2')
 
     #kreairanje modela u model folderu
     for model in models:
@@ -82,8 +104,16 @@ def generate(model, output_path, overwrite):
         ss = open(join(backend_model_service, "%sService.java" % model.name), 'w')
         ss.write(templateService.render(model=model, datetime=now))
 
-        if(model.property):
-            pprint(vars(model.property))
+        ss = open(join(backend_model_folder_repository, "%sRepository.java" % model.name), 'w')
+        ss.write(templateRepo.render(model=model, datetime=now))
+        ss = open(join(backend_model_controller, "%sController.java" % model.name), 'w')
+        ss.write(templateController.render(model=model, datetime=now))
+
+        if(model.properties):
+            for p in model.properties:
+                print('property type is',p.type.name)
+        if(model.implements):
+            print(model.implements.value)
 
     ##########################################################################################################
     #Frontent generator

@@ -1,0 +1,62 @@
+package com.example.demo.model;
+import javax.persistence.*;
+import java.util.*;
+
+@Entity
+public class {{model.name[0]|upper}}{{model.name[1:]}} {%if model.extends['model']%}extends {{model.extends['model']}}{%endif%} {%if model.implements.value%} implements {%for n in range(model.implements.value | length)%}{% if (n+1) != model.implements.value| length %} {{model.implements.value[n]}},{%else%} {{model.implements.value[n]}}{%endif%}{%endfor%}{%endif%} {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+        {%if model.properties%}
+            {% for p in model.properties %}
+               {% if p.objectType %}
+
+    {%if p.annotiation and p.primitive != True%}
+    {{p.annotiation}}
+    {%endif%}
+    {%if p.isArray%}
+    {{p.type.name}}[] {{p.name}};
+    {%else%}
+    {%if p.isArrayList %}List{%elif p.isSet%}Set{%else%}{{p.objectType}}{%endif%}<{{p.type.name}}> {{p.name}} = new {{p.objectType}}<{{p.type.name | javatype}}>();
+    {%endif%}
+            {% else %}
+
+    {%if p.annotiation and p.primitive != True%}
+    {{p.annotiation}}
+    {%else%}
+    @Column
+    {%endif%}
+    {{p.type.name | javatype}} {{p.name}};
+                {% endif %}
+            {% endfor %}
+            {%endif%}
+
+
+    public {{model.name}}(){}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    {%if model.properties%}
+    {%for p in model.properties%}
+    public {%if p.objectType%}{%if p.isArray%}{{p.type.name | javatype}}[]{%else%}{%if p.isArrayList%}List{%elif p.isSet%}Set{%else%}{{p.objectType}}{%endif%}<{{p.type.name | javatype}}>{%endif%}{%else%}{{p.type.name | javatype}}{%endif%} get{{p.name[0]|upper}}{{p.name[1:] }}(){
+        return this.{{p.name}};
+    }
+    
+    public void set{{p.name[0]|upper}}{{p.name[1:] }}({% if p.objectType %}{%if p.isArray%}{{p.type.name}}[]{%else%}{{p.objectType}}<{{p.type.name}}>{%endif%}{%else%}{{p.type.name| javatype}}{%endif%} {{p.name}}){
+        this.{{p.name}} = {{p.name}};
+    }
+
+    {%endfor%}
+    {%endif%}
+
+}

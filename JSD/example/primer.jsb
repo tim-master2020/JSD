@@ -1,28 +1,18 @@
 app {
   model Covek {
-
-      properties {
-        model_type{
-          @OneToMany
-          zanimanje: Zanimanje : [] 
-        }
-        build_in_type{
-          ime : string
-          prezime : string
-        }
-      }
-
+      zanimanje: Zanimanje : ArrayList : @OneToMany
+      ime : string 
+      godine : integer
+      jmbg : float 
+      
       controller : "getName()","getAge()"
   }
 
-   model Zanimanje {
-
-      properties {
-        build_in_type {
-          naziv : string 
-          id : int 
-        }
-      }
-      controller : "getName()","getAge()"
+  model Zanimanje {      
+    covek : Covek : @ManyToOne
+    mbr : string 
+    naziv : string
+    
+      controller : "getNaziv()"
   }
 }
