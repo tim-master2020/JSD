@@ -33,6 +33,16 @@ export class Add{{model.name}}Component implements OnInit {
           {{p.name}} :['',Validators.required],
       {% endfor %}
       });
+
+       {% for p in model.properties %}
+        {% if p.primitive != True %}
+            this.service.get{{p.type.name}}All().subscribe(
+              data => {
+                this.{{p.type.name.lower()}} = data
+              }
+            );
+        {% endif %}
+      {% endfor %}
   }
 
   get f() { return this.{{model.name}}.controls; }
@@ -40,6 +50,12 @@ export class Add{{model.name}}Component implements OnInit {
   onSubmit(event:any) {
     this.submitted = true;
     this.data = this.{{model.name}}.getRawValue();
+    {% for p in model.properties %} 
+      {% if p.primitive != True %}
+        this.data.{{p.name.lower()}} =  new Array(JSON.parse(this.data.{{p.name.lower()}}))
+      {% endif %}
+    {% endfor %}
+
     console.log(this.data)
     this.service.add{{model.name}}(this.data).subscribe(
       data => {

@@ -48,6 +48,16 @@ export class {{model.name}}EditComponent implements OnInit {
         this.setValues();
       }
       );
+
+      {% for p in model.properties %}
+        {% if p.primitive != True %}
+            this.service.get{{p.type.name}}All().subscribe(
+              data => {
+                this.{{p.type.name.lower()}}Edit = data
+              }
+            );
+        {% endif %}
+      {% endfor %}
   }
 
   setValues(){
@@ -61,6 +71,11 @@ export class {{model.name}}EditComponent implements OnInit {
   onSubmit(event:any) {
     this.submitted = true;
     this.data = this.{{model.name}}.getRawValue();
+    {% for p in model.properties %} 
+      {% if p.primitive != True %}
+        this.data.{{p.name.lower()}} =  new Array(JSON.parse(this.data.{{p.name.lower()}}))
+      {% endif %}
+    {% endfor %}
     console.log(this.data)
     this.service.edit{{model.name}}(this.data,this.id).subscribe(
       data => {

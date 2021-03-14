@@ -25,20 +25,45 @@
 					{% endif %}
 				{%else%}
 					{%if p.annotiation %}
-						{% if p.annotiation == "@OneToMany" or p.annotiation == "@ManyToMany" %}
-								<div class="form-group"> 
+						{% if p.annotiation == "@OneToMany" or p.annostring %}
+							<div class="form-group"> 
 										<label for="{{p.name}}">{{p.name}}</label> 
 								<select class="form-control" formControlName="{{p.name}}" id="{{p.name}}" multiple>
-									<option value="1">CHOOSE</option>
-									<option *ngFor="let zan of {{p.name}}" value="{{zan}}">{{zan}}</option>
+									<option value="0">CHOOSE</option>
+									<option *ngFor="let zan of {{p.name}}" value="{{'{{zan|json}}'}}">
+											{% for m in models %}
+												{%if m.name.lower() == p.type.name.lower() %}
+												 	{% for p1 in m.properties %}
+														{%if p1.type.name == 'string' %}
+															{{'{{zan.'}}{{p1.name}}{{'}}'}}
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+											{% endfor %}
+									</option>
 								</select>
 									</div>
 						{% else %}
 							<div class="form-group"> 
 										<label for="{{p.name}}">{{p.name}}</label> 
 								<select class="form-control" formControlName="{{p.name}}" id="{{p.name}}">
+<<<<<<< HEAD
+									<option value="0">CHOOSE</option>
+									<option *ngFor="let zan of {{p.name}}" value="{{'{{zan|json}}'}}">
+										{% for m in models %}
+												{%if m.name.lower() == p.type.name.lower() %}
+												 	{% for p1 in m.properties %}
+														{%if p1.type.name == 'string' %}
+															{{'{{zan.'}}{{p1.name}}{{'}}'}}
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+											{% endfor %}
+									</option>
+=======
 									<option value="1">CHOOSE</option>
 									<option *ngFor="let zan of {{p.name}}" value="{{zan}}">{{zan}}</option>
+>>>>>>> 159425e391e6861faf62773c7f2182d699fa84a1
 								</select>
 									</div>
 						{% endif %}

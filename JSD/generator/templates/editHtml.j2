@@ -30,7 +30,17 @@
 										<label for="{{p.name}}">{{p.name}}</label> 
 								<select class="form-control" formControlName="{{p.name}}" id="{{p.name}}" multiple>
 									<option value="1">CHOOSE</option>
-									<option *ngFor="let zan of {{p.name}}Edit" value="{{zan}}">{{zan}}</option>
+									<option *ngFor="let zan of {{p.name}}Edit" value="{{'{{zan|json}}'}}">
+										{% for m in models %}
+												{%if m.name.lower() == p.type.name.lower() %}
+												 	{% for p1 in m.properties %}
+														{%if p1.type.name == 'string' %}
+															{{'{{zan.'}}{{p1.name}}{{'}}'}}
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+											{% endfor %}
+									</option>
 								</select>
 									</div>
 						{% else %}
@@ -38,7 +48,17 @@
 										<label for="{{p.name}}">{{p.name}}</label> 
 								<select class="form-control" formControlName="{{p.name}}" id="{{p.name}}">
 									<option value="1">CHOOSE</option>
-									<option *ngFor="let zan of {{p.name}}Edit" value="{{zan}}">{{zan}}</option>
+									<option *ngFor="let zan of {{p.name}}Edit" value="{{'{{zan|json}}'}}">
+										{% for m in models %}
+												{%if m.name.lower() == p.type.name.lower() %}
+												 	{% for p1 in m.properties %}
+														{%if p1.type.name == 'string' %}
+															{{'{{zan.'}}{{p1.name}}{{'}}'}}
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+											{% endfor %}
+									</option>
 								</select>
 									</div>
 						{% endif %}
