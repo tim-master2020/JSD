@@ -47,6 +47,7 @@
 							<div class="form-group"> 
 										<label for="{{p.name}}">{{p.name}}</label> 
 								<select class="form-control" formControlName="{{p.name}}" id="{{p.name}}">
+<<<<<<< HEAD
 									<option value="0">CHOOSE</option>
 									<option *ngFor="let zan of {{p.name}}" value="{{'{{zan|json}}'}}">
 										{% for m in models %}
@@ -59,6 +60,10 @@
 												{% endif %}
 											{% endfor %}
 									</option>
+=======
+									<option value="1">CHOOSE</option>
+									<option *ngFor="let zan of {{p.name}}" value="{{zan}}">{{zan}}</option>
+>>>>>>> 159425e391e6861faf62773c7f2182d699fa84a1
 								</select>
 									</div>
 						{% endif %}
