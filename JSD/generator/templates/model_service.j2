@@ -1,26 +1,44 @@
+package com.example.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.{{model.name}};
+import com.example.demo.service.I{{model.name}}Service;
+import com.example.demo.repository.{{model.name}}Repository;
+
+import java.util.*;
+
 @Service
 public class {{model.name}}Service implements I{{model.name}}Service {
 
     @Autowired
     private {{model.name}}Repository {{model.name.lower()}}Repository;
 
-    private {{model.name}} save({{model.name}} {{model.name.lower()}}) {
+    @Override
+    public {{model.name}} save({{model.name}} {{model.name.lower()}}) {
         return {{model.name.lower()}}Repository.save({{model.name.lower()}});
     }
 
-    private List<{{model.name}}> findAll() {
+    @Override
+    public List<{{model.name}}> findAll() {
         return {{model.name.lower()}}Repository.findAll();
     }
 
-    private {{model.name}} findById(long id){
+    @Override
+    public {{model.name}} findById(long id){
         return {{model.name.lower()}}Repository.findById(id);
     }
     
-    private {{model.name}} update({{model.name}} {{model.name.lower()}}) {
-        return {{model.name.lower()}}Repository.update({{model.name.lower()}});
+    @Override
+    public {{model.name}} update(long id, {{model.name}} {{model.name.lower()}}) {
+        {{model.name.lower()}}.setId(id);
+        return {{model.name.lower()}}Repository.save({{model.name.lower()}});
     }
 
-    private void remove(long id) {
-        return {{model.name.lower()}}Repository.remove(id);
+    @Override
+    public void remove(long id) {
+        {{model.name.lower()}}Repository.deleteById(id);
     }
 }

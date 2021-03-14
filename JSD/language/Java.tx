@@ -6,7 +6,7 @@ App:
 
 Model:
   'model' name=ID '{'
-    (property=Property)?
+    (properties+=Property)?
     (controller=Controller)?
     (implements=Interfaces)?
     (extends=BaseClasses)?
@@ -15,17 +15,9 @@ Model:
 ;
 
 Property:
-  'properties' '{'
-    ('model_type' '{'
-      ( prop_name_model_annotation=AnnotationType
-        prop_name_model=ID ':' prop_name_model_type=[Model] (':' prop_name_model_object_type=ObjectType | prop_name_model_object_type='')
-      )+
-    '}')?
-    ('build_in_type' '{'
-      (prop_name=ID ':' prop_name_type=Value (':' prop_name_object_type=ObjectType | prop_name_object_type=''))+
-    '}')?
-  '}'
+  name=ID ':' type=[Model] (':' objectType=ObjectType)? (':' annotiation=AnnotationType)?
 ;
+
 
 Controller:
   'controller' ':' value=ControllerType
@@ -33,9 +25,9 @@ Controller:
 
 Interfaces:
   'implements' '{'
-    ('model' ':' value=ValueType)?
-    ('service' ':' value=ValueType)?
-    ('repository' ':' value=ValueType)?
+    ('model' ':' ValueType)?
+    ('service' ':' ValueType)?
+    ('repository' ':' ValueType)?
   '}'
 ;
 
@@ -54,7 +46,7 @@ Dependencies:
 ;
 
 ValueType:
-  value=STRING | value+=STRING[',']
+  value+=STRING[',']
 ;
 
 ControllerType:
@@ -66,7 +58,7 @@ Value:
 ;
 
 ObjectType:
-  ( 'ArrayList' | 'HashMap' | '[]' | 'HashSet')
+  ( 'ArrayList' | '[]' | 'HashSet')
 ;
 
 AnnotationType:

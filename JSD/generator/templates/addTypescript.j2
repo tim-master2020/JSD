@@ -12,8 +12,10 @@ export class Add{{model.name}}Component implements OnInit {
 
   {{model.name}}:FormGroup;
   
-  {% for n in range(model.property['prop_name_model'] | length) %}
-        {{model.property['prop_name_model'][n]}}: any[]
+  {% for p in model.properties %}
+    {% if p.primitive != True %}
+        {{p.name}}: any[]
+    {% endif %}
   {% endfor %}
   submitted = false;
   data: any;
@@ -27,19 +29,8 @@ export class Add{{model.name}}Component implements OnInit {
   ngOnInit() {
 
       this.{{model.name}} = this.formBuilder.group({
-      {% for n in range(model.property['prop_name'] | length) %}
-        {%if model.property['prop_name_type'][n] == "string" %}
-         	{{model.property['prop_name'][n]}} :['',Validators.required],
-        {% elif (model.property['prop_name_type'][n] == "int") or (model.property['prop_name_type'][n] == "float") %}
-          {{model.property['prop_name'][n]}} :['',Validators.required],
-        {% else %}
-          {{model.property['prop_name'][n]}} :['',Validators.required]
-
-        {% endif %}
-
-      {% endfor %}
-      {% for n in range(model.property['prop_name_model'] | length) %}
-        {{model.property['prop_name_model'][n]}} :['',Validators.required],
+      {% for p in model.properties %}
+          {{p.name}} :['',Validators.required],
       {% endfor %}
       });
   }
