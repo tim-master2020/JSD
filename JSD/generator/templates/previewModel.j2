@@ -8,8 +8,8 @@
 
       	<tr>
 
-			{% for n in range(model.property['prop_name'] | length) %}
-			<th scope="col">{{model.property['prop_name'][n]}}</th>
+			{% for p in model.properties %}
+			  <th scope="col">{{p.name}}</th>
 			{% endfor %}
 
 			<th scope="col">Manipulation</th>
@@ -21,8 +21,8 @@
 	  
       <tr *ngFor="let dat of data ; let i = index" id="1">
 
-		{% for n in range(model.property['prop_name'] | length) %}
-			<th scope="row">{{'{{dat.'}}{{model.property['prop_name'][n]}}{{'}}'}}</th>
+		{% for p in model.properties %}
+			<th scope="row">{{'{{dat.'}}{{p.name}}{{'}}'}}</th>
 		{% endfor %}
 
       <td>

@@ -11,6 +11,13 @@ import { Service } from '../app.service';
 export class {{model.name}}EditComponent implements OnInit {
 
   {{model.name}}:FormGroup;
+  {% for p in model.properties %}
+  	{%if p.annotiation != None %}
+      {{p.name}}Edit:any;
+    {% endif %}
+  {% endfor %}
+
+
   submitted = false;
   data : any;
   id:number;
@@ -30,8 +37,8 @@ export class {{model.name}}EditComponent implements OnInit {
       });
   	  	
       this.{{model.name}} = this.formBuilder.group({
-        {% for n in range(model.property['prop_name'] | length) %}
-          {{model.property['prop_name'][n]}} :['', Validators.required],
+        {% for p in model.properties %}
+          {{p.name}} :['', Validators.required],
         {% endfor %}
         })
       
@@ -44,9 +51,10 @@ export class {{model.name}}EditComponent implements OnInit {
   }
 
   setValues(){
-    {% for n in range(model.property['prop_name'] | length) %}
-      this.{{model.name}}.controls.{{model.property['prop_name'][n]}}.setValue(this.data.{{model.property['prop_name'][n]}});
-    {% endfor %}}
+    {% for p in model.properties %}
+      this.{{model.name}}.controls.{{p.name}}.setValue(this.data.{{p.name}});
+    {% endfor %}
+  }
 
   get f() { return this.{{model.name}}.controls; }
 

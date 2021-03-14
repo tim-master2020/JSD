@@ -35,10 +35,10 @@ def generate(model, output_path, overwrite):
     ##########################################################################################################
     #BackEnd generator
     ##########################################################################################################
-    backend_folder = join(output_folder, 'backend/')
-    backend_model = join(backend_folder, 'model')
-    backend_model_folder_repository = join(backend_folder, 'repository')
-    backend_model_service = join(backend_folder, 'service')
+    backend_model = join(output_folder_be, 'model')
+    backend_model_folder_repository = join(output_folder_be, 'repository')
+    backend_model_service = join(output_folder_be, 'service')
+    backend_model_controller = join(output_folder_be, 'controller')
 
     # if not exists(backend_folder):
     #     mkdir(backend_folder)
@@ -54,9 +54,6 @@ def generate(model, output_path, overwrite):
     
     if not exists(backend_model_controller):
         mkdir(backend_model_controller)
-    
-    if not exists(frontend_folder):
-        mkdir(frontend_folder)
 
     
     models  = md.get_children_of_type("Model", model)
@@ -112,6 +109,8 @@ def generate(model, output_path, overwrite):
         if(model.properties):
             for p in model.properties:
                 print('property type is',p.type.name)
+                print('property type', p.annotiation)
+                print('property primitive : ', p.primitive)
         if(model.implements):
             print(model.implements.value)
 
