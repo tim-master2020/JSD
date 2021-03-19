@@ -9,7 +9,6 @@ app {
   }
 
   model Zanimanje {      
-    covek : Covek : @ManyToOne
     mbr : string 
     naziv : string
     

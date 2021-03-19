@@ -1,0 +1,74 @@
+<div class="container" style="color:green"> 
+     	<h1 style="margin-bottom: 30px">{{model.name}}</h1> 
+    </div> 
+    
+	<div class="container">
+	    <form action="" [formGroup]="{{model.name}}" (ngSubmit)="onSubmit($event)">
+			{% for p in model.properties %}
+				{%if p.primitive == True %}
+					{%if p.type.name == "string" %}
+						<div class="form-group"> 
+							<label for="{{p.name}}">{{p.name}}</label> 
+							<input class="form-control" formControlName="{{p.name}}" type="text" id="{{p.name}}"> 
+								</div>
+					{% elif (p.type.name == "integer") or (p.type.name == "float") %}
+						<div class="form-group"> 
+							<label for="{{p.name}}">{{p.name}}</label> 
+							<input class="form-control" formControlName="{{p.name}}" type="number" id="{{p.name}}"> 
+								</div>
+					{% else %}
+						<div class="form-group"> 
+							<label for="{{p.name}}">{{p.name}}</label> 
+							<input class="form-control" formControlName="{{p.name}}" type="checkbox" id="{{p.name}}"> 
+								</div>
+
+					{% endif %}
+				{%else%}
+					{%if p.annotiation %}
+						{% if p.annotiation == "@OneToMany" or p.annostring %}
+							<div class="form-group"> 
+										<label for="{{p.name}}">{{p.name}}</label> 
+								<select class="form-control" formControlName="{{p.name}}" id="{{p.name}}" multiple>
+									<option value="0">CHOOSE</option>
+									<option *ngFor="let zan of {{p.name}}" value="{{'{{zan.id}}'}}">
+											{% for m in models %}
+												{%if m.name.lower() == p.type.name.lower() %}
+												 	{% for p1 in m.properties %}
+														{%if p1.type.name == 'string' %}
+															{{'{{zan.'}}{{p1.name}}{{'}}'}}
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+											{% endfor %}
+									</option>
+								</select>
+									</div>
+						{% else %}
+							<div class="form-group"> 
+										<label for="{{p.name}}">{{p.name}}</label> 
+								<select class="form-control" formControlName="{{p.name}}" id="{{p.name}}">
+									<option value="0">CHOOSE</option>
+									<option *ngFor="let zan of {{p.name}}" value="{{'{{zan.id}}'}}">
+										{% for m in models %}
+												{%if m.name.lower() == p.type.name.lower() %}
+												 	{% for p1 in m.properties %}
+														{%if p1.type.name == 'string' %}
+															{{'{{zan.'}}{{p1.name}}{{'}}'}}
+														{% endif %}
+													{% endfor %}
+												{% endif %}
+											{% endfor %}
+									</option>
+								</select>
+									</div>
+						{% endif %}
+					{%endif%}
+    		{%endif%}
+			{% endfor %}
+
+		          
+	        <div class="container"> 
+	            <button type="submit" class="btn btn-success" style="margin-left: -13px;margin-top: 20px">Add</button>  
+	        </div> 
+	    </form> 
+	</div> 

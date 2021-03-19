@@ -1,0 +1,21 @@
+clear
+source env/bin/activate
+rm -r JSD/example/generator_output/front
+rm -r JSD/example/generator_output/backend
+pip install -r requirements.txt
+pip uninstall JSD
+pip install .
+mkdir -p JSD/example/generator_output/backend
+mkdir -p JSD/example/generator_output/front
+cp -r JSD/demo JSD/example/generator_output/backend
+cd JSD/example/generator_output/front
+ng new AngularFront --routing --style=scss
+cd -
+textx generate JSD/example/primer.jsb --target java+html+js --overwrite
+
+
+cd JSD/example/generator_output/front/AngularFront/
+npm install bootstrap
+npm install jquery
+ng serve -o
+cd -
