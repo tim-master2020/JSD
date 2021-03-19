@@ -25,15 +25,17 @@
       {%if p.primitive == True%}
 			  <th scope="row">{{'{{dat.'}}{{p.name}}{{'}}'}}</th>
       {% else %}
-
         <th scope="row">
         {% for m in models %}
           {%if m.name.lower() == p.type.name.lower() %}
-            {% for p1 in m.properties %}
-              {%if p1.type.name == 'string' %}
-                  {{'{{dat.'}}{{m.name.lower()}}[0].{{p1.name}}{{'}}'}}
-              {% endif %}
-            {% endfor %}
+            <span *ngFor="let dat1 of dat.zanimanje ; let i = index">
+              {% for p1 in m.properties %}
+                {%if p1.type.name == 'string' %}
+                      {{'{{dat1.'}}{{p1.name}}{{'}}'}}
+                {% endif %}
+              {% endfor %}
+              <br>
+            </span>
           {% endif %}
         {% endfor %}
           </th>

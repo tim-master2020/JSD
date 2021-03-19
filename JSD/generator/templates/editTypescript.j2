@@ -71,12 +71,21 @@ export class {{model.name}}EditComponent implements OnInit {
   onSubmit(event:any) {
     this.submitted = true;
     this.data = this.{{model.name}}.getRawValue();
+    
     {% for p in model.properties %} 
       {% if p.primitive != True %}
-        this.data.{{p.name.lower()}} =  new Array(JSON.parse(this.data.{{p.name.lower()}}))
+        let ids= this.data.{{p.name.lower()}};
+        this.data.{{p.name.lower()}} = new Array();
+        this.{{p.name.lower()}}Edit.forEach(zan => {
+          ids.forEach(id => {
+            if(zan.id == id){
+              this.data.{{p.name.lower()}}.push(zan);
+            }
+          });
+        });
       {% endif %}
     {% endfor %}
-    console.log(this.data)
+
     this.service.edit{{model.name}}(this.data,this.id).subscribe(
       data => {
     });
