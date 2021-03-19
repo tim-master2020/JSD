@@ -52,7 +52,15 @@ export class Add{{model.name}}Component implements OnInit {
     this.data = this.{{model.name}}.getRawValue();
     {% for p in model.properties %} 
       {% if p.primitive != True %}
-        this.data.{{p.name.lower()}} =  new Array(JSON.parse(this.data.{{p.name.lower()}}))
+        let ids= this.data.{{p.name.lower()}};
+        this.data.{{p.name.lower()}} = new Array();
+        this.{{p.name.lower()}}.forEach(zan => {
+          ids.forEach(id => {
+            if(zan.id == id){
+              this.data.{{p.name.lower()}}.push(zan);
+            }
+          });
+        });
       {% endif %}
     {% endfor %}
 
