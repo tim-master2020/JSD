@@ -60,6 +60,13 @@ Model bi u svojoj definiciji odredio da li je potreban i njegov controller. To p
 </pre>
 
 
+<h2>Tehnologije</h2>
+<div>
+	<ul>
+		<li>Python </li>
+		<li>textX </li>
+	</ul>
+</div>
 
 <h2>Nameštanje okruženja</h2>
 <div>
