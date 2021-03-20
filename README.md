@@ -22,8 +22,7 @@
   model Zanimanje {      
     mbr : string 
     naziv : string
-    
-      controller : "getNaziv()"
+    controller : "getNaziv()"
   }
 </pre>
 
@@ -34,8 +33,7 @@
       zanimanje: Zanimanje : ArrayList : @OneToMany
       ime : string 
       godine : integer
-      jmbg : float 
-      
+      jmbg : float
       controller : "getName()","getAge()"
   }
 </pre>
@@ -53,6 +51,20 @@
 		<li> free to go </li>
 	</ul>
 </div>
+
+
+<p1>Preparing setup</p1>
+<div>
+	<ul>
+		<a href="https://github.com/OljaSekulic"> Olivera Sekulić </li>
+	 	<a href="https://github.com/jelena-bojanic"> Jelena Bojanić </li>
+		<a href="https://github.com/DejanPredojevic"> Dejan Predojević </li>
+		<a href="https://github.com/minamaras"> Mina Maraš </li>
+		<a href="https://github.com/tjncc"> Tamara Jančić </li>
+	</ul>
+</div>
+
+
 <p1>Team instructions for commands</p1>
 <div>
 	<ul>
