@@ -5,14 +5,15 @@
 <h2>Generisanje</h2>
 <p>Model bi se definisao sa ključnonm rečju model. On bi sadržao polja koja bi opisivali taj entitet. Svako polje bi se definisalo preko svog naziva i tipa. Tipovi polja koji su omogućeni su: 
 <ol>
-	<li>Osnovni tipovi:</li>
+	<li><b>Osnovni tipovi:</b></li>
 		<ol>
 			<li>string</li>
 			<li>int</li>
 			<li>float</li>
 			<li>boolean</li>
 		</ol>
-	<li>Složeni tipovi:</li>
+	
+	<li><b>Složeni tipovi:</b></li>
 		<ol>
 			<li>ArrayList</li>
 			<li>HashSet</li>
