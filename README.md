@@ -11,6 +11,7 @@
 			<li>int</li>
 			<li>float</li>
 			<li>boolean</li>
+			<br/>
 		</ol>
 	<li><b>Složeni tipovi:</b></li>
 		<ol>
