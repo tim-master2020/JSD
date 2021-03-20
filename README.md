@@ -1,19 +1,39 @@
 # JSD
 <h2>Ideja</h2>
-<p>JSD koji generiše Spring Boot aplikaciju, odnosno fajlove  za kontroler, servis, repozitorijum i model. Pored Spring Boot aplikacije, generisali bi se i fajlovi koji čine Angular radni okvir za klijentski deo aplikacije. </p>
+<p>JSD koji generiše Spring Boot aplikaciju, odnosno fajlove  za kontroler, servis, repozitorijum i model. Pored Spring Boot aplikacije, generisali bi se i fajlovi koji čine Angular radni okvir za klijentski deo aplikacije. Zajedno, generisani serverski (Spring Boot) i klijentski (Angular - JS) deo, kreirali bi celu aplikaciju koju je moguće pokrenuti, koristiti i dopunjavati u zavisnosti od potreba korisnika. </p>
 
 <h2>Generisanje</h2>
-<p>Model bi se definisao sa ključnonm rečju model, koji bi u svojoj definiciji odredio da li je potreban i njegov controller. To polje bi moglo imati jedno od dve vrednosti. <ol><li>Ključna reč CRUD</li><li>Lista metoda</li></ol></p>
+<p>Model bi se definisao sa ključnonm rečju model. On bi sadržao polja koja bi opisivali taj entitet. Svako polje bi se definisalo preko svog naziva i tipa. Tipovi polja koji su omogućeni su: 
+<ol>
+	<li>Osnovni tipovi:</li>
+		<ol>
+			<li>string</li>
+			<li>int</li>
+			<li>float</li>
+			<li>boolean</li>
+		</ol>
+	<li>Složeni tipovi:</li>
+		<ol>
+			<li>ArrayList</li>
+			<li>HashSet</li>
+			<li>Model</li>
+		</ol>
+</ol>
+Ukoliko postoji veza između modela, potrebno je uneti i anotaciju koja nam govori tip te veze.
+Osim toga, moguće bi bilo navesti klase koje model implementira ili nasleđuje uz pomoć ključnih reči implements i extends.
+Model bi u svojoj definiciji odredio da li je potreban i njegov controller. To polje bi moglo imati jedno od dve vrednosti. <ol><li>Ključna reč CRUD</li><li>Lista metoda</li></ol></p>
 <br/>
 <p>Ukoliko je vrednost controller-a nedefinisana, kontroler se neće kreirati već samo odgovarajući servis i repozitorijum. Kada je vrednost polja controller jedna ključna reč, odnosno CRUD, onda se pravi controller i on je popunjen svim CRUD operacijama, a u servisu i repozitorijumu se takođe prave odgovarajuće metode koje su potrebne za izvršavanje CRUD metoda. Na kraju, ukoliko je upisana lista metoda, to znači da će kontroler pored svojih CRUD operacija, imati i dodatne metode koje su izlisane, a naziv kontrolera je naziv modela.</p>
+
 
 <h2>Primer / Bez controller-a</h2>
 
 <pre>
- model Doctor
+ model Doctor {
 	name:  string,
 	specialization: string,
   	rate: double
+}
 </pre>
 
 <h2>Primer / CRUD</h2>
@@ -23,7 +43,7 @@
     mbr : string 
     naziv : string
     controller : "getNaziv()"
-  }
+ }
 </pre>
 
 <h2>Primer / Lista metoda</h2>
