@@ -12,7 +12,6 @@
 			<li>float</li>
 			<li>boolean</li>
 		</ol>
-	
 	<li><b>Složeni tipovi:</b></li>
 		<ol>
 			<li>ArrayList</li>
