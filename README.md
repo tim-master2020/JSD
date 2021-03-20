@@ -53,7 +53,7 @@
 </div>
 
 
-<p1>Preparing setup</p1>
+<h2>Contributors</h2>
 <div>
 	<ul>
 		<li><a href="https://github.com/OljaSekulic"> Olivera Sekulić </a></li>
