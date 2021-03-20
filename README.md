@@ -40,7 +40,7 @@
 
 
 
-<p1>Preparing setup</p1>
+<h2>Nameštanje okruženja</h2>
 <div>
 	<ul>
 		<li> python3 -m venv env - creating env for Linux </li>
@@ -53,7 +53,7 @@
 </div>
 
 
-<h2>Contributors</h2>
+<h2>Članovi tima</h2>
 <div>
 	<ul>
 		<li><a href="https://github.com/OljaSekulic"> Olivera Sekulić </a></li>
@@ -65,7 +65,7 @@
 </div>
 
 
-<p1>Team instructions for commands</p1>
+<p1>Instrukcije za tim</p1>
 <div>
 	<ul>
 		<li> pip uninstall JSD - if there are changes in generator or metamodel </li>
