@@ -65,7 +65,7 @@
 </div>
 
 
-<p1>Instrukcije za tim</p1>
+<h1>Instrukcije za tim</h1>
 <div>
 	<ul>
 		<li> pip uninstall JSD - if there are changes in generator or metamodel </li>
