@@ -56,11 +56,11 @@
 <p1>Preparing setup</p1>
 <div>
 	<ul>
-		<a href="https://github.com/OljaSekulic"> Olivera Sekulić </li>
-	 	<a href="https://github.com/jelena-bojanic"> Jelena Bojanić </li>
-		<a href="https://github.com/DejanPredojevic"> Dejan Predojević </li>
-		<a href="https://github.com/minamaras"> Mina Maraš </li>
-		<a href="https://github.com/tjncc"> Tamara Jančić </li>
+		<li><a href="https://github.com/OljaSekulic"> Olivera Sekulić </a></li>
+		<li><a href="https://github.com/jelena-bojanic"> Jelena Bojanić </a></li>
+		<li><a href="https://github.com/DejanPredojevic"> Dejan Predojević </a></li>
+		<li><a href="https://github.com/minamaras"> Mina Maraš </a></li>
+		<li><a href="https://github.com/tjncc"> Tamara Jančić </a></li>
 	</ul>
 </div>
 
