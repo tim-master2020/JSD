@@ -3,13 +3,11 @@ import os
 from textx import metamodel_from_file, TextXSyntaxError, TextXSemanticError
 
 class Model(object):
-    def __init__(self,parent ,name, properties, controller,implements,extends,dependencies):
+    def __init__(self,parent ,name, properties, controller,dependencies):
         self.parent = parent
         self.name = name
         self.properties = properties
         self.controller = controller
-        self.implements = implements
-        self.extends =  extends
         self.dependencies = dependencies
 
 class Property(object):
@@ -37,7 +35,7 @@ def property_type_processor(property):
 
     if property.type.name in ['integer', 'string','boolean','float'] and property.objectType in ['ArrayList','HashMap','HashSet','[]'] and property.annotiation is not None:
         raise TextXSemanticError("Current version of this language doesn't support mixing primitive values with given data structures! Try with type that you have already defined as one of the models. ")
-
+    
     property.primitive = property.type.name  in ['integer', 'string','boolean','float']
     property.isArray = property.objectType == '[]'
     property.isArrayList = property.objectType == 'ArrayList'
@@ -63,10 +61,10 @@ def get_meta_model():
     }
 
     model_builtins = {
-        'integer': Model(None, 'integer', [],None,None,None,None),
-        'string': Model(None, 'string', [],None,None,None,None),
-        'float': Model(None, 'float', [],None,None,None,None),
-        'boolean' : Model(None,'boolean',[],None,None,None,None)
+        'integer': Model(None, 'integer', [],None,None),
+        'string': Model(None, 'string', [],None,None),
+        'float': Model(None, 'float', [],None,None),
+        'boolean' : Model(None,'boolean',[],None,None)
     }
 
     metamodel = metamodel_from_file(grammar_path,classes=[Model],builtins=model_builtins)
