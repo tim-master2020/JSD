@@ -8,8 +8,6 @@ Model:
   'model' name=ID '{'
     (properties+=Property)?
     (controller=Controller)?
-    (implements=Interfaces)?
-    (extends=BaseClasses)?
     (dependencies=Dependencies)?
   '}'  
 ;
@@ -21,22 +19,6 @@ Property:
 
 Controller:
   'controller' ':' value=ControllerType
-;
-
-Interfaces:
-  'implements' '{'
-    ('model' ':' ValueType)?
-    ('service' ':' ValueType)?
-    ('repository' ':' ValueType)?
-  '}'
-;
-
-BaseClasses:
-  'extends' '{'
-    ('model' ':' model=STRING)?
-    ('service' ':' service=STRING)?
-    ('repository' ':' repository=STRING)?
-  '}'
 ;
 
 Dependencies:
@@ -58,9 +40,11 @@ Value:
 ;
 
 ObjectType:
-  ( 'ArrayList' | '[]' | 'HashSet')
+  ( 'ArrayList' | 'HashSet')
 ;
 
 AnnotationType:
   ('@ManyToOne'| '@OneToMany' | '@OneToOne' | '@ManyToMany' | '')
 ;
+
+
