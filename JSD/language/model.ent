@@ -18,14 +18,6 @@ model Dete {
 
     controller : CRUD
 
-    implements {
-      repository: "JPA"
-    }
-
-    extends {
-      model : "Covek"
-    }
-
     dependencies {
       "alert" : "2.0.23"
     }
