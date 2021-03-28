@@ -111,8 +111,6 @@ def generate(model, output_path, overwrite):
                 print('property type is',p.type.name)
                 print('property type', p.annotiation)
                 print('property primitive : ', p.primitive)
-        if(model.implements):
-            print(model.implements.value)
 
     ##########################################################################################################
     #Frontent generator

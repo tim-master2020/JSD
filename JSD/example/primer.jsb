@@ -14,4 +14,11 @@ app {
     
       controller : "getNaziv()"
   }
+
+  model RadnoMesto {      
+    naziv : string
+    brojZaposlenih : integer
+    zaposleni : Covek : ArrayList : @OneToMany   
+      controller : "CRUD"
+  }
 }
