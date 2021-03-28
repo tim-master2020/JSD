@@ -3,7 +3,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-public class {{model.name[0]|upper}}{{model.name[1:]}} {%if model.extends['model']%}extends {{model.extends['model']}}{%endif%} {%if model.implements.value%} implements {%for n in range(model.implements.value | length)%}{% if (n+1) != model.implements.value| length %} {{model.implements.value[n]}},{%else%} {{model.implements.value[n]}}{%endif%}{%endfor%}{%endif%} {
+public class {{model.name[0]|upper}}{{model.name[1:]}}  {
 
 
     @Id
@@ -19,9 +19,9 @@ public class {{model.name[0]|upper}}{{model.name[1:]}} {%if model.extends['model
     {{p.annotiation}}
     {%endif%}
     {%if p.isArray%}
-    {{p.type.name}}[] {{p.name}};
+    private {{p.type.name}}[] {{p.name}};
     {%else%}
-    {%if p.isArrayList %}List{%elif p.isSet%}Set{%else%}{{p.objectType}}{%endif%}<{{p.type.name}}> {{p.name}} = new {{p.objectType}}<{{p.type.name | javatype}}>();
+    private {%if p.isArrayList %}List{%elif p.isSet%}Set{%else%}{{p.objectType}}{%endif%}<{{p.type.name}}> {{p.name}} = new {{p.objectType}}<{{p.type.name | javatype}}>();
     {%endif%}
             {% else %}
 
@@ -30,7 +30,7 @@ public class {{model.name[0]|upper}}{{model.name[1:]}} {%if model.extends['model
     {%else%}
     @Column
     {%endif%}
-    {{p.type.name | javatype}} {{p.name}};
+    private {{p.type.name | javatype}} {{p.name}};
                 {% endif %}
             {% endfor %}
             {%endif%}
