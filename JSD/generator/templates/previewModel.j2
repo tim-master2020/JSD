@@ -28,7 +28,7 @@
         <th scope="row">
         {% for m in models %}
           {%if m.name.lower() == p.type.name.lower() %}
-            <span *ngFor="let dat1 of dat.zanimanje ; let i = index">
+            <span *ngFor="let dat1 of dat.{{p.name}} ; let i = index">
               {% for p1 in m.properties %}
                 {%if p1.type.name == 'string' %}
                       {{'{{dat1.'}}{{p1.name}}{{'}}'}}
