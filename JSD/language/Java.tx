@@ -8,14 +8,12 @@ Model:
   'model' name=ID '{'
     (properties+=Property)?
     (controller=Controller)?
-    (implements=Interfaces)?
-    (extends=BaseClasses)?
     (dependencies=Dependencies)?
   '}'  
 ;
 
 Property:
-  name=ID ':' type=[Model] (':' objectType=ObjectType)? (':' annotiation=AnnotationType)?
+  name=ID ':' type=[Model] (':' objectType=ObjectType)?
 ;
 
 
@@ -23,30 +21,10 @@ Controller:
   'controller' ':' value=ControllerType
 ;
 
-Interfaces:
-  'implements' '{'
-    ('model' ':' ValueType)?
-    ('service' ':' ValueType)?
-    ('repository' ':' ValueType)?
-  '}'
-;
-
-BaseClasses:
-  'extends' '{'
-    ('model' ':' model=STRING)?
-    ('service' ':' service=STRING)?
-    ('repository' ':' repository=STRING)?
-  '}'
-;
-
 Dependencies:
   'dependencies' '{'
     (dependency=STRING ':' version=STRING)+
   '}'
-;
-
-ValueType:
-  value+=STRING[',']
 ;
 
 ControllerType:
@@ -58,9 +36,8 @@ Value:
 ;
 
 ObjectType:
-  ( 'ArrayList' | '[]' | 'HashSet')
+  ( '[]' | '{}' )
 ;
 
-AnnotationType:
-  ('@ManyToOne'| '@OneToMany' | '@OneToOne' | '@ManyToMany' | '')
-;
+
+

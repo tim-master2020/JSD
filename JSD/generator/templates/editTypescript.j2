@@ -53,7 +53,7 @@ export class {{model.name}}EditComponent implements OnInit {
         {% if p.primitive != True %}
             this.service.get{{p.type.name}}All().subscribe(
               data => {
-                this.{{p.type.name.lower()}}Edit = data
+                this.{{p.name.lower()}}Edit = data
               }
             );
         {% endif %}

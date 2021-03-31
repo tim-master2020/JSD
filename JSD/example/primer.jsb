@@ -1,6 +1,6 @@
 app {
   model Covek {
-      zanimanje: Zanimanje : ArrayList : @OneToMany
+      zanimanje: Zanimanje : []
       ime : string 
       godine : integer
       jmbg : float 
@@ -13,5 +13,12 @@ app {
     naziv : string
     
       controller : "getNaziv()"
+  }
+
+  model RadnoMesto {      
+    naziv : string
+    brojZaposlenih : integer
+    zaposleni : Covek : {}   
+      controller : "CRUD"
   }
 }
