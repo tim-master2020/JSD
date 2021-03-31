@@ -13,27 +13,21 @@ public class {{model.name[0]|upper}}{{model.name[1:]}}  {
 
         {%if model.properties%}
             {% for p in model.properties %}
+    {{p.annotation}}
                {% if p.objectType %}
+                    {%if p.isArray%}
+    private List<{{p.type.name}}> {{p.name}} = new ArrayList<{{p.type.name | javatype}}>();
 
-    {%if p.annotiation and p.primitive != True%}
-    {{p.annotiation}}
-    {%endif%}
-    {%if p.isArray%}
-    private {{p.type.name}}[] {{p.name}};
-    {%else%}
-    private {%if p.isArrayList %}List{%elif p.isSet%}Set{%else%}{{p.objectType}}{%endif%}<{{p.type.name}}> {{p.name}} = new {{p.objectType}}<{{p.type.name | javatype}}>();
-    {%endif%}
-            {% else %}
+                    {%elif p.isSet%}
+    private Set<{{p.type.name}}> {{p.name}} = new HashSet<{{p.type.name | javatype}}>();
 
-    {%if p.annotiation and p.primitive != True%}
-    {{p.annotiation}}
-    {%else%}
-    @Column
-    {%endif%}
+                    {%endif%}
+                {% else %}
     private {{p.type.name | javatype}} {{p.name}};
+
                 {% endif %}
             {% endfor %}
-            {%endif%}
+        {%endif%}
 
 
     public {{model.name}}(){}
@@ -48,11 +42,11 @@ public class {{model.name[0]|upper}}{{model.name[1:]}}  {
 
     {%if model.properties%}
     {%for p in model.properties%}
-    public {%if p.objectType%}{%if p.isArray%}{{p.type.name | javatype}}[]{%else%}{%if p.isArrayList%}List{%elif p.isSet%}Set{%else%}{{p.objectType}}{%endif%}<{{p.type.name | javatype}}>{%endif%}{%else%}{{p.type.name | javatype}}{%endif%} get{{p.name[0]|upper}}{{p.name[1:] }}(){
+    public {%if p.objectType%}{%if p.isArray%}ArrayList<{{p.type.name | javatype}}>{%elif p.isSet%}Set<{{p.objectType}}>{%endif%}{%else%}{{p.type.name | javatype}}{%endif%} get{{p.name[0]|upper}}{{p.name[1:]}}(){
         return this.{{p.name}};
     }
     
-    public void set{{p.name[0]|upper}}{{p.name[1:] }}({% if p.objectType %}{%if p.isArray%}{{p.type.name}}[]{%else%}{{p.objectType}}<{{p.type.name}}>{%endif%}{%else%}{{p.type.name| javatype}}{%endif%} {{p.name}}){
+    public void set{{p.name[0]|upper}}{{p.name[1:] }}({%if p.objectType%}{%if p.isArray%}ArrayList<{{p.type.name}}> {{p.name}}{%elif p.isSet%}HashSet<{{p.type.name}}> p.name{%endif%}{%else%}{{p.type.name | javatype}} {{p.name}}{%endif%}){
         this.{{p.name}} = {{p.name}};
     }
 
