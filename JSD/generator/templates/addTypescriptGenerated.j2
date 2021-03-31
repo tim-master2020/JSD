@@ -1,0 +1,73 @@
+import { Component, OnInit } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ServiceGenerated } from '../appGenerated.service';
+
+@Component({
+  selector: 'app-{{model.name}}-add',
+  templateUrl: './{{model.name}}Generated.html',
+  styleUrls: []
+})
+export class Add{{model.name}}GeneratedComponent implements OnInit {
+
+  {{model.name}}:FormGroup;
+  
+  {% for p in model.properties %}
+    {% if p.primitive != True %}
+        {{p.name}}: any[]
+    {% endif %}
+  {% endfor %}
+  submitted = false;
+  data: any;
+
+  constructor(
+    public service : ServiceGenerated,
+    public formBuilder : FormBuilder,
+    public router : Router,
+    public activatedRoute : ActivatedRoute) {
+      this.{{model.name}} = this.formBuilder.group({
+      {% for p in model.properties %}
+          {{p.name}} :['',Validators.required],
+      {% endfor %}
+      });
+
+       {% for p in model.properties %}
+        {% if p.primitive != True %}
+            this.service.get{{p.type.name}}All().subscribe(
+              data => {
+                this.{{p.name.lower()}} = data
+              }
+            );
+        {% endif %}
+      {% endfor %}
+     }
+
+  ngOnInit() {
+  }
+
+  get f() { return this.{{model.name}}.controls; }
+
+  onSubmit(event:any) {
+    this.submitted = true;
+    this.data = this.{{model.name}}.getRawValue();
+    {% for p in model.properties %} 
+      {% if p.primitive != True %}
+        let ids= this.data.{{p.name.lower()}};
+        this.data.{{p.name.lower()}} = new Array();
+        this.{{p.name.lower()}}.forEach(zan => {
+          ids.forEach(id => {
+            if(zan.id == id){
+              this.data.{{p.name.lower()}}.push(zan);
+            }
+          });
+        });
+      {% endif %}
+    {% endfor %}
+
+    console.log(this.data)
+    this.service.add{{model.name}}(this.data).subscribe(
+      data => {
+    });
+  }
+
+}

@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { HomeGeneratedComponent } from '../generated/home-generated/HomeGenerated';
 
 @Component({
   selector: 'app-Home',
-  templateUrl: './Home.html',
+  templateUrl: '../generated/home-generated/HomeGenerated.html',
   styleUrls: []
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent extends HomeGeneratedComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    super();
+   }
 
   ngOnInit() {
   }

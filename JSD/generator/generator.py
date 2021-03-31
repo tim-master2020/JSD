@@ -120,8 +120,12 @@ def generate(model, output_path, overwrite):
     if not exists(frontend_folder):
         mkdir(frontend_folder)
 
-    frontend_angular = join(frontend_folder, 'AngularFront/src/app')
-    frontend_angular_setings = join(frontend_folder, 'AngularFront')
+
+    frontend_angular = join(frontend_folder, 'AngularFront/src/app/')
+    frontend_angular_generated = join(frontend_folder, 'AngularFront/src/app/generated/')
+    if not exists(frontend_angular_generated):
+        mkdir(frontend_angular_generated)
+    frontend_angular_setings = join(frontend_folder, 'AngularFront/')
 
     template = jinja_env.get_template('appComponent.j2')
     f = open(join(frontend_angular, "app.component.html"), 'w')
@@ -139,49 +143,65 @@ def generate(model, output_path, overwrite):
     f = open(join(frontend_angular_setings, "angular.json"), 'w')
     f.write(template.render(models=models, datetime=now))
 
-    component_folder_home = join(frontend_angular,"Home")
+    component_folder_home_generated = join(frontend_angular_generated,"home-generated")
+    if not exists(component_folder_home_generated):
+            mkdir(component_folder_home_generated)
+    component_folder_home = join(frontend_angular,"home")
     if not exists(component_folder_home):
             mkdir(component_folder_home)
             
+    template = jinja_env.get_template('homeGeneratedTs.j2')
+    f = open(join(component_folder_home_generated, "HomeGenerated.ts"), 'w')
+    f.write(template.render(models=models, datetime=now))
     template = jinja_env.get_template('homeTs.j2')
     f = open(join(component_folder_home, "Home.ts"), 'w')
     f.write(template.render(models=models, datetime=now))
 
-    template = jinja_env.get_template('homeHtml.j2')
-    f = open(join(component_folder_home, "Home.html"), 'w')
+
+    template = jinja_env.get_template('homeGeneratedHtml.j2')
+    f = open(join(component_folder_home_generated, "HomeGenerated.html"), 'w')
     f.write(template.render(models=models, datetime=now))
 
+    template = jinja_env.get_template('serviceGenerated.j2')
+    f = open(join(frontend_angular_generated, "appGenerated.service.ts"), 'w')
+    f.write(template.render(models=models, datetime=now))
     template = jinja_env.get_template('service.j2')
     f = open(join(frontend_angular, "app.service.ts"), 'w')
     f.write(template.render(models=models, datetime=now))
 
     for model in models:
+        component_folder_generated = join(frontend_angular_generated,str(model.name.lower()) + "-generated")
+        if not exists(component_folder_generated):
+            mkdir(component_folder_generated)
         component_folder = join(frontend_angular,str(model.name))
         if not exists(component_folder):
             mkdir(component_folder)
 
+        template = jinja_env.get_template('addTypescriptGenerated.j2')
+        f = open(join(component_folder_generated, "%sGenerated.ts" % model.name), 'w')
+        f.write(template.render(model=model, models=models, datetime=now))
         template = jinja_env.get_template('addTypescript.j2')
         f = open(join(component_folder, "%s.ts" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
 
         template = jinja_env.get_template('addHtml.j2')
-        f = open(join(component_folder, "%s.html" % model.name), 'w')
+        f = open(join(component_folder_generated, "%sGenerated.html" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
 
         template = jinja_env.get_template('previewModel.j2')
-        f = open(join(component_folder, "%sPreview.html" % model.name), 'w')
+        f = open(join(component_folder_generated, "%sPreview.html" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
 
         template = jinja_env.get_template('previewTypescript.j2')
-        f = open(join(component_folder, "%sPreview.ts" % model.name), 'w')
+        f = open(join(component_folder_generated, "%sPreview.ts" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
 
         template = jinja_env.get_template('editHtml.j2')
-        f = open(join(component_folder, "%sEdit.html" % model.name), 'w')
+        f = open(join(component_folder_generated, "%sEdit.html" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
 
         template = jinja_env.get_template('editTypescript.j2')
-        f = open(join(component_folder, "%sEdit.ts" % model.name), 'w')
+        f = open(join(component_folder_generated, "%sEdit.ts" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
 
         

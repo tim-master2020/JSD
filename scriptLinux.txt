@@ -13,7 +13,6 @@ ng new AngularFront --routing --style=scss
 cd -
 textx generate JSD/example/primer.jsb --target java+html+js --overwrite
 
-
 cd JSD/example/generator_output/front/AngularFront/
 npm install bootstrap
 npm install jquery

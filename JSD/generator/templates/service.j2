@@ -1,39 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ServiceGenerated } from './generated/appGenerated.service';
 
 const SERVER_URL = 'http://localhost:8081/';
 
 @Injectable({
   providedIn: 'root'
 })
-export class Service {
+export class Service extends ServiceGenerated{
     
-    constructor(private http:HttpClient){
-
+    constructor(public http:HttpClient){
+      super(http);
     }
-
-    {% for model in models %}
-        get{{model.name}}All(): Observable<any>{
-            return this.http.get(SERVER_URL + '{{model.name.lower()}}');
-        }
-
-        get{{model.name}}ById(id): Observable<any>{
-            return this.http.get(SERVER_URL + '{{model.name.lower()}}/' +id);
-        }
-
-        add{{model.name}}(data): Observable<any>{
-            return this.http.post(SERVER_URL + '{{model.name.lower()}}/',data);
-        }
-
-        edit{{model.name}}(data,id): Observable<any>{
-            return this.http.put(SERVER_URL + '{{model.name.lower()}}/'+id, data);
-        }
-
-        delete{{model.name}}ById(id): Observable<any>{
-            return this.http.delete(SERVER_URL + '{{model.name.lower()}}/' + id);
-        }
-
-    {% endfor %}
 
 }

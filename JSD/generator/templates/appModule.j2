@@ -6,11 +6,13 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 //Components import  for model in models:
-import { HomeComponent } from './Home/Home';
+import { HomeComponent } from './home/Home';
+'./generated/radnomesto-generated/RadnoMestoGenerated';
 {% for model in models %}
 import { Add{{model.name}}Component } from './{{model.name}}/{{model.name}}';
-import { {{model.name}}PreviewComponent } from './{{model.name}}/{{model.name}}Preview';
-import { {{model.name}}EditComponent } from './{{model.name}}/{{model.name}}Edit';
+import { Add{{model.name}}GeneratedComponent } from './generated/{{model.name.lower()}}-generated/{{model.name}}Generated';
+// import { {{model.name}}PreviewComponent } from './{{model.name}}/{{model.name}}Preview';
+// import { {{model.name}}EditComponent } from './{{model.name}}/{{model.name}}Edit';
 {% endfor %}
 
 @NgModule({
@@ -19,8 +21,9 @@ import { {{model.name}}EditComponent } from './{{model.name}}/{{model.name}}Edit
     HomeComponent,
     {% for model in models %}
       Add{{model.name}}Component,
-      {{model.name}}PreviewComponent,
-      {{model.name}}EditComponent,
+      Add{{model.name}}GeneratedComponent,
+      // {{model.name}}PreviewComponent,
+      // {{model.name}}EditComponent,
     {% endfor %}
   ],
   imports: [
