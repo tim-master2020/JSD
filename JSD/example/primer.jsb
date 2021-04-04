@@ -1,7 +1,8 @@
 app {
   model Covek {
-      zanimanje: Zanimanje : []
-      ime : string 
+      zanimanja: Zanimanje : [] -> ljudi
+      radnoMesto: RadnoMesto : {} -> zaposleni
+      ime : string
       godine : integer
       jmbg : float 
       
@@ -11,14 +12,17 @@ app {
   model Zanimanje {      
     mbr : string 
     naziv : string
+    ljudi : Covek : [] -> zanimanja
     
-      controller : "getNaziv()"
+    controller : "getNaziv()"
   }
 
   model RadnoMesto {      
     naziv : string
     brojZaposlenih : integer
-    zaposleni : Covek : {}   
-      controller : "CRUD"
+    direktor : Covek
+    zaposleni: Covek -> radnoMesto
+
+    controller : "CRUD"
   }
 }
