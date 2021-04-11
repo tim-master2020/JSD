@@ -11,7 +11,7 @@ import { HomeComponent } from './home/Home';
 {% for model in models %}
 import { Add{{model.name}}Component } from './{{model.name}}/{{model.name}}';
 import { Add{{model.name}}GeneratedComponent } from './generated/{{model.name.lower()}}-generated/{{model.name}}Generated';
-// import { {{model.name}}PreviewComponent } from './{{model.name}}/{{model.name}}Preview';
+import { {{model.name}}PreviewComponent } from './{{model.name}}/{{model.name}}Preview';
 // import { {{model.name}}EditComponent } from './{{model.name}}/{{model.name}}Edit';
 {% endfor %}
 
@@ -22,7 +22,7 @@ import { Add{{model.name}}GeneratedComponent } from './generated/{{model.name.lo
     {% for model in models %}
       Add{{model.name}}Component,
       Add{{model.name}}GeneratedComponent,
-      // {{model.name}}PreviewComponent,
+      {{model.name}}PreviewComponent,
       // {{model.name}}EditComponent,
     {% endfor %}
   ],

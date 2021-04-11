@@ -184,17 +184,28 @@ def generate(model, output_path, overwrite):
         f = open(join(component_folder, "%s.ts" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
 
+        template = jinja_env.get_template('previewTypescriptGenerated.j2')
+        f = open(join(component_folder_generated, "%sPreviewGenerated.ts" % model.name), 'w')
+        f.write(template.render(model=model, models=models, datetime=now))
+        template = jinja_env.get_template('previewTypescript.j2')
+        f = open(join(component_folder, "%sPreview.ts" % model.name), 'w')
+        f.write(template.render(model=model, models=models, datetime=now))
+
         template = jinja_env.get_template('addHtml.j2')
         f = open(join(component_folder_generated, "%sGenerated.html" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
 
         template = jinja_env.get_template('previewModel.j2')
-        f = open(join(component_folder_generated, "%sPreview.html" % model.name), 'w')
+        f = open(join(component_folder_generated, "%sPreviewGenerated.html" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
 
-        template = jinja_env.get_template('previewTypescript.j2')
-        f = open(join(component_folder_generated, "%sPreview.ts" % model.name), 'w')
-        f.write(template.render(model=model, models=models, datetime=now))
+        #template = jinja_env.get_template('previewModel.j2')
+        #f = open(join(component_folder_generated, "%sPreview.html" % model.name), 'w')
+        #f.write(template.render(model=model, models=models, datetime=now))
+
+        #template = jinja_env.get_template('previewTypescript.j2')
+        #f = open(join(component_folder_generated, "%sPreview.ts" % model.name), 'w')
+        #f.write(template.render(model=model, models=models, datetime=now))
 
         template = jinja_env.get_template('editHtml.j2')
         f = open(join(component_folder_generated, "%sEdit.html" % model.name), 'w')

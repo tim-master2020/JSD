@@ -1,5 +1,4 @@
 clear
-.\env\Scripts\activate
 rm -rf JSD/example/generator_output/front
 pip install -r requirements.txt
 pip uninstall JSD

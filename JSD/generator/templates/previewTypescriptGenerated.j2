@@ -1,0 +1,45 @@
+import { Component, OnInit } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Service } from 'src/app/app.service';
+
+@Component({
+  selector: 'app-{{model.name}}-show',
+  templateUrl: './{{model.name}}PreviewGenerated.html',
+  styleUrls: []
+})
+export class {{model.name}}PreviewGeneratedComponent implements OnInit {
+
+  submitted = false;
+  data: any;
+  id:number;
+  
+
+  constructor(
+    public service : Service,
+    public formBuilder : FormBuilder,
+    public router : Router,
+    public activatedRoute : ActivatedRoute) { }
+
+  ngOnInit() {
+      
+      this.service.get{{model.name}}All().subscribe(
+      data => {
+        this.data = data
+      }
+    );
+    
+  }
+
+  delete{{model.name}}(id:number){
+      this.service.delete{{model.name}}ById(id).subscribe(
+      data => {
+      }
+    );
+  }
+
+  edit{{model.name}}(id:number){
+      this.router.navigate([`{{model.name}}Edit/${id}`]);
+  }
+
+}
