@@ -1,7 +1,7 @@
 app {
   model Covek {
       zanimanja: Zanimanje : [] -> ljudi
-      radnoMesto: RadnoMesto : {} -> zaposleni
+      radnoMesto: RadnoMesto -> zaposleni
       ime : string
       godine : integer
       jmbg : float 
@@ -21,7 +21,7 @@ app {
     naziv : string
     brojZaposlenih : integer
     direktor : Covek
-    zaposleni: Covek -> radnoMesto
+    zaposleni: Covek : {} -> radnoMesto
 
     controller : "CRUD"
   }

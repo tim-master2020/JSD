@@ -51,8 +51,6 @@ def app_type_processor(app):
 
         for prop in model.properties:
             print('------')
-            print(prop.objectType)
-            print(prop.propName)
 
             if prop.annotation is '@Column' and prop.type.name not in ['integer', 'string','boolean','float']:
                 if prop.objectType is None and prop.propName is None:
@@ -60,6 +58,7 @@ def app_type_processor(app):
                 
                 if prop.propName is not None:
                     print('Refereced model:')
+                    print(prop.propName)
                     referenced_model = next((x for x in app.models if x.name == prop.type.name), None)
                     referenced_prop = next((x for x in referenced_model.properties if x.name == prop.propName.name), None)
 
@@ -71,16 +70,16 @@ def app_type_processor(app):
                         if referenced_prop.objectType is None:
                             raise TextXSemanticError("Property {} is referencing an invalid property name in model {}. It must referece a collection.".format(prop.propName.name, referenced_model.name))
                         else:
-                            prop.annotation = '@ManyToOne'
-                            referenced_prop.annotation = '@OneToMany'
+                            prop.annotation = '@ManyToOne\n' + '\t@JoinColumn(name = "{}_id")'.format(referenced_prop.name)
+                            referenced_prop.annotation = '@OneToMany(fetch = FetchType.LAZY, mappedBy = "{}")'.format(prop.name)
                             
                     else:
                         if referenced_prop.objectType is not None:
-                            prop.annotation = '@ManyToMany'
+                            prop.annotation = '@ManyToMany(mappedBy = "{}", fetch = FetchType.EAGER)'.format(referenced_prop.name)
                             referenced_prop.annotation = '@ManyToMany'
                         else:
-                            prop.annotation = '@OneToMany'
-                            referenced_prop.annotation = '@ManyToOne'
+                            prop.annotation = '@OneToMany(fetch = FetchType.LAZY, mappedBy = {}")'.format.prop_name
+                            referenced_prop.annotation = '@ManyToOne\n' + '\t@JoinColumn(name = "{}_id")'.format(prop.name)
                 elif prop.objectType is not None:
                     raise TextXSemanticError("Property {} must provide referenced property's name.".format(prop.name))
                         
