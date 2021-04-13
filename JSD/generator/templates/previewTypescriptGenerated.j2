@@ -19,16 +19,16 @@ export class {{model.name}}PreviewGeneratedComponent implements OnInit {
     public service : Service,
     public formBuilder : FormBuilder,
     public router : Router,
-    public activatedRoute : ActivatedRoute) { }
+    public activatedRoute : ActivatedRoute) { 
 
-  ngOnInit() {
-      
       this.service.get{{model.name}}All().subscribe(
       data => {
         this.data = data
       }
     );
-    
+    }
+
+  ngOnInit() {
   }
 
   delete{{model.name}}(id:number){
