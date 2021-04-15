@@ -12,7 +12,8 @@ import { HomeComponent } from './home/Home';
 import { Add{{model.name}}Component } from './{{model.name}}/{{model.name}}';
 import { Add{{model.name}}GeneratedComponent } from './generated/{{model.name.lower()}}-generated/{{model.name}}Generated';
 import { {{model.name}}PreviewComponent } from './{{model.name}}/{{model.name}}Preview';
-// import { {{model.name}}EditComponent } from './{{model.name}}/{{model.name}}Edit';
+import { {{model.name}}EditComponent } from './{{model.name}}/{{model.name}}Edit';
+import { {{model.name}}EditGeneratedComponent } from './generated/{{model.name.lower()}}-generated/{{model.name}}EditGenerated';
 {% endfor %}
 
 @NgModule({
@@ -23,7 +24,8 @@ import { {{model.name}}PreviewComponent } from './{{model.name}}/{{model.name}}P
       Add{{model.name}}Component,
       Add{{model.name}}GeneratedComponent,
       {{model.name}}PreviewComponent,
-      // {{model.name}}EditComponent,
+      {{model.name}}EditComponent,
+      {{model.name}}EditGeneratedComponent,
     {% endfor %}
   ],
   imports: [
