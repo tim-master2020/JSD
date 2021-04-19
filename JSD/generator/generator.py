@@ -86,9 +86,13 @@ def generate(model, output_path, overwrite):
     jinja_env.filters['javatype'] = javatype
     template = jinja_env.get_template('model_backend_template.j2')
     templateIService = jinja_env.get_template('model_iservice.j2')
+    templateGeneratedIService = jinja_env.get_template('modelGenerated_iservice.j2')
     templateService = jinja_env.get_template('model_service.j2')
+    templateServiceGenerated = jinja_env.get_template('modelGenerated_service.j2')
     templateRepo = jinja_env.get_template('repository_backend.j2')
+    templateRepoGenerated = jinja_env.get_template('repositoryGenerated_backend.j2')
     templateController = jinja_env.get_template('model_controller.j2')
+    templateGeneratedController = jinja_env.get_template('modelGenerated_controller.j2')
 
     #kreairanje modela u model folderu
     for model in models:
@@ -98,13 +102,26 @@ def generate(model, output_path, overwrite):
         s = open(join(backend_model_service, "I%sService.java" % model.name), 'w')
         s.write(templateIService.render(model=model, datetime=now))
 
+        s = open(join(backend_model_service, "I%sGeneratedService.java" % model.name), 'w')
+        s.write(templateGeneratedIService.render(model=model, datetime=now))
+
         ss = open(join(backend_model_service, "%sService.java" % model.name), 'w')
         ss.write(templateService.render(model=model, datetime=now))
 
+        ss = open(join(backend_model_service, "%sGeneratedService.java" % model.name), 'w')
+        ss.write(templateServiceGenerated.render(model=model, datetime=now))
+
         ss = open(join(backend_model_folder_repository, "%sRepository.java" % model.name), 'w')
         ss.write(templateRepo.render(model=model, datetime=now))
+
+        ss = open(join(backend_model_folder_repository, "%sGeneratedRepository.java" % model.name), 'w')
+        ss.write(templateRepoGenerated.render(model=model, datetime=now))
+
         ss = open(join(backend_model_controller, "%sController.java" % model.name), 'w')
         ss.write(templateController.render(model=model, datetime=now))
+
+        ss = open(join(backend_model_controller, "%sGeneratedController.java" % model.name), 'w')
+        ss.write(templateGeneratedController.render(model=model, datetime=now))
 
         if(model.properties):
             for p in model.properties:

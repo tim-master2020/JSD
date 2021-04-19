@@ -1,0 +1,44 @@
+package com.example.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.{{model.name}};
+import com.example.demo.service.I{{model.name}}Service;
+import com.example.demo.repository.{{model.name}}Repository;
+
+import java.util.*;
+
+@Service
+public class {{model.name}}GeneratedService implements I{{model.name}}GeneratedService {
+
+    @Autowired
+    private {{model.name}}Repository {{model.name.lower()}}Repository;
+
+    @Override
+    public {{model.name}} save({{model.name}} {{model.name.lower()}}) {
+        return {{model.name.lower()}}Repository.save({{model.name.lower()}});
+    }
+
+    @Override
+    public List<{{model.name}}> findAll() {
+        return {{model.name.lower()}}Repository.findAll();
+    }
+
+    @Override
+    public {{model.name}} findById(long id){
+        return {{model.name.lower()}}Repository.findById(id);
+    }
+    
+    @Override
+    public {{model.name}} update(long id, {{model.name}} {{model.name.lower()}}) {
+        {{model.name.lower()}}.setId(id);
+        return {{model.name.lower()}}Repository.save({{model.name.lower()}});
+    }
+
+    @Override
+    public void remove(long id) {
+        {{model.name.lower()}}Repository.deleteById(id);
+    }
+}

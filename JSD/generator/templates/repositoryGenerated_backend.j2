@@ -1,0 +1,16 @@
+package com.example.demo.repository;
+import com.example.demo.model.{{model.name}};
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface {{model.name[0]|upper}}{{model.name[1:] }}GeneratedRepository extends JpaRepository<{{model.name[0]|upper}}{{model.name[1:] }}, Long> {
+
+    List<{{model.name[0]|upper}}{{model.name[1:] }}> findAll();
+    {{model.name[0]|upper}}{{model.name[1:] }} save({{model.name[0]|upper}}{{model.name[1:] }} {{model.name[0:]|lower}});
+    void deleteById(Long id);
+    {{model.name[0]|upper}}{{model.name[1:]}} findById(long id);
+}

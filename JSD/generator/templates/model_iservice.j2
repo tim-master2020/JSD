@@ -3,10 +3,6 @@ package com.example.demo.service;
 import com.example.demo.model.{{model.name}};
 import java.util.List;
 
-public interface I{{model.name}}Service {
-    {{model.name}} save({{model.name}} {{model.name.lower()}});
-    List<{{model.name}}> findAll();
-    {{model.name}} findById(long id);
-    {{model.name}} update(long id, {{model.name}} {{model.name.lower()}});
-    void remove(long id);
+public interface I{{model.name}}Service extends I{{model.name}}GeneratedService{
+  
 }
