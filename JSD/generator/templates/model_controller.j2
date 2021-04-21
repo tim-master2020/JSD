@@ -4,6 +4,7 @@ import com.example.demo.model.*;
 import com.example.demo.service.I{{model.name}}Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,5 +15,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/{{model.name.lower()}}")
 public class {{model.name}}Controller extends {{model.name}}GeneratedController{
+
+  @Autowired
+  @Qualifier("{{model.name[0].lower()}}{{model.name[1:]}}Service")
+  private I{{model.name}}Service {{model.name.lower()}}Service;
 
 }

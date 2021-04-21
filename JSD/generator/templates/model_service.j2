@@ -12,6 +12,8 @@ import java.util.*;
 
 @Service
 public class {{model.name}}Service extends {{model.name}}GeneratedService implements I{{model.name}}Service  {
-
+  
+    @Autowired
+    private {{model.name}}Repository {{model.name.lower()}}Repository;
    
 }
