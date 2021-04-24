@@ -27,18 +27,18 @@ public class {{model.name}}Controller {
         {%endfor%}
 
         @RequestMapping(method = RequestMethod.POST)
-        public ResponseEntity<{{model.name}}> add(@RequestBody {{model.name}} {{model.name.lower()}}) {
-            {{model.name.lower()}}Service.save({{model.name.lower()}});
-            return new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED);
+        public ResponseEntity<{{model.name}}DTO> add(@RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
+            {{model.name.lower()}}Service.save({{model.name.lower()}}DTO);
+            return new ResponseEntity<>({{model.name.lower()}}DTO, HttpStatus.CREATED);
         }
 
         @RequestMapping(method = RequestMethod.GET)
-        public ResponseEntity<List<{{model.name}}>> getAll() {
+        public ResponseEntity<List<{{model.name}}DTO>> getAll() {
             return new ResponseEntity<>({{model.name.lower()}}Service.findAll(), HttpStatus.OK);
         }
 
         @RequestMapping(method = RequestMethod.GET, value = "{id}")
-        public ResponseEntity<{{model.name}}> getAll(@PathVariable Long id) {
+        public ResponseEntity<{{model.name}}DTO> getAll(@PathVariable Long id) {
             return new ResponseEntity({{model.name.lower()}}Service.findById(id), HttpStatus.OK);
         }
 
@@ -49,26 +49,26 @@ public class {{model.name}}Controller {
         }
 
         @RequestMapping(method = RequestMethod.PUT, value = "{id}")
-        public ResponseEntity<{{model.name}}> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}} {{model.name.lower()}}) {
-            {{model.name.lower()}}Service.update(id, {{model.name.lower()}});
-            return new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED);
+        public ResponseEntity<{{model.name}}DTO> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
+            {{model.name.lower()}}Service.update(id, {{model.name.lower()}}DTO);
+            return new ResponseEntity<>({{model.name.lower()}}DTO, HttpStatus.CREATED);
         }
     {% endif %}
     
     {% if model.controller.value.value[0] == "CRUD" %}
         @RequestMapping(method = RequestMethod.POST)
-        public ResponseEntity<{{model.name}}> add(@RequestBody {{model.name}} {{model.name.lower()}}) {
-            {{model.name.lower()}}Service.save({{model.name.lower()}});
-           return new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED);   
+        public ResponseEntity<{{model.name}}DTO> add(@RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
+            {{model.name.lower()}}Service.save({{model.name.lower()}}DTO);
+           return new ResponseEntity<>({{model.name.lower()}}DTO, HttpStatus.CREATED);   
         }
 
         @RequestMapping(method = RequestMethod.GET)
-        public ResponseEntity<List<{{model.name}}>> getAll() {
+        public ResponseEntity<List<{{model.name}}DTO>> getAll() {
             return new ResponseEntity<>({{model.name.lower()}}Service.findAll(), HttpStatus.OK);
         }
 
         @RequestMapping(method = RequestMethod.GET, value = "{id}")
-        public ResponseEntity<{{model.name}}> getAll(@PathVariable Long id) {
+        public ResponseEntity<{{model.name}}DTO> getAll(@PathVariable Long id) {
             return new ResponseEntity({{model.name.lower()}}Service.findById(id), HttpStatus.OK);
         }
 
@@ -79,9 +79,9 @@ public class {{model.name}}Controller {
         }
 
         @RequestMapping(method = RequestMethod.PUT, value = "{id}")
-        public ResponseEntity<{{model.name}}> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}} {{model.name.lower()}}) {
-            {{model.name.lower()}}Service.update(id, {{model.name.lower()}});
-            return new ResponseEntity<>({{model.name.lower()}}, HttpStatus.CREATED);        
+        public ResponseEntity<{{model.name}}DTO> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
+            {{model.name.lower()}}Service.update(id, {{model.name.lower()}}DTO);
+            return new ResponseEntity<>({{model.name.lower()}}DTO, HttpStatus.CREATED);        
         }
     {% endif %}
     

@@ -16,24 +16,37 @@ public class {{model.name}}Service implements I{{model.name}}Service {
     @Autowired
     private {{model.name}}Repository {{model.name.lower()}}Repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
-    public {{model.name}} save({{model.name}} {{model.name.lower()}}) {
+    public {{model.name}}DTO save({{model.name}}DTO {{model.name.lower()}}DTO) {
+        {{model.name}} {{model.name.lower()}} = modelMapper.map({{model.name.lower()}}DTO,{{model.name}}.class);
         return {{model.name.lower()}}Repository.save({{model.name.lower()}});
     }
 
     @Override
-    public List<{{model.name}}> findAll() {
-        return {{model.name.lower()}}Repository.findAll();
+    public List<{{model.name}}DTO> findAll() {
+        ArrayList<{{model.name}}DTO> {{model.name.lower()}}List = new ArrayList<{{model.name}}DTO>();
+
+        for({{model.name}} {{model.name.lower()}} : {{model.name.lower()}}Repository.findAll()){
+
+            {{model.name.lower()}}List.add(modelMapper.map({{model.name.lower()}},{{model.name}}DTO.class));
+        }
+
+        return {{model.name.lower()}}List;
     }
 
     @Override
-    public {{model.name}} findById(long id){
-        return {{model.name.lower()}}Repository.findById(id);
+    public {{model.name}}DTO findById(long id){
+        {{model.name}}DTO {{model.name.lower()}}DTO = modelMapper.map({{model.name.lower()}}Repository.findById(id),{{model.name}}DTO.class);
+        return {{model.name.lower()}}DTO;
     }
     
     @Override
-    public {{model.name}} update(long id, {{model.name}} {{model.name.lower()}}) {
-        {{model.name.lower()}}.setId(id);
+    public {{model.name}}DTO update(long id, {{model.name}}DTO {{model.name.lower()}}DTO) {
+        {{model.name.lower()}}DTO.setId(id);
+        {{model.name}} {{model.name.lower()}} = modelMapper.map({{model.name.lower()}}DTO,{{model.name}}.class);
         return {{model.name.lower()}}Repository.save({{model.name.lower()}});
     }
 
