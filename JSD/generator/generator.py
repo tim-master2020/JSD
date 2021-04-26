@@ -155,25 +155,25 @@ def generate(model, output_path, overwrite):
         mkdir(frontend_angular_generated)
     frontend_angular_setings = join(frontend_folder, 'AngularFront/')
 
-    if not isfile(join(frontend_angular, "app.component.html")):
-        template = jinja_env.get_template('appComponent.j2')
-        f = open(join(frontend_angular, "app.component.html"), 'w')
-        f.write(template.render(model=model, datetime=now))
+    
+    template = jinja_env.get_template('appComponent.j2')
+    f = open(join(frontend_angular, "app.component.html"), 'w')
+    f.write(template.render(model=model, datetime=now))
 
-    if not isfile(join(frontend_angular, "app.module.ts")):
-        template = jinja_env.get_template('appModule.j2')
-        f = open(join(frontend_angular, "app.module.ts"), 'w')
-        f.write(template.render(models=models, datetime=now))
 
-    if not isfile(join(frontend_angular, "app-routing.module.ts")):
-        template = jinja_env.get_template('appRouting.j2')
-        f = open(join(frontend_angular, "app-routing.module.ts"), 'w')
-        f.write(template.render(models=models, datetime=now))
+    template = jinja_env.get_template('appModule.j2')
+    f = open(join(frontend_angular, "app.module.ts"), 'w')
+    f.write(template.render(models=models, datetime=now))
 
-    if not isfile(join(frontend_angular_setings, "angular.json")):
-        template = jinja_env.get_template('angularJson.j2')
-        f = open(join(frontend_angular_setings, "angular.json"), 'w')
-        f.write(template.render(models=models, datetime=now))
+
+    template = jinja_env.get_template('appRouting.j2')
+    f = open(join(frontend_angular, "app-routing.module.ts"), 'w')
+    f.write(template.render(models=models, datetime=now))
+
+
+    template = jinja_env.get_template('angularJson.j2')
+    f = open(join(frontend_angular_setings, "angular.json"), 'w')
+    f.write(template.render(models=models, datetime=now))
 
     component_folder_home_generated = join(frontend_angular_generated,"home-generated")
     if not exists(component_folder_home_generated):
