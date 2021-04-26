@@ -1,0 +1,47 @@
+package com.example.demo.generated.service;
+
+import com.example.demo.generated.repository.{{model.name}}GeneratedRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.{{model.name}};
+import com.example.demo.service.I{{model.name}}Service;
+import com.example.demo.repository.{{model.name}}Repository;
+
+import java.util.*;
+
+@Service
+public class {{model.name}}GeneratedService implements I{{model.name}}GeneratedService {
+
+    @Autowired
+    @Qualifier("{{model.name[0].lower()}}{{model.name[1:]}}GeneratedRepository")
+    private {{model.name}}GeneratedRepository {{model.name.lower()}}GeneratedRepository;
+
+    @Override
+    public {{model.name}} save({{model.name}} {{model.name.lower()}}) {
+        return {{model.name.lower()}}GeneratedRepository.save({{model.name.lower()}});
+    }
+
+    @Override
+    public List<{{model.name}}> findAll() {
+        return {{model.name.lower()}}GeneratedRepository.findAll();
+    }
+
+    @Override
+    public {{model.name}} findById(long id){
+        return {{model.name.lower()}}GeneratedRepository.findById(id);
+    }
+    
+    @Override
+    public {{model.name}} update(long id, {{model.name}} {{model.name.lower()}}) {
+        {{model.name.lower()}}.setId(id);
+        return {{model.name.lower()}}GeneratedRepository.save({{model.name.lower()}});
+    }
+
+    @Override
+    public void remove(long id) {
+        {{model.name.lower()}}GeneratedRepository.deleteById(id);
+    }
+}

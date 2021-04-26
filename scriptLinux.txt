@@ -1,4 +1,5 @@
 clear
+source env/bin/activate
 pip install -r requirements.txt
 pip uninstall JSD
 pip install .
@@ -6,22 +7,29 @@ pip install .
 if [[ ! -d JSD/example/generator_output/front/AngularFront ]]
 then
   rm -r JSD/example/generator_output/front/AngularFront
-  rm -r JSD/example/generator_output/backend
-  mkdir -p JSD/example/generator_output/backend
   mkdir -p JSD/example/generator_output/front
-  cp -r JSD/demo JSD/example/generator_output/backend
   cd JSD/example/generator_output/front
   ng new AngularFront --routing --style=scss
   cd -
 fi
 
+if [[ ! -d JSD/example/generator_output/backend ]]
+then
+  rm -r JSD/example/generator_output/backend
+  mkdir -p JSD/example/generator_output/backend
+  cp -r JSD/demo JSD/example/generator_output/backend
+fi
+
 if [[ -d JSD/example/generator_output/front/AngularFront ]]
 then
   rm -r JSD/example/generator_output/front/AngularFront/src/app/generated
-  rm -r JSD/example/generator_output/backend
-  mkdir -p JSD/example/generator_output/backend
   mkdir -p JSD/example/generator_output/front/AngularFront/src/app/generated
-  cp -r JSD/demo JSD/example/generator_output/backend
+fi
+
+if [[ -d JSD/example/generator_output/backend ]]
+then
+  rm -r JSD/example/generator_output/backend/demo/src/main/java/com/example/demo/generated
+  mkdir -p JSD/example/generator_output/backend/demo/src/main/java/com/example/demo/generated
 fi
 
 textx generate JSD/example/primer.jsb --target java+html+js --overwrite
