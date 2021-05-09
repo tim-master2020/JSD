@@ -23,7 +23,7 @@ class Property(object):
 def property_type_processor(property):
     """Checks if model type property has annotation."""
     
-    if property.type.name in ['integer', 'string','boolean','float'] and property.objectType is '[]':
+    if property.type.name in ['integer', 'string','boolean','float'] and property.objectType in ['[]','{}']:
         raise TextXSemanticError("Current version of this language doesn't support mixing primitive values with given data structures! Try with type that you have already defined as one of the models. ")
     # print(property.objectType)
     # print(property.type.name)
@@ -83,13 +83,7 @@ def app_type_processor(app):
                 elif prop.objectType is not None:
                     raise TextXSemanticError("Property {} must provide referenced property's name.".format(prop.name))
                         
-
-
-
-                    
-
-
-
+            
 def get_meta_model():
 
     # build metamodel

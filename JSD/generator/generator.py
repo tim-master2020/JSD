@@ -38,6 +38,7 @@ def generate(model, output_path, overwrite):
     backend_model = join(output_folder_be, 'model')
     backend_model_folder_repository = join(output_folder_be, 'repository')
     backend_model_service = join(output_folder_be, 'service')
+    backend_model_dto = join(output_folder_be, 'dto')
     backend_model_controller = join(output_folder_be, 'controller')
 
     # if not exists(backend_folder):
@@ -51,6 +52,9 @@ def generate(model, output_path, overwrite):
 
     if not exists(backend_model_service):
         mkdir(backend_model_service)
+
+    if not exists(backend_model_dto):
+        mkdir(backend_model_dto)
     
     if not exists(backend_model_controller):
         mkdir(backend_model_controller)
@@ -89,6 +93,7 @@ def generate(model, output_path, overwrite):
     templateService = jinja_env.get_template('model_service.j2')
     templateRepo = jinja_env.get_template('repository_backend.j2')
     templateController = jinja_env.get_template('model_controller.j2')
+    templateDto = jinja_env.get_template('dtoTemplate.j2')
 
     #kreairanje modela u model folderu
     for model in models:
@@ -97,6 +102,9 @@ def generate(model, output_path, overwrite):
 
         s = open(join(backend_model_service, "I%sService.java" % model.name), 'w')
         s.write(templateIService.render(model=model, datetime=now))
+
+        s = open(join(backend_model_dto, "%sDTO.java" % model.name), 'w')
+        s.write(templateDto.render(model=model, datetime=now))
 
         ss = open(join(backend_model_service, "%sService.java" % model.name), 'w')
         ss.write(templateService.render(model=model, datetime=now))

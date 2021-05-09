@@ -87,3 +87,12 @@ public class {{model.name}}Controller {
     
 
 }
+
+    @RequestMapping(method = RequestMethod.GET,value="getFromIds")
+    public ResponseEntity<List<{{model.name}}DTO>> getFromIds(List<Long> ids){
+         List<{{model.name}}DTO> {{model.name}}DTOSList = new ArrayList<>();
+         for(Long id : ids){
+            {{model.name}}DTOSList.add({{model.name.lower()}}Service.findById(id));
+        }
+        return new ResponseEntity<>({{model.name}}DTOSList,HttpStatus.OK);
+    }
