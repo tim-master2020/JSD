@@ -38,7 +38,13 @@ def property_type_processor(property):
     #     property.annotation = '@OneToOne'
         
 
-def model_type_processor(model):   
+def model_type_processor(model):
+    model.relations = [];
+    if(model.properties):
+        for p in model.properties:
+            if(p.type.name not in model.relations and p.type.name not in ['integer', 'string','boolean','float']):
+                model.relations.append(p.type.name);
+
     properties = list(map(lambda x: x.name, model.properties))
     for p in properties:
         if(properties.count(p) > 1):

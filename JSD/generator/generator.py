@@ -95,6 +95,10 @@ def generate(model, output_path, overwrite):
     templateController = jinja_env.get_template('model_controller.j2')
     templateDto = jinja_env.get_template('dtoTemplate.j2')
 
+    transferDTO = jinja_env.get_template('transferDTO.j2')
+    s = open(join(backend_model_dto, "TransferDTO.java"), 'w')
+    s.write(transferDTO.render(datetime=now))
+
     #kreairanje modela u model folderu
     for model in models:
         f = open(join(backend_model, "%s.java" % model.name), 'w')
