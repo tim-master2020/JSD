@@ -118,7 +118,7 @@ public class {{model.name}}Controller {
     public ResponseEntity<List<{{model.name}}DTO>> getFromIds(@RequestBody TransferDTO transferDTO){
         List<{{model.name}}DTO> {{model.name}}DTOSList = new ArrayList<>();
         for(Long id : transferDTO.getWantedIds()){
-            {{model.name}}DTOSList.add({{model.name.lower()}}Service.findById(id));
+            {{model.name}}DTOSList.add(mapModelToDto({{model.name.lower()}}Service.findById(id)));
         }
         return new ResponseEntity<>({{model.name}}DTOSList,HttpStatus.OK);
     }
@@ -130,21 +130,32 @@ public class {{model.name}}Controller {
     {%for p in model.properties%}
     {%if p.primitive is false%}
         {%if p.objectType%}
+        if({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
         {%if p.isSet%}Set{%else%}List{%endif%}<Long> {{p.name | lower}}ids = {{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}();
-        for(Long id: {{p.name | lower}}ids){
-            {{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}().add({{p.type.name.lower()}}Service.findById(id));
+            for(Long id: {{p.name | lower}}ids){
+                {{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}().add({{p.type.name.lower()}}Service.findById(id));
+            }
         }       
         {%else%}
-        {{p.type.name[0]|upper}}{{p.type.name[1:]}} {{p.name | lower}} = {{p.type.name.lower()}}Service.findById({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}());
-        {{model.name | lower}}Model.set{{p.name[0]|upper}}{{p.name[1:]}}({{p.type.name | lower}});
+        if({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
+            {{p.type.name[0]|upper}}{{p.type.name[1:]}} {{p.name | lower}} = {{p.type.name.lower()}}Service.findById({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}());
+            {{model.name | lower}}Model.set{{p.name[0]|upper}}{{p.name[1:]}}({{p.name | lower}});
+        }
         {%endif%}
     {%else%}
+    {%if p.isNumber%}
+    if({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}() != 0){
+    {%else%}
+    if({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
+    {%endif%}
         {{model.name | lower}}Model.set{{p.name[0]|upper}}{{p.name[1:]}}({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}());
+    }
     {%endif%}
     {%endfor%}
-        return {{model.name | lower}}Model;
+     return {{model.name | lower}}Model;
+    }
     {%endif%}
-     }
+    
 
 
 
@@ -155,15 +166,25 @@ public class {{model.name}}Controller {
     {%for p in model.properties%}
     {%if p.primitive is false%}
         {%if p.objectType%}
+        if({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
         {%if p.isSet%}Set{%else%}List{%endif%}<{{p.type.name}}> {{p.name | lower}}Elements = {{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}();
-        for({{p.type.name}} element: {{p.name | lower}}Elements){
-            {{model.name | lower}}Dto.get{{p.name[0]|upper}}{{p.name[1:]}}().add(element.getId());
+            for({{p.type.name}} element: {{p.name | lower}}Elements){
+                {{model.name | lower}}Dto.get{{p.name[0]|upper}}{{p.name[1:]}}().add(element.getId());
+            }
         }       
         {%else%}
-        {{model.name | lower}}Dto.set{{p.name[0]|upper}}{{p.name[1:]}}({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}().getId());
+        if({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
+            {{model.name | lower}}Dto.set{{p.name[0]|upper}}{{p.name[1:]}}({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}().getId());
+        }
         {%endif%}
     {%else%}
+    {%if p.isNumber%}
+    if({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}() != 0){
+    {%else%}
+    if({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
+    {%endif%}
         {{model.name | lower}}Dto.set{{p.name[0]|upper}}{{p.name[1:]}}({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}());
+    }
     {%endif%}
     {%endfor%}
         return {{model.name | lower}}Dto;

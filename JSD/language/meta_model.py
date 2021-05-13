@@ -30,6 +30,7 @@ def property_type_processor(property):
     # print(property.propName)
     # print('-----------')
     property.primitive = property.type.name  in ['integer', 'string','boolean','float']
+    property.isNumber = property.type.name  in ['integer','float']
     property.isArray = property.objectType == '[]'
     property.isSet = property.objectType == '{}'
     property.annotation = '@Column'
