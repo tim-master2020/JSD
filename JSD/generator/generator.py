@@ -134,11 +134,11 @@ def generate(model, output_path, overwrite):
         ss = open(join(backend_model_controller_generated, "%sGeneratedController.java" % model.name), 'w')
         ss.write(templateGeneratedController.render(model=model, datetime=now))
 
-        if(model.properties):
-            for p in model.properties:
-                print('property type is',p.type.name)
-                print('property type', p.annotiation)
-                print('property primitive : ', p.primitive)
+        # if(model.properties):
+        #     for p in model.properties:
+        #         print('property type is',p.type.name)
+        #         print('property type', p.annotiation)
+        #         print('property primitive : ', p.primitive)
 
     ##########################################################################################################
     #Frontent generator

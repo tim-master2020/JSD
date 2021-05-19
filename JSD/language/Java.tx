@@ -13,7 +13,7 @@ Model:
 ;
 
 Property:
-  name=ID ':' type=[Model] (':' objectType=ObjectType)? (':' annotiation=AnnotationType)?
+  name=ID ':' type=[Model] (':' objectType=ObjectType)?
 ;
 
 
@@ -27,10 +27,6 @@ Dependencies:
   '}'
 ;
 
-ValueType:
-  value+=STRING[',']
-;
-
 ControllerType:
   value='CRUD' | value+=STRING[',']
 ;
@@ -40,11 +36,8 @@ Value:
 ;
 
 ObjectType:
-  ( 'ArrayList' | 'HashSet')
+  ( '[]' | '{}' )
 ;
 
-AnnotationType:
-  ('@ManyToOne'| '@OneToMany' | '@OneToOne' | '@ManyToMany' | '')
-;
 
 
