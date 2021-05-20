@@ -1,0 +1,53 @@
+package com.example.demo.dto;
+import java.util.*;
+
+
+public class {{model.name[0]|upper}}{{model.name[1:]}}DTO {
+
+    {%if model.properties%}
+    {% for p in model.properties%}
+    {%if p.primitive %}
+    private {{p.type.name | javatype}} {{p.name}};
+
+    {%else%}
+    {%if p.isArray%}
+    private List<Long> {{p.name}} = new ArrayList<Long>();
+
+    {%elif p.isSet%}
+    private Set<Long> {{p.name}} = new HashSet<Long>();
+
+    {%else%} 
+    private Long {{p.name}};
+    
+    {%endif%}
+    {%endif%}
+    {% endfor %}
+    {% endif %}
+
+    public {{model.name[0]|upper}}{{model.name[1:]}}DTO(){}
+
+    {%if model.properties%}
+    {%for p in model.properties%}
+    {%if p.primitive%}
+    
+    public {{p.type.name | javatype}} get{{p.name[0]|upper}}{{p.name[1:]}}(){
+        return this.{{p.name}};
+    }
+    
+    public void set{{p.name[0]|upper}}{{p.name[1:] }}({{p.type.name | javatype}} {{p.name}}){
+        this.{{p.name}} = {{p.name}};
+    }
+    {%else%}
+
+     public {%if p.objectType%}{%if p.isArray%}List<Long>{%elif p.isSet%}Set<Long>{%endif%}{%else%}Long {%endif%} get{{p.name[0]|upper}}{{p.name[1:]}}(){
+        return this.{{p.name}};
+    }
+    
+    public void set{{p.name[0]|upper}}{{p.name[1:] }}({%if p.objectType%}{%if p.isArray%}List<Long> {{p.name}}{%elif p.isSet%}Set<Long> {{p.name}}{%endif%}{%else%}Long {{p.name}}{%endif%}){
+        this.{{p.name}} = {{p.name}};
+    }
+
+    {%endif%}
+    {%endfor%}
+    {%endif%}
+}

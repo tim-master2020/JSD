@@ -42,15 +42,16 @@ public class {{model.name[0]|upper}}{{model.name[1:]}}  {
 
     {%if model.properties%}
     {%for p in model.properties%}
-    public {%if p.objectType%}{%if p.isArray%}ArrayList<{{p.type.name | javatype}}>{%elif p.isSet%}Set<{{p.objectType}}>{%endif%}{%else%}{{p.type.name | javatype}}{%endif%} get{{p.name[0]|upper}}{{p.name[1:]}}(){
+    public {%if p.objectType%}{%if p.isArray%}List<{{p.type.name | javatype}}>{%elif p.isSet%}Set<{{p.type.name}}>{%endif%}{%else%}{{p.type.name | javatype}}{%endif%} get{{p.name[0]|upper}}{{p.name[1:]}}(){
         return this.{{p.name}};
     }
     
-    public void set{{p.name[0]|upper}}{{p.name[1:] }}({%if p.objectType%}{%if p.isArray%}ArrayList<{{p.type.name}}> {{p.name}}{%elif p.isSet%}HashSet<{{p.type.name}}> p.name{%endif%}{%else%}{{p.type.name | javatype}} {{p.name}}{%endif%}){
+    public void set{{p.name[0]|upper}}{{p.name[1:] }}({%if p.objectType%}{%if p.isArray%}List<{{p.type.name}}> {{p.name}}{%elif p.isSet%}Set<{{p.type.name}}> {{p.name}}{%endif%}{%else%}{{p.type.name | javatype}} {{p.name}}{%endif%}){
         this.{{p.name}} = {{p.name}};
     }
 
     {%endfor%}
     {%endif%}
+
 
 }
