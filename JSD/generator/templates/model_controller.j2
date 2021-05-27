@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import java.util.*;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
@@ -20,65 +20,5 @@ public class {{model.name}}Controller extends {{model.name}}GeneratedController{
   @Autowired
   @Qualifier("{{model.name[0].lower()}}{{model.name[1:]}}Service")
   private I{{model.name}}Service {{model.name.lower()}}Service;
-
-        @RequestMapping(method = RequestMethod.POST)
-        public ResponseEntity<{{model.name}}DTO> add(@RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
-            {{model.name.lower()}}Service.save({{model.name.lower()}}DTO);
-            return new ResponseEntity<>({{model.name.lower()}}DTO, HttpStatus.CREATED);
-        }
-
-        @RequestMapping(method = RequestMethod.GET)
-        public ResponseEntity<List<{{model.name}}DTO>> getAll() {
-            return new ResponseEntity<>({{model.name.lower()}}Service.findAll(), HttpStatus.OK);
-        }
-
-        @RequestMapping(method = RequestMethod.GET, value = "{id}")
-        public ResponseEntity<{{model.name}}DTO> getAll(@PathVariable Long id) {
-            return new ResponseEntity({{model.name.lower()}}Service.findById(id), HttpStatus.OK);
-        }
-
-        @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-        public ResponseEntity<Void> delete{{model.name}}(@PathVariable Long id) {
-            {{model.name.lower()}}Service.remove(id); 
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-
-        @RequestMapping(method = RequestMethod.PUT, value = "{id}")
-        public ResponseEntity<{{model.name}}DTO> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
-            {{model.name.lower()}}Service.update(id, {{model.name.lower()}}DTO);
-            return new ResponseEntity<>({{model.name.lower()}}DTO, HttpStatus.CREATED);
-        }
-    {% endif %}
-    
-    {% if model.controller.value.value[0] == "CRUD" %}
-        @RequestMapping(method = RequestMethod.POST)
-        public ResponseEntity<{{model.name}}DTO> add(@RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
-            {{model.name.lower()}}Service.save({{model.name.lower()}}DTO);
-           return new ResponseEntity<>({{model.name.lower()}}DTO, HttpStatus.CREATED);   
-        }
-
-        @RequestMapping(method = RequestMethod.GET)
-        public ResponseEntity<List<{{model.name}}DTO>> getAll() {
-            return new ResponseEntity<>({{model.name.lower()}}Service.findAll(), HttpStatus.OK);
-        }
-
-        @RequestMapping(method = RequestMethod.GET, value = "{id}")
-        public ResponseEntity<{{model.name}}DTO> getAll(@PathVariable Long id) {
-            return new ResponseEntity({{model.name.lower()}}Service.findById(id), HttpStatus.OK);
-        }
-
-        @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-        public ResponseEntity<Void> delete{{model.name}}(@PathVariable Long id) {
-            {{model.name.lower()}}Service.remove(id); 
-            return new ResponseEntity<>(HttpStatus.OK);        
-        }
-
-        @RequestMapping(method = RequestMethod.PUT, value = "{id}")
-        public ResponseEntity<{{model.name}}DTO> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
-            {{model.name.lower()}}Service.update(id, {{model.name.lower()}}DTO);
-            return new ResponseEntity<>({{model.name.lower()}}DTO, HttpStatus.CREATED);        
-        }
-    {% endif %}
-    
 
 }

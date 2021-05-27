@@ -5,9 +5,5 @@ import com.example.demo.generated.service.I{{model.name}}GeneratedService;
 import java.util.List;
 
 public interface I{{model.name}}Service extends I{{model.name}}GeneratedService{
-    {{model.name}}DTO save({{model.name}}DTO {{model.name.lower()}}DTO);
-    List<{{model.name}}DTO> findAll();
-    {{model.name}}DTO findById(long id);
-    {{model.name}}DTO update(long id, {{model.name}}DTO {{model.name.lower()}}DTO);
-    void remove(long id);
+
 }

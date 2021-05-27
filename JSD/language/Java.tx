@@ -13,7 +13,7 @@ Model:
 ;
 
 Property:
-  name=ID ':' type=[Model] (':' objectType=ObjectType)?
+  name=ID ':' type=[Model] (':' objectType=ObjectType)? ('->' propName=PropName)?
 ;
 
 
@@ -39,5 +39,6 @@ ObjectType:
   ( '[]' | '{}' )
 ;
 
-
-
+PropName:
+  name=ID
+;
