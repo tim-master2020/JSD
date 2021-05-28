@@ -1,3 +1,4 @@
+
 app {
   model Covek {
       zanimanja: Zanimanje : [] -> ljudi

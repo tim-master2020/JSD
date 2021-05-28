@@ -35,7 +35,7 @@ export class Add{{model.name}}GeneratedComponent implements OnInit {
         {% if p.primitive != True %}
             this.service.get{{p.type.name}}All().subscribe(
               data => {
-                this.{{p.name.lower()}} = data
+                this.{{p.name}} = data
               }
             );
         {% endif %}
@@ -52,9 +52,9 @@ export class Add{{model.name}}GeneratedComponent implements OnInit {
     this.data = this.{{model.name}}.getRawValue();
     {% for p in model.properties %} 
       {% if p.primitive != True %}
-        let ids= this.data.{{p.name.lower()}};
+        var ids= this.data.{{p.name.lower()}};
         this.data.{{p.name.lower()}} = new Array();
-        this.{{p.name.lower()}}.forEach(zan => {
+        this.{{p.name}}.forEach(zan => {
           ids.forEach(id => {
             if(zan.id == id){
               this.data.{{p.name.lower()}}.push(zan);
