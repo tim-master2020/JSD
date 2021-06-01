@@ -40,7 +40,9 @@
           {% else %}
               {% for p1 in m.properties %}
                 {%if p1.type.name == 'string' %}
+                  <span *ngIf="dat.{{p.name}}">
                       {{'{{dat.'}}{{p.name}}.{{p1.name}}{{'}}'}}
+                  </span>
                 {% endif %}
               {% endfor %}
           {% endif %}

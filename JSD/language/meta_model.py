@@ -83,7 +83,7 @@ def app_type_processor(app):
                         else:
                             prop.annotation = '@ManyToOne\n' + '\t@JoinColumn(name = "{}_id")'.format(referenced_prop.name)
                             print('Annotation is : ManyToOne')
-                            referenced_prop.annotation = '@OneToMany(fetch = FetchType.LAZY, mappedBy = "{}")'.format(prop.name)
+                            referenced_prop.annotation = '@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "{}")'.format(prop.name)
                             
                     else:
                         if referenced_prop.objectType is not None:
@@ -91,7 +91,7 @@ def app_type_processor(app):
                             print('Annotation is : ManyToMany')
                             referenced_prop.annotation = '@ManyToMany'
                         else:
-                            prop.annotation = '@OneToMany(fetch = FetchType.LAZY, mappedBy = {}")'.format.prop_name
+                            prop.annotation = '@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "{}")'.format.prop_name
                             print('Annotation is : OneToMany')
                             referenced_prop.annotation = '@ManyToOne\n' + '\t@JoinColumn(name = "{}_id")'.format(prop.name)
                 elif prop.objectType is not None:
