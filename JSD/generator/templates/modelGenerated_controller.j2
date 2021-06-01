@@ -117,7 +117,7 @@ public class {{model.name}}GeneratedController {
         }
     {% endif %}
     
-@RequestMapping(method = RequestMethod.GET,value="getFromIds")
+@RequestMapping(method = RequestMethod.POST,value="getFromIds")
     public ResponseEntity<List<{{model.name}}DTO>> getFromIds(@RequestBody TransferDTO transferDTO){
         List<{{model.name}}DTO> {{model.name}}DTOSList = new ArrayList<>();
         for(Long id : transferDTO.getWantedIds()){
@@ -129,6 +129,10 @@ public class {{model.name}}GeneratedController {
 
     public {{model.name[0]|upper}}{{model.name[1:]}} mapDtoToModel({{model.name}}DTO {{model.name | lower}}DTO){
         {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}Model = new {{model.name[0]|upper}}{{model.name[1:]}}();
+
+         if({{model.name | lower}}DTO.getId() != null){
+            {{model.name | lower}}Model.setId({{model.name | lower}}DTO.getId());
+        }
     {% if model.properties %}
     {%for p in model.properties%}
     {%if p.primitive is false%}
@@ -164,6 +168,11 @@ public class {{model.name}}GeneratedController {
 
      public {{model.name[0]|upper}}{{model.name[1:]}}DTO mapModelToDto({{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}Model){
         {{model.name[0]|upper}}{{model.name[1:]}}DTO {{model.name | lower}}Dto = new {{model.name[0]|upper}}{{model.name[1:]}}DTO();
+
+
+        if({{model.name | lower}}Model.getId() != null){
+             {{model.name | lower}}Dto.setId({{model.name | lower}}Model.getId());
+         }
 
     {% if model.properties %}
     {%for p in model.properties%}

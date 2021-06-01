@@ -27,7 +27,11 @@ export class Add{{model.name}}GeneratedComponent implements OnInit {
     public activatedRoute : ActivatedRoute) {
       this.{{model.name}} = this.formBuilder.group({
       {% for p in model.properties %}
+        {% if p.primitive == True %}
           {{p.name}} :['',Validators.required],
+        {% else %}
+          {{p.name}} :[,Validators.required],
+        {% endif %}
       {% endfor %}
       });
 
@@ -51,16 +55,32 @@ export class Add{{model.name}}GeneratedComponent implements OnInit {
     this.submitted = true;
     this.data = this.{{model.name}}.getRawValue();
     {% for p in model.properties %} 
-      {% if p.primitive != True %}
-        var ids= this.data.{{p.name.lower()}};
-        this.data.{{p.name.lower()}} = new Array();
-        this.{{p.name}}.forEach(zan => {
-          ids.forEach(id => {
-            if(zan.id == id){
-              this.data.{{p.name.lower()}}.push(zan);
-            }
+      {% if p.primitive != True and (p.isArray or p.isSet) %}
+      if( this.data.{{p.name}} != -1){
+        if (this.data.{{p.name}} instanceof Array && this.data.{{p.name}}){
+          var ids= this.data.{{p.name}};
+          this.data.{{p.name}} = new Array();
+          this.{{p.name}}.forEach(zan => {
+            ids.forEach(id => {
+              if(zan.id == id){
+                this.data.{{p.name}}.push(zan.id);
+              }
+            });
           });
-        });
+        }else if(this.data.{{p.name}}){
+          var ids = this.data.{{p.name}};
+          this.data.{{p.name}} = new Array();
+          this.data.{{p.name}}.push(ids);
+        }
+      }else{
+        this.data.{{p.name}} = null;
+      }
+      {% else %}
+      if( this.data.{{p.name}} != -1){
+
+      }else{
+        this.data.{{p.name}} = null;
+      }
       {% endif %}
     {% endfor %}
 

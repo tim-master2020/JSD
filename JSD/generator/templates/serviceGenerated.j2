@@ -34,6 +34,10 @@ export class ServiceGenerated {
             return this.http.delete(SERVER_URL + '{{model.name.lower()}}/' + id);
         }
 
+        get{{model.name}}ByIds(data): Observable<any>{
+            return this.http.post(SERVER_URL + '{{model.name.lower()}}/getFromIds/', data);
+        }
+
     {% endfor %}
 
 }

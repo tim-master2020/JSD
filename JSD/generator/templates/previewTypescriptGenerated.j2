@@ -24,6 +24,29 @@ export class {{model.name}}PreviewGeneratedComponent implements OnInit {
       this.service.get{{model.name}}All().subscribe(
       data => {
         this.data = data
+
+            this.data.forEach(element => {
+         {% for p in model.properties %}
+          {% if p.primitive != True %}
+              {% if p.isArray or p.isSet %}
+              if( element.{{p.name}} )
+                this.service.get{{p.type.name}}ByIds({'wantedIds' : element.{{p.name}}}).subscribe(
+                  data1 => {
+                    element.{{p.name}} = data1;
+                  }
+                )
+              {% else %}
+                if (element.{{p.name}})
+                  this.service.get{{p.type.name}}ById(element.{{p.name}}).subscribe(
+                    data1 => {
+                      element.{{p.name}} = data1;
+                    }
+                  )
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+            });
       }
     );
     }
