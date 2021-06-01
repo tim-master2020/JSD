@@ -2,93 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Service } from '../app.service';
+import { {{model.name}}EditGeneratedComponent } from '../generated/{{model.name.lower()}}-generated/{{model.name}}EditGenerated';
 
 @Component({
   selector: 'app-{{model.name}}-edit',
-  templateUrl: './{{model.name}}Edit.html',
+  templateUrl: '../generated/{{model.name.lower()}}-generated/{{model.name}}EditGenerated.html',
   styleUrls: []
 })
-export class {{model.name}}EditComponent implements OnInit {
-
-  {{model.name}}:FormGroup;
-  {% for p in model.properties %}
-  	{%if p.annotiation != None %}
-      {{p.name}}Edit:any;
-    {% endif %}
-  {% endfor %}
-
-
-  submitted = false;
-  data : any;
-  id:number;
-  zanimanje: any;
-  
+export class {{model.name}}EditComponent extends {{model.name}}EditGeneratedComponent implements OnInit {
 
   constructor(
-    private service : Service,
-    private formBuilder : FormBuilder,
-    private router : Router,
-    private activatedRoute : ActivatedRoute) { }
+    public service : Service,
+    public formBuilder : FormBuilder,
+    public router : Router,
+    public activatedRoute : ActivatedRoute
+  ) { 
+    super(service, formBuilder, router, activatedRoute);
+  }
 
   ngOnInit() {
-  
-  	  this.activatedRoute.params.subscribe(params =>{
-      this.id = params.{{model.name}}Id;
-      });
-  	  	
-      this.{{model.name}} = this.formBuilder.group({
-        {% for p in model.properties %}
-          {{p.name}} :['', Validators.required],
-        {% endfor %}
-        })
-      
-      this.service.get{{model.name}}ById(this.id).subscribe(
-      data => {
-        this.data = data
-        this.setValues();
-      }
-      );
 
-      {% for p in model.properties %}
-        {% if p.primitive != True %}
-            this.service.get{{p.type.name}}All().subscribe(
-              data => {
-                this.{{p.name.lower()}}Edit = data
-              }
-            );
-        {% endif %}
-      {% endfor %}
-  }
-
-  setValues(){
-    {% for p in model.properties %}
-      this.{{model.name}}.controls.{{p.name}}.setValue(this.data.{{p.name}});
-    {% endfor %}
-  }
-
-  get f() { return this.{{model.name}}.controls; }
-
-  onSubmit(event:any) {
-    this.submitted = true;
-    this.data = this.{{model.name}}.getRawValue();
-    
-    {% for p in model.properties %} 
-      {% if p.primitive != True %}
-        let ids= this.data.{{p.name.lower()}};
-        this.data.{{p.name.lower()}} = new Array();
-        this.{{p.name.lower()}}Edit.forEach(zan => {
-          ids.forEach(id => {
-            if(zan.id == id){
-              this.data.{{p.name.lower()}}.push(zan);
-            }
-          });
-        });
-      {% endif %}
-    {% endfor %}
-
-    this.service.edit{{model.name}}(this.data,this.id).subscribe(
-      data => {
-    });
   }
 
 }

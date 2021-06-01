@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-//Components import  for model in models:
-import { HomeComponent } from './Home/Home';
+// Components import  for model in models:
+import { HomeComponent } from './home/Home';
 {% for model in models %}
 import { Add{{model.name}}Component } from './{{model.name}}/{{model.name}}';
 import { {{model.name}}PreviewComponent } from './{{model.name}}/{{model.name}}Preview';

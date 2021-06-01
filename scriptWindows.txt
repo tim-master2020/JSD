@@ -1,13 +1,37 @@
 clear
-.\env\Scripts\activate
-rm -rf JSD/example/generator_output/front
+./env/Scripts/activate
 pip install -r requirements.txt
 pip uninstall JSD
 pip install .
-mkdir -p JSD/example/generator_output/front
-cd JSD/example/generator_output/front
-ng new AngularFront --routing --style=scss
-cd -
+
+if [[ ! -d JSD/example/generator_output/front/AngularFront ]]
+then
+  rm -r JSD/example/generator_output/front/AngularFront
+  mkdir -p JSD/example/generator_output/front
+  cd JSD/example/generator_output/front
+  ng new AngularFront --routing --style=scss
+  cd -
+fi
+
+if [[ ! -d JSD/example/generator_output/backend ]]
+then
+  rm -r JSD/example/generator_output/backend
+  mkdir -p JSD/example/generator_output/backend
+  cp -r JSD/demo JSD/example/generator_output/backend
+fi
+
+if [[ -d JSD/example/generator_output/front/AngularFront ]]
+then
+  rm -r JSD/example/generator_output/front/AngularFront/src/app/generated
+  mkdir -p JSD/example/generator_output/front/AngularFront/src/app/generated
+fi
+
+if [[ -d JSD/example/generator_output/backend ]]
+then
+  rm -r JSD/example/generator_output/backend/demo/src/main/java/com/example/demo/generated
+  mkdir -p JSD/example/generator_output/backend/demo/src/main/java/com/example/demo/generated
+fi
+
 textx generate JSD/example/primer.jsb --target java+html+js --overwrite
 cd JSD/example/generator_output/front/AngularFront/
 npm install bootstrap

@@ -24,13 +24,13 @@
 
 					{% endif %}
 				{%else%}
-					{%if p.annotiation %}
-						{% if p.annotiation == "@OneToMany" or p.annostring %}
+					{%if p.annotation %}
+						{%  if p.annotation == "@OneToMany" or p.annotation == "@ManyToMany" %}
 							<div class="form-group"> 
 										<label for="{{p.name}}">{{p.name}}</label> 
 								<select class="form-control" formControlName="{{p.name}}" id="{{p.name}}" multiple>
-									<option value="0">CHOOSE</option>
-									<option *ngFor="let zan of {{p.name}}" value="{{'{{zan.id}}'}}">
+									<option [ngValue]=-1>CHOOSE</option>
+									<option *ngFor="let zan of {{p.name}}" [ngValue]=zan.id>
 											{% for m in models %}
 												{%if m.name.lower() == p.type.name.lower() %}
 												 	{% for p1 in m.properties %}
@@ -47,8 +47,8 @@
 							<div class="form-group"> 
 										<label for="{{p.name}}">{{p.name}}</label> 
 								<select class="form-control" formControlName="{{p.name}}" id="{{p.name}}">
-									<option value="0">CHOOSE</option>
-									<option *ngFor="let zan of {{p.name}}" value="{{'{{zan.id}}'}}">
+									<option [ngValue]=-1>CHOOSE</option>
+									<option *ngFor="let zan of {{p.name}}" [ngValue]=zan.id>
 										{% for m in models %}
 												{%if m.name.lower() == p.type.name.lower() %}
 												 	{% for p1 in m.properties %}

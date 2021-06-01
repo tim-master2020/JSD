@@ -1,0 +1,110 @@
+import { Component, OnInit } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ServiceGenerated } from '../appGenerated.service';
+
+@Component({
+  selector: 'app-{{model.name}}-edit',
+  templateUrl: './{{model.name}}EditGenerated.html',
+  styleUrls: []
+})
+export class {{model.name}}EditGeneratedComponent implements OnInit {
+
+  {{model.name}}:FormGroup;
+  {% for p in model.properties %}
+  	{%if p.annotiation != None %}
+      {{p.name}}Edit:any;
+    {% endif %}
+  {% endfor %}
+
+
+  submitted = false;
+  data : any;
+  id:number;
+  zanimanje: any;
+  
+
+  constructor(
+    public service : ServiceGenerated,
+    public formBuilder : FormBuilder,
+    public router : Router,
+    public activatedRoute : ActivatedRoute) {
+      this.{{model.name}} = this.formBuilder.group({
+        {% for p in model.properties %}
+          {{p.name}} :['', Validators.required],
+        {% endfor %}
+        })
+
+      this.activatedRoute.params.subscribe(params =>{
+      this.id = params.{{model.name}}Id;
+      });
+  	  	
+      this.service.get{{model.name}}ById(this.id).subscribe(
+      data => {
+        this.data = data
+        this.setValues();
+      }
+      );
+
+      {% for p in model.properties %}
+        {% if p.primitive != True %}
+            this.service.get{{p.type.name}}All().subscribe(
+              data => {
+                this.{{p.name}}Edit = data
+              }
+            );
+        {% endif %}
+      {% endfor %}
+     }
+
+  ngOnInit() { 
+  }
+
+  setValues(){
+    {% for p in model.properties %}
+      this.{{model.name}}.controls.{{p.name}}.setValue(this.data.{{p.name}});
+    {% endfor %}
+  }
+
+  get f() { return this.{{model.name}}.controls; }
+
+  onSubmit(event:any) {
+    this.submitted = true;
+    this.data = this.{{model.name}}.getRawValue();
+
+    {% for p in model.properties %}
+      {% if p.primitive != True and (p.isArray or p.isSet) %}
+      if( this.data.{{p.name}} != -1){
+        if (this.data.{{p.name}} instanceof Array && this.data.{{p.name}}){
+          var ids= this.data.{{p.name}};
+          this.data.{{p.name}} = new Array();
+          this.{{p.name}}Edit.forEach(zan => {
+            ids.forEach(id => {
+              if(zan.id == id){
+                this.data.{{p.name}}.push(zan.id);
+              }
+            });
+          });
+        }else if(this.data.{{p.name}}){
+          var ids = this.data.{{p.name}};
+          this.data.{{p.name}} = new Array();
+          this.data.{{p.name}}.push(ids);
+        }
+      }else{
+        this.data.{{p.name}} = null;
+      }
+      {% else %}
+      if( this.data.{{p.name}} != -1){
+
+      }else{
+        this.data.{{p.name}} = null;
+      }
+      {% endif %}
+    {% endfor %}
+
+    this.service.edit{{model.name}}(this.data,this.id).subscribe(
+      data => {
+    });
+  }
+
+}

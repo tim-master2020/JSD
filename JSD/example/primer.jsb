@@ -1,27 +1,27 @@
+
 app {
   model Covek {
-      zanimanja: Zanimanje : [] -> ljudi
-      radnoMesto: RadnoMesto -> zaposleni
       ime : string
       godine : integer
-      jmbg : float 
-      
+      jmbg : string
+      zanimanja: Zanimanje : [] -> ljudi
+      firma: Firma -> zaposleni
+
       controller : "getName()","getAge()"
   }
 
-  model Zanimanje {      
-    mbr : string 
+  model Zanimanje {
+    mbr : string
     naziv : string
     ljudi : Covek : [] -> zanimanja
-    
+
     controller : "getNaziv()"
   }
 
-  model RadnoMesto {      
+  model Firma {
     naziv : string
-    brojZaposlenih : integer
     direktor : Covek
-    zaposleni: Covek : {} -> radnoMesto
+    zaposleni : Covek : {} -> firma
 
     controller : "CRUD"
   }

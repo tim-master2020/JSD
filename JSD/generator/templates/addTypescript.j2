@@ -2,72 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Service } from '../app.service';
+import { Add{{model.name}}GeneratedComponent } from '../generated/{{model.name.lower()}}-generated/{{model.name}}Generated';
 
 @Component({
   selector: 'app-{{model.name}}-add',
-  templateUrl: './{{model.name}}.html',
+  templateUrl: '../generated/{{model.name.lower()}}-generated/{{model.name}}Generated.html',
   styleUrls: []
 })
-export class Add{{model.name}}Component implements OnInit {
+export class Add{{model.name}}Component extends Add{{model.name}}GeneratedComponent implements OnInit  {
 
-  {{model.name}}:FormGroup;
-  
-  {% for p in model.properties %}
-    {% if p.primitive != True %}
-        {{p.name}}: any[]
-    {% endif %}
-  {% endfor %}
-  submitted = false;
-  data: any;
 
   constructor(
-    private service : Service,
-    private formBuilder : FormBuilder,
-    private router : Router,
-    private activatedRoute : ActivatedRoute) { }
+    public service : Service,
+    public formBuilder : FormBuilder,
+    public router : Router,
+    public activatedRoute : ActivatedRoute
+  ) { 
+    super(service, formBuilder, router, activatedRoute);
+  }
 
   ngOnInit() {
 
-      this.{{model.name}} = this.formBuilder.group({
-      {% for p in model.properties %}
-          {{p.name}} :['',Validators.required],
-      {% endfor %}
-      });
-
-       {% for p in model.properties %}
-        {% if p.primitive != True %}
-            this.service.get{{p.type.name}}All().subscribe(
-              data => {
-                this.{{p.name.lower()}} = data
-              }
-            );
-        {% endif %}
-      {% endfor %}
-  }
-
-  get f() { return this.{{model.name}}.controls; }
-
-  onSubmit(event:any) {
-    this.submitted = true;
-    this.data = this.{{model.name}}.getRawValue();
-    {% for p in model.properties %} 
-      {% if p.primitive != True %}
-        let ids= this.data.{{p.name.lower()}};
-        this.data.{{p.name.lower()}} = new Array();
-        this.{{p.name.lower()}}.forEach(zan => {
-          ids.forEach(id => {
-            if(zan.id == id){
-              this.data.{{p.name.lower()}}.push(zan);
-            }
-          });
-        });
-      {% endif %}
-    {% endfor %}
-
-    console.log(this.data)
-    this.service.add{{model.name}}(this.data).subscribe(
-      data => {
-    });
   }
 
 }

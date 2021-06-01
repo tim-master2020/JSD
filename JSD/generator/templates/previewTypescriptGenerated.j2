@@ -1,0 +1,68 @@
+import { Component, OnInit } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Service } from 'src/app/app.service';
+
+@Component({
+  selector: 'app-{{model.name}}-show',
+  templateUrl: './{{model.name}}PreviewGenerated.html',
+  styleUrls: []
+})
+export class {{model.name}}PreviewGeneratedComponent implements OnInit {
+
+  submitted = false;
+  data: any;
+  id:number;
+  
+
+  constructor(
+    public service : Service,
+    public formBuilder : FormBuilder,
+    public router : Router,
+    public activatedRoute : ActivatedRoute) { 
+
+      this.service.get{{model.name}}All().subscribe(
+      data => {
+        this.data = data
+
+            this.data.forEach(element => {
+         {% for p in model.properties %}
+          {% if p.primitive != True %}
+              {% if p.isArray or p.isSet %}
+              if( element.{{p.name}} )
+                this.service.get{{p.type.name}}ByIds({'wantedIds' : element.{{p.name}}}).subscribe(
+                  data1 => {
+                    element.{{p.name}} = data1;
+                  }
+                )
+              {% else %}
+                if (element.{{p.name}})
+                  this.service.get{{p.type.name}}ById(element.{{p.name}}).subscribe(
+                    data1 => {
+                      element.{{p.name}} = data1;
+                    }
+                  )
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+            });
+      }
+    );
+    }
+
+  ngOnInit() {
+  }
+
+  delete{{model.name}}(id:number){
+      this.service.delete{{model.name}}ById(id).subscribe(
+      data => {
+      }
+    );
+  }
+
+  edit{{model.name}}(id:number){
+      this.router.navigate([`{{model.name}}Edit/${id}`]);
+  }
+
+}

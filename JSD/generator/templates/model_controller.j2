@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.*;
-import com.example.demo.dto.*;
-import com.example.demo.service.*;
+import com.example.demo.service.I{{model.name}}Service;
+import com.example.demo.generated.controller.{{model.name}}GeneratedController;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,180 +15,10 @@ import java.util.*;
 @CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = "/{{model.name.lower()}}")
-public class {{model.name}}Controller {
+public class {{model.name}}Controller extends {{model.name}}GeneratedController{
 
-    @Autowired
-    private I{{model.name}}Service {{model.name.lower()}}Service;
+  @Autowired
+  @Qualifier("{{model.name[0].lower()}}{{model.name[1:]}}Service")
+  private I{{model.name}}Service {{model.name.lower()}}Service;
 
-    {%if model.relations%}
-    {%for relation in model.relations %}
-    @Autowired
-    private I{{relation}}Service {{relation | lower}}Service;
-   
-    {%endfor%}
-    {%endif%}
-        
-    {% if model.controller.value.value[0] != "CRUD" %}
-        {%for n in range(model.controller.value.value | length)%}
-        @RequestMapping(method = RequestMethod.{%if 'get' in model.controller.value.value[n].split('()')[0] %}GET{%endif%}{%if 'post' in model.controller.value.value[n].split('()')[0] %}POST{%endif%}{%if 'put' in model.controller.value.value[n].split('()')[0] %}PUT{%endif%}{%if 'delete' in model.controller.value.value[n].split('()')[0] %}DELETE{%endif%}, value = "/{{model.controller.value.value[n].split('()')[0]}}")
-        public ResponseEntity<?> {{model.controller.value.value[n]}} {
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        {%endfor%}
-
-        @RequestMapping(method = RequestMethod.POST)
-        public ResponseEntity<{{model.name}}DTO> add(@RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
-            {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}Model = mapDtoToModel({{model.name.lower()}}DTO);
-            {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}UpdatedModel = {{model.name.lower()}}Service.save({{model.name | lower}}Model);
-            {{model.name[0]|upper}}{{model.name[1:]}}DTO {{model.name | lower}}ReturnDTO = mapModelToDto({{model.name | lower}}UpdatedModel);
-            return new ResponseEntity<>({{model.name | lower}}ReturnDTO , HttpStatus.CREATED);
-        }
-
-        @RequestMapping(method = RequestMethod.GET)
-        public ResponseEntity<List<{{model.name}}DTO>> getAll() {
-            List<{{model.name[0]|upper}}{{model.name[1:]}}DTO> {{model.name[0]|upper}}{{model.name[1:]}}dtos =  new ArrayList<{{model.name[0]|upper}}{{model.name[1:]}}DTO>(); 
-            for({{model.name[0]|upper}}{{model.name[1:]}} element : {{model.name.lower()}}Service.findAll()){
-                {{model.name[0]|upper}}{{model.name[1:]}}dtos.add(mapModelToDto(element));
-            }
-            return new ResponseEntity<>({{model.name[0]|upper}}{{model.name[1:]}}dtos, HttpStatus.OK);
-        }
-
-        @RequestMapping(method = RequestMethod.GET, value = "{id}")
-        public ResponseEntity<{{model.name}}DTO> getById(@PathVariable Long id) {
-           {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}Model = {{model.name.lower()}}Service.findById(id);
-           {{model.name[0]|upper}}{{model.name[1:]}}DTO {{model.name | lower}}Dto = mapModelToDto({{model.name | lower}}Model);
-            return new ResponseEntity({{model.name | lower}}Dto, HttpStatus.OK);
-        }
-
-        @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-        public ResponseEntity<Void> delete{{model.name}}(@PathVariable Long id) {
-            {{model.name.lower()}}Service.remove(id); 
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-
-        @RequestMapping(method = RequestMethod.PUT, value = "{id}")
-        public ResponseEntity<{{model.name}}DTO> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
-            {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}Model = mapDtoToModel({{model.name.lower()}}DTO);
-            {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}UpdatedModel = {{model.name.lower()}}Service.update(id, {{model.name | lower}}Model);
-            {{model.name[0]|upper}}{{model.name[1:]}}DTO {{model.name | lower}}ReturnDTO = mapModelToDto({{model.name | lower}}UpdatedModel);
-            return new ResponseEntity<>({{model.name | lower}}ReturnDTO, HttpStatus.CREATED);
-        }
-    {% endif %}
-    
-    {% if model.controller.value.value[0] == "CRUD" %}
-        @RequestMapping(method = RequestMethod.POST)
-        public ResponseEntity<{{model.name}}DTO> add(@RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
-            {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}Model = mapDtoToModel({{model.name.lower()}}DTO);
-            {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}UpdatedModel = {{model.name.lower()}}Service.save({{model.name | lower}}Model);
-            {{model.name[0]|upper}}{{model.name[1:]}}DTO {{model.name | lower}}ReturnDTO = mapModelToDto({{model.name | lower}}UpdatedModel);
-            return new ResponseEntity<>({{model.name | lower}}ReturnDTO , HttpStatus.CREATED);  
-        }
-
-        @RequestMapping(method = RequestMethod.GET)
-        public ResponseEntity<List<{{model.name}}DTO>> getAll() {
-            List<{{model.name[0]|upper}}{{model.name[1:]}}DTO> {{model.name[0]|upper}}{{model.name[1:]}}dtos =  new ArrayList<{{model.name[0]|upper}}{{model.name[1:]}}DTO>(); 
-            for({{model.name[0]|upper}}{{model.name[1:]}} element : {{model.name.lower()}}Service.findAll()){
-                {{model.name[0]|upper}}{{model.name[1:]}}dtos.add(mapModelToDto(element));
-            }
-            return new ResponseEntity<>({{model.name[0]|upper}}{{model.name[1:]}}dtos, HttpStatus.OK);
-        }
-
-        @RequestMapping(method = RequestMethod.GET, value = "{id}")
-        public ResponseEntity<{{model.name}}DTO> getById(@PathVariable Long id) {
-            {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}Model = {{model.name.lower()}}Service.findById(id);
-           {{model.name[0]|upper}}{{model.name[1:]}}DTO {{model.name | lower}}Dto = mapModelToDto({{model.name | lower}}Model);
-            return new ResponseEntity({{model.name | lower}}Dto, HttpStatus.OK);
-        }
-
-        @RequestMapping(method = RequestMethod.DELETE, value = "{id}")
-        public ResponseEntity<Void> delete{{model.name}}(@PathVariable Long id) {
-            {{model.name.lower()}}Service.remove(id); 
-            return new ResponseEntity<>(HttpStatus.OK);        
-        }
-
-        @RequestMapping(method = RequestMethod.PUT, value = "{id}")
-        public ResponseEntity<{{model.name}}DTO> update{{model.name}}(@PathVariable Long id, @RequestBody {{model.name}}DTO {{model.name.lower()}}DTO) {
-            {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}Model = mapDtoToModel({{model.name.lower()}}DTO);
-            {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}UpdatedModel = {{model.name.lower()}}Service.update(id, {{model.name | lower}}Model);
-            {{model.name[0]|upper}}{{model.name[1:]}}DTO {{model.name | lower}}ReturnDTO = mapModelToDto({{model.name | lower}}UpdatedModel);
-            return new ResponseEntity<>({{model.name | lower}}ReturnDTO, HttpStatus.CREATED);        
-        }
-    {% endif %}
-    
-@RequestMapping(method = RequestMethod.GET,value="getFromIds")
-    public ResponseEntity<List<{{model.name}}DTO>> getFromIds(@RequestBody TransferDTO transferDTO){
-        List<{{model.name}}DTO> {{model.name}}DTOSList = new ArrayList<>();
-        for(Long id : transferDTO.getWantedIds()){
-            {{model.name}}DTOSList.add(mapModelToDto({{model.name.lower()}}Service.findById(id)));
-        }
-        return new ResponseEntity<>({{model.name}}DTOSList,HttpStatus.OK);
-    }
-
-
-    public {{model.name[0]|upper}}{{model.name[1:]}} mapDtoToModel({{model.name}}DTO {{model.name | lower}}DTO){
-        {{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}Model = new {{model.name[0]|upper}}{{model.name[1:]}}();
-    {% if model.properties %}
-    {%for p in model.properties%}
-    {%if p.primitive is false%}
-        {%if p.objectType%}
-        if({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
-        {%if p.isSet%}Set{%else%}List{%endif%}<Long> {{p.name | lower}}ids = {{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}();
-            for(Long id: {{p.name | lower}}ids){
-                {{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}().add({{p.type.name.lower()}}Service.findById(id));
-            }
-        }       
-        {%else%}
-        if({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
-            {{p.type.name[0]|upper}}{{p.type.name[1:]}} {{p.name | lower}} = {{p.type.name.lower()}}Service.findById({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}());
-            {{model.name | lower}}Model.set{{p.name[0]|upper}}{{p.name[1:]}}({{p.name | lower}});
-        }
-        {%endif%}
-    {%else%}
-    {%if p.isNumber%}
-    if({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}() != 0){
-    {%else%}
-    if({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
-    {%endif%}
-        {{model.name | lower}}Model.set{{p.name[0]|upper}}{{p.name[1:]}}({{model.name | lower}}DTO.get{{p.name[0]|upper}}{{p.name[1:]}}());
-    }
-    {%endif%}
-    {%endfor%}
-     return {{model.name | lower}}Model;
-    }
-    {%endif%}
-    
-
-
-
-     public {{model.name[0]|upper}}{{model.name[1:]}}DTO mapModelToDto({{model.name[0]|upper}}{{model.name[1:]}} {{model.name | lower}}Model){
-        {{model.name[0]|upper}}{{model.name[1:]}}DTO {{model.name | lower}}Dto = new {{model.name[0]|upper}}{{model.name[1:]}}DTO();
-
-    {% if model.properties %}
-    {%for p in model.properties%}
-    {%if p.primitive is false%}
-        {%if p.objectType%}
-        if({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
-        {%if p.isSet%}Set{%else%}List{%endif%}<{{p.type.name}}> {{p.name | lower}}Elements = {{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}();
-            for({{p.type.name}} element: {{p.name | lower}}Elements){
-                {{model.name | lower}}Dto.get{{p.name[0]|upper}}{{p.name[1:]}}().add(element.getId());
-            }
-        }       
-        {%else%}
-        if({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
-            {{model.name | lower}}Dto.set{{p.name[0]|upper}}{{p.name[1:]}}({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}().getId());
-        }
-        {%endif%}
-    {%else%}
-    {%if p.isNumber%}
-    if({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}() != 0){
-    {%else%}
-    if({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}() != null){
-    {%endif%}
-        {{model.name | lower}}Dto.set{{p.name[0]|upper}}{{p.name[1:]}}({{model.name | lower}}Model.get{{p.name[0]|upper}}{{p.name[1:]}}());
-    }
-    {%endif%}
-    {%endfor%}
-        return {{model.name | lower}}Dto;
-    {%endif%}
-     }
 }

@@ -27,7 +27,8 @@
       {% else %}
         <th scope="row">
         {% for m in models %}
-          {%if m.name.lower() == p.type.name.lower() %}
+        {%if m.name.lower() == p.type.name.lower() %}
+          {%if p.isArray or p.isSet %}
             <span *ngFor="let dat1 of dat.{{p.name}} ; let i = index">
               {% for p1 in m.properties %}
                 {%if p1.type.name == 'string' %}
@@ -36,7 +37,16 @@
               {% endfor %}
               <br>
             </span>
+          {% else %}
+              {% for p1 in m.properties %}
+                {%if p1.type.name == 'string' %}
+                  <span *ngIf="dat.{{p.name}}">
+                      {{'{{dat.'}}{{p.name}}.{{p1.name}}{{'}}'}}
+                  </span>
+                {% endif %}
+              {% endfor %}
           {% endif %}
+        {% endif %}
         {% endfor %}
           </th>
 

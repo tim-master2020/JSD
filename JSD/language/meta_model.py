@@ -58,10 +58,14 @@ def app_type_processor(app):
 
         for prop in model.properties:
             print('------')
-
-            if prop.annotation is '@Column' and prop.type.name not in ['integer', 'string','boolean','float']:
+            print(prop.annotation)
+            print('Prop has anotation column: ' + prop.annotation is '@Column')
+            print('Prop is not a primitive type: ' + prop.type.name not in ['integer', 'string','boolean','float'])
+            if prop.annotation == '@Column' and prop.type.name not in ['integer', 'string','boolean','float']:
+                print('DA LI SI USAOOOOOOOOO')
                 if prop.objectType is None and prop.propName is None:
                     prop.annotation = '@OneToOne'
+                    print('Annotation is : oneToOne')
                 
                 if prop.propName is not None:
                     print('Refereced model:')
@@ -78,14 +82,17 @@ def app_type_processor(app):
                             raise TextXSemanticError("Property {} is referencing an invalid property name in model {}. It must referece a collection.".format(prop.propName.name, referenced_model.name))
                         else:
                             prop.annotation = '@ManyToOne\n' + '\t@JoinColumn(name = "{}_id")'.format(referenced_prop.name)
-                            referenced_prop.annotation = '@OneToMany(fetch = FetchType.LAZY, mappedBy = "{}")'.format(prop.name)
+                            print('Annotation is : ManyToOne')
+                            referenced_prop.annotation = '@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "{}")'.format(prop.name)
                             
                     else:
                         if referenced_prop.objectType is not None:
                             prop.annotation = '@ManyToMany(mappedBy = "{}", fetch = FetchType.EAGER)'.format(referenced_prop.name)
+                            print('Annotation is : ManyToMany')
                             referenced_prop.annotation = '@ManyToMany'
                         else:
-                            prop.annotation = '@OneToMany(fetch = FetchType.LAZY, mappedBy = {}")'.format.prop_name
+                            prop.annotation = '@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "{}")'.format.prop_name
+                            print('Annotation is : OneToMany')
                             referenced_prop.annotation = '@ManyToOne\n' + '\t@JoinColumn(name = "{}_id")'.format(prop.name)
                 elif prop.objectType is not None:
                     raise TextXSemanticError("Property {} must provide referenced property's name.".format(prop.name))
@@ -116,4 +123,3 @@ def get_meta_model():
     metamodel.register_obj_processors(object_processors)
     
     return metamodel
-

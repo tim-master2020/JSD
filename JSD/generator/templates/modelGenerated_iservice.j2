@@ -1,0 +1,13 @@
+package com.example.demo.generated.service;
+
+import com.example.demo.model.*;
+import com.example.demo.dto.*;
+import java.util.List;
+
+public interface I{{model.name}}GeneratedService {
+    {{model.name}} save({{model.name}} {{model.name.lower()}});
+    List<{{model.name}}> findAll();
+    {{model.name}} findById(long id);
+    {{model.name}} update(long id, {{model.name}} {{model.name.lower()}});
+    void remove(long id);
+}
