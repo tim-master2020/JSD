@@ -84,7 +84,7 @@ Model bi u svojoj definiciji odredio da li je potreban i njegov controller. To p
 
 <h2>Nameštanje okruženja</h2>
 <li>pip install -r requirements.txt </li>
-<li>pip uninstall JSD </li>
+<li>pip install JSD </li>
 <li> textx generate JSD/example/primer.jsb --target java+html+js --overwrite </li>
 
 <h2>Članovi tima</h2>
