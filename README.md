@@ -23,7 +23,7 @@
 Ukoliko je veza koja postoji izmedju dva modela <b>više prema više ili više prema jedan</b>, potrebno je uneti naziv polja referenciranog modela.
 Model bi u svojoj definiciji odredio da li je potreban i njegov controller. To polje bi moglo imati jedno od dve vrednosti. <ol><li>Ključna reč CRUD</li><li>Lista metoda</li></ol></p>
 <br/>
-<p>Ukoliko je vrednost controller-a nedefinisana, kontroler se neće kreirati već samo odgovarajući servis i repozitorijum. Kada je vrednost polja controller jedna ključna reč, odnosno CRUD, onda se pravi controller i on je popunjen svim CRUD operacijama, a u servisu i repozitorijumu se takođe prave odgovarajuće metode koje su potrebne za izvršavanje CRUD metoda. Na kraju, ukoliko je upisana lista metoda, to znači da će kontroler pored svojih CRUD operacija, imati i dodatne metode koje su izlisane, a naziv kontrolera je naziv modela.</p>
+<p>Ako je vrednost polja controller jedna ključna reč, odnosno CRUD, onda se pravi controller i on je popunjen svim CRUD operacijama, a u servisu i repozitorijumu se takođe prave odgovarajuće metode koje su potrebne za izvršavanje CRUD metoda. Na kraju, ukoliko je upisana lista metoda, to znači da će kontroler pored svojih CRUD operacija, imati i dodatne metode koje su izlisane, a naziv kontrolera je naziv modela.</p>
 
 
 <h2>Primer</h2>
