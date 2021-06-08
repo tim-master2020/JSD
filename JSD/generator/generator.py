@@ -1,5 +1,6 @@
-from os import mkdir
+from os import mkdir,rmdir
 import os
+from unipath import Path
 from os.path import exists, dirname, join, isfile
 from shutil import copy
 import jinja2
@@ -8,18 +9,16 @@ import datetime
 import sys
 from pprint import pprint
 import re
+# importing shutil module
+import shutil
 
 def generate(model, output_path, overwrite):
-    """
-    Generates spring boot backend + angular frontend applications for  domain specific language
-    Parameters: 
-        model (Survey): textX model that represents the survey
-        output_path (string): The output to generate to
-        overwrite (boolean): Should overwrite output files 
-    """
 
     now = datetime.datetime.now().strftime("%a, %b %d, %Y %X")
     this_folder = dirname(__file__)
+
+    if not exists(output_path):
+        mkdir(output_path)
     # create output folders
     output_folder = join(output_path, 'generator_output/')
 
@@ -34,6 +33,10 @@ def generate(model, output_path, overwrite):
     ##########################################################################################################
     #BackEnd generator
     ##########################################################################################################
+    p = Path(output_path)
+    if exists(join(output_folder, 'backend')):
+        shutil.rmtree(join(output_folder, 'backend'))
+    shutil.copytree(join(p.parent, 'demo'), join(output_folder, 'backend/demo'))
 
     output_folder_be_generated = join(output_folder, 'backend/demo/src/main/java/com/example/demo/generated')
     backend_model_folder_repository_generated = join(output_folder_be_generated, 'repository')
@@ -148,19 +151,13 @@ def generate(model, output_path, overwrite):
         ss = open(join(backend_model_controller_generated, "%sGeneratedController.java" % model.name), 'w')
         ss.write(templateGeneratedController.render(model=model, datetime=now))
 
-        # if(model.properties):
-        #     for p in model.properties:
-        #         print('property type is',p.type.name)
-        #         print('property type', p.annotiation)
-        #         print('property primitive : ', p.primitive)
-
     ##########################################################################################################
     #Frontent generator
-    ##########################################################################################################
 
     frontend_folder = join(output_folder, 'front/')
-    if not exists(frontend_folder):
-        mkdir(frontend_folder)
+    if exists(frontend_folder):
+        shutil.rmtree(frontend_folder)
+    shutil.copytree(join(p.parent, 'front'), join(output_folder, 'front'))
 
 
     frontend_angular = join(frontend_folder, 'AngularFront/src/app/')
@@ -261,35 +258,3 @@ def generate(model, output_path, overwrite):
         template = jinja_env.get_template('editHtml.j2')
         f = open(join(component_folder_generated, "%sEditGenerated.html" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
-
-
-        
-
- 
-
-    
-    #kreairanje modela u model folderu
-   
-
-    # js_template = jinja_env.get_template('survey_js.j2')
-
-    # f = open(join(js_output_folder, 'index.js'), 'w')
-    # f.write(js_template.render(survey=model.survey, datetime=now))
-
-    # copy(join(this_folder, 'templates/styles.css'), css_output_folder)
-   
-if __name__ == "__main__":
-
-    this_folder = dirname(__file__)
-    
-    if len(sys.argv) < 2:
-        print('Error: JavaSpringBootLan file is missing.')
-    else:
-        javaspringbootlan_file = sys.argv[1]
-
-        javaspringboot_meta_model = metamodel_for_language('JSD')
-
-        # build model
-        model = survey_metamodel.model_from_file(javaspringbootlan_file)
-
-        generate(model, this_folder, True)
