@@ -20,7 +20,7 @@ def generate(model, output_path, overwrite):
     if not exists(output_path):
         mkdir(output_path)
     # create output folders
-    output_folder = join(output_path, 'generator_output/')
+    output_folder = join(output_path, 'generator_output')
 
     if not overwrite and exists(output_folder):
         print('-- Skipping: {}'.format(output_folder))
@@ -36,14 +36,24 @@ def generate(model, output_path, overwrite):
     p = Path(output_path)
     if exists(join(output_folder, 'backend')):
         shutil.rmtree(join(output_folder, 'backend'))
-    shutil.copytree(join(p.parent, 'demo'), join(output_folder, 'backend/demo'))
+        
+    backend_demo_f =  join(output_folder, 'backend','demo')
+    shutil.copytree(join(p.parent, 'demo'),  backend_demo_f)
 
-    output_folder_be_generated = join(output_folder, 'backend/demo/src/main/java/com/example/demo/generated')
+    print('output folder at top'+str(output_folder))
+
+    backendGeneratedFolder = generateBackendStructure(output_folder,'generated')
+    print('backendGeneratedFolder'+str(backendGeneratedFolder))
+
+    output_folder_be_generated = backendGeneratedFolder
     backend_model_folder_repository_generated = join(output_folder_be_generated, 'repository')
     backend_model_service_generated = join(output_folder_be_generated, 'service')
     backend_model_controller_generated = join(output_folder_be_generated, 'controller')
 
-    output_folder_be = join(output_folder, 'backend/demo/src/main/java/com/example/demo/')
+    backendFolderDemo = generateBackendStructure(output_folder,'demo')
+    print('backendFolderDemo'+str(backendFolderDemo))
+
+    output_folder_be = backendFolderDemo
     backend_model = join(output_folder_be, 'model')
     backend_model_folder_repository = join(output_folder_be, 'repository')
     backend_model_service = join(output_folder_be, 'service')
@@ -64,6 +74,9 @@ def generate(model, output_path, overwrite):
     
     if not exists(backend_model_controller):
         mkdir(backend_model_controller)
+
+    if not exists(output_folder_be_generated):
+        mkdir(output_folder_be_generated)
 
     if not exists(backend_model_folder_repository_generated):
         mkdir(backend_model_folder_repository_generated)
@@ -154,17 +167,17 @@ def generate(model, output_path, overwrite):
     ##########################################################################################################
     #Frontent generator
 
-    frontend_folder = join(output_folder, 'front/')
+    frontend_folder = join(output_folder, 'front')
     if exists(frontend_folder):
         shutil.rmtree(frontend_folder)
     shutil.copytree(join(p.parent, 'front'), join(output_folder, 'front'))
 
 
-    frontend_angular = join(frontend_folder, 'AngularFront/src/app/')
-    frontend_angular_generated = join(frontend_folder, 'AngularFront/src/app/generated/')
+    frontend_angular = generateFrontendFolderStructure(frontend_folder,'app')
+    frontend_angular_generated = generateFrontendFolderStructure(frontend_folder,'generated')
     if not exists(frontend_angular_generated):
         mkdir(frontend_angular_generated)
-    frontend_angular_setings = join(frontend_folder, 'AngularFront/')
+    frontend_angular_setings = join(frontend_folder, 'AngularFront')
 
     template = jinja_env.get_template('appComponent.j2')
     f = open(join(frontend_angular, "app.component.html"), 'w')
@@ -258,3 +271,34 @@ def generate(model, output_path, overwrite):
         template = jinja_env.get_template('editHtml.j2')
         f = open(join(component_folder_generated, "%sEditGenerated.html" % model.name), 'w')
         f.write(template.render(model=model, models=models, datetime=now))
+
+def generateBackendStructure(output_folder,depth):
+    backend = join(output_folder,'backend')
+    backend_demo = join(backend,'demo')
+    backend_demo_src = join(backend_demo,'src')
+    backend_demo_src_main = join(backend_demo_src,'main')
+    backend_demo_src_main_java = join(backend_demo_src_main,'java')
+    backend_demo_src_main_java_com = join(backend_demo_src_main_java,'com')
+    backend_demo_src_main_java_com_example = join(backend_demo_src_main_java_com,'example')
+    backend_demo_src_main_java_com_example_demo = join(backend_demo_src_main_java_com_example,'demo')
+
+    if depth == 'generated':
+        backend_demo_src_main_java_com_example_demo_generated = join(backend_demo_src_main_java_com_example_demo,'generated')
+        return backend_demo_src_main_java_com_example_demo_generated
+    else:
+        return backend_demo_src_main_java_com_example_demo
+
+
+def generateFrontendFolderStructure(output_folder,depth):
+
+    angularFront = join(output_folder,'AngularFront');
+    angularFront_src = join(angularFront,'src');
+    angularFront_src_app = join(angularFront_src,'app');
+    if depth == 'generated':
+        return join(angularFront_src_app,'generated')
+    else:
+        return angularFront_src_app
+
+    #AngularFront/src/app
+
+
